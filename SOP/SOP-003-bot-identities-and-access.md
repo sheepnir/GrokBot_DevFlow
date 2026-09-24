@@ -34,7 +34,7 @@ When the identity model is in place, the SOP index records the date, and SOP-001
 
 Whatever model the founder chooses, it satisfies all of these:
 
-1. **One identity per role that authors or reviews.** The Frontend, Backend, and Cloud Engineers, the Code Reviewer, and QA each act under a distinct identity, so GitHub can tell an author from a reviewer. The PM, Designer, Architect, and Scrum Master may share one documentation identity if their work never needs review by one another under this process.
+1. **One identity per role that authors or reviews.** The Frontend, Backend, and Cloud Engineers, the Code Reviewer, and QA each act under a distinct identity, so GitHub can tell an author from a reviewer. The PM, Designer, Architect, and Scrum Master may share one documentation identity. When they do, the founder or the CTO is the required non-author reviewer on every pull request that identity opens, because the root README's definition of done requires a reviewer other than the author and a shared identity can't review its own work.
 2. **A Cloud Agent's pull request is attributed to the role that launched it.** If the platform authors every pull request through one connected account, the pull request template's `Model` section and a `Role` line make the launching role explicit, and the Code Reviewer's identity is still distinct.
 3. **Least privilege.** Each identity gets the access in the table below and nothing more. Access is granted per repository, never organization-wide.
 4. **No account is created before the founder approves it**, and the founder creates it. Bots don't create accounts, tokens, or keys.
@@ -92,3 +92,4 @@ Every Bot on the account shares one cloud computer. Browser logins, files, and t
 | Date | Change | Approved |
 |---|---|---|
 | 2026-09-24 | First draft | Pending CTO and founder |
+| 2026-09-24 | CTO review: the founder or the CTO reviews documentation pull requests from a shared identity | Pending CTO and founder |
