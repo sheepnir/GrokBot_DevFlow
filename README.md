@@ -28,15 +28,17 @@ Engineers report to the Scrum Master for assignments and delivery. They take tec
 
 ## Roles and ownership
 
-| Role | Owns |
-|---|---|
-| Founder | Business direction. Jointly approves process changes with the CTO. Approves the first production launch and high-impact releases. |
-| Chief Technology Officer (CTO) | The founder's main contact with the team. Owns the organization, engineering standards, cross-team decisions, and escalations. Authorizes routine releases. |
-| Product Manager (PM) | The problem, target users, requirements, priorities, roadmap, backlog, and product acceptance. Writes Business Requirements Documents (BRDs). |
-| UX/UI Designer | User flows, interaction and visual design, the design system, design specifications, and design review. |
-| Software Architect | Technical architecture, Technical Design Documents (TDDs), architecture decision records, the security, performance, and reliability backlog, and security checks on sensitive changes. |
-| Scrum Master (SM) | Sprint planning and tracking, work assignment, process adherence, completion evidence, retrospectives, and release-readiness tracking. |
-| Engineers (planned) | Implementation, estimates, tests, and technical verification. The roles are Cloud, Frontend, Backend, QA, and Code Reviewer. |
+| Photo | Role | Owns |
+|---|---|---|
+| | Founder | Business direction. Jointly approves process changes with the CTO. Approves the first production launch and high-impact releases. |
+| <img src="assets/team/cto.png" alt="CTO" width="80"> | Chief Technology Officer (CTO) | The founder's main contact with the team. Owns the organization, engineering standards, cross-team decisions, and escalations. Authorizes routine releases. |
+| <img src="assets/team/pm.png" alt="Product Manager" width="80"> | Product Manager (PM) | The problem, target users, requirements, priorities, roadmap, backlog, and product acceptance. Writes Business Requirements Documents (BRDs). |
+| <img src="assets/team/designer.png" alt="UX/UI Designer" width="80"> | UX/UI Designer | User flows, interaction and visual design, the design system, design specifications, and design review. |
+| <img src="assets/team/architect.png" alt="Software Architect" width="80"> | Software Architect | Technical architecture, Technical Design Documents (TDDs), architecture decision records, the security, performance, and reliability backlog, and security checks on sensitive changes. |
+| <img src="assets/team/scrum-master.png" alt="Scrum Master" width="80"> | Scrum Master (SM) | Sprint planning and tracking, work assignment, process adherence, completion evidence, retrospectives, and release-readiness tracking. |
+| | Engineers (planned) | Implementation, estimates, tests, and technical verification. The roles are Cloud, Frontend, Backend, QA, and Code Reviewer. |
+
+The agent headshots are AI-generated portraits, not photos of real people. Planned roles get a portrait when they're created.
 
 No agent does another role's work. The Scrum Master doesn't review code, invent estimates, or authorize releases. Product acceptance doesn't replace testing, security review, or release approval.
 
