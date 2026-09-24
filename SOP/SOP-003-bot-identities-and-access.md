@@ -23,7 +23,11 @@ This SOP covers GitHub identities, cloud identities, logins on the shared cloud 
 
 | Item | State | Tracked in |
 |---|---|---|
-| Identity model | Not yet decided. Until then, the founder opens pull requests and launches Cloud Agents on a Bot's behalf, and the Code Reviewer's approval is recorded as a comment rather than a GitHub review. | #6 |
+| Identity model | Not yet decided for the other roles. Until then, the founder opens pull requests and launches Cloud Agents on a Bot's behalf. The Code Reviewer has its own identity, so its approval is a GitHub review from `shpdev-reviewer`. | #6 |
+| CTO GitHub account | `shpdev-cto`. | #6 |
+| Code Reviewer GitHub account | Set up. [`shpdev-reviewer`](https://github.com/shpdev-reviewer), created by the founder, is the independent reviewer identity: separate from pull request authors, from `shpdev-cto`, and from the founder's personal account. Its login is the 1Password item "GitHub - ShpDev - Code Reviewer". Its profile picture is the team portrait `assets/team/code-reviewer.png`. It's a collaborator with Write on this repository, so its approvals count toward branch protection. No product repository exists yet. | #6 |
+| Other Bots' GitHub accounts | None yet | #6 |
+| Founder's personal GitHub account | `sheepnir`. Never used by a Bot. | |
 | Pull request creation on `main` | Restricted by ruleset to the founder and the CTO. Bot identities are added to the ruleset when they exist. | #6 |
 | Scrum Master read access to Cursor usage | Not set up. The founder posts the numbers. | #5 |
 | Cursor on-demand monthly limit | Not yet set | #4 |
@@ -63,6 +67,8 @@ Every Bot on the account shares one cloud computer. Browser logins, files, and t
 8. A Bot signs out of any service it logged into for a one-off task, and says so in the task's record.
 9. Files a Bot keeps on the shared computer go under a folder named for its role. Nothing under any role's folder is a secret. A Bot that finds one tells the founder and doesn't copy or use it.
 
+Bots also share one browser profile. A Bot with its own GitHub account, such as the Code Reviewer, adds it with GitHub's account switcher and never signs out `shpdev-cto`. It confirms its own account is the active one before any GitHub write, and switches back when done. Its login is filled from 1Password without the Bot ever seeing it, so the password manager itself is never logged in on the shared computer (rule 7). GitHub is a team service under rule 6, so this login isn't a one-off under rule 8.
+
 ## Requesting, recording, and reviewing access
 
 10. A Bot that needs access it doesn't have opens an issue labeled `access`, stating what it needs, for which task, and for how long. It doesn't work around the gap.
@@ -93,3 +99,4 @@ Every Bot on the account shares one cloud computer. Browser logins, files, and t
 |---|---|---|
 | 2026-09-24 | First draft | Pending CTO and founder |
 | 2026-09-24 | CTO review: the founder or the CTO reviews documentation pull requests from a shared identity | Pending CTO and founder |
+| 2026-09-24 | Current state records the CTO's account, the Code Reviewer's account `shpdev-reviewer` as set up, and the founder's personal account, and how a Bot's account shares the browser profile (factual). Process change: the Code Reviewer's approval is a GitHub review from `shpdev-reviewer` instead of a comment | Pending CTO and founder |
