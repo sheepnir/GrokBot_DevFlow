@@ -8,7 +8,7 @@ Every new product repository starts from this repository, so it carries this fol
 
 | ID | Title | Owner | Status | Approved |
 |---|---|---|---|---|
-| [SOP-001](SOP-001-token-efficiency.md) | Token efficiency: Bots, Cloud Agents, and model assignment | CTO | Draft | Pending CTO and founder |
+| [SOP-001](SOP-001-token-efficiency.md) | Token efficiency: Bots, Cloud Agents, and model assignment | CTO | Approved | CTO and founder, 2026-09-24 |
 
 ## Conventions
 
