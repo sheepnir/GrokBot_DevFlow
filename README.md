@@ -155,7 +155,7 @@ flowchart LR
 
 Sprints last **one week**. Planning happens on day 1, there's a check on day 3, and closure and the retrospective happen on the last day. Each sprint has its own GitHub Project, which is archived when the sprint closes and never deleted.
 
-Every issue moves through these states. Each lane is the role that owns the state, and the flow runs left to right: the PM owns the backlog, the Scrum Master checks readiness and the definition of done, engineers build, and the Code Reviewer and QA work In review together, per SM-003. Verifying is the state after the merge, because a merge alone doesn't make an issue done.
+Every issue moves through these states. Each lane is the role that owns the state: the PM owns the backlog, the Scrum Master checks readiness and the definition of done, engineers build, and the Code Reviewer and QA work In review together, per SM-003. Verifying is the state after the merge, because a merge alone doesn't make an issue done.
 
 ```mermaid
 flowchart LR
@@ -180,7 +180,7 @@ flowchart LR
     Blocked -->|cleared| InProgress
     InProgress -->|PR opened| InReview
     InReview -->|changes requested or QA fail| InProgress
-    InReview -->|QA pass, CI green, approved, merged| Verifying
+    InReview -->|QA pass, CI green, approved, merged by engineer| Verifying
     Verifying -->|gap found| InProgress
     Verifying -->|definition of done met| Done
     classDef frontier fill:#dbeafe,stroke:#1d4ed8,color:#111827
