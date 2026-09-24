@@ -19,6 +19,8 @@ Every new product repository starts from this repository, so it carries this fol
 | [SOP-009](SOP-009-escalation-and-urgent-risks.md) | Escalation and urgent risks | CTO | Draft | Pending CTO and founder |
 | [SOP-010](SOP-010-releases.md) | Releases | CTO, with the Cloud Engineer | Draft | Pending CTO and founder |
 
+Bot identities in place 2026-09-24 (#6). The identity model is recorded in [SOP-003](SOP-003-bot-identities-and-access.md), and SOP-001 rules 1 through 6 are in full effect from that date.
+
 ## Conventions
 
 - One SOP per file, named `SOP-NNN-short-title.md`, numbered in the order they are proposed.
