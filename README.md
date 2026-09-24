@@ -6,21 +6,62 @@ This repository is the process Nir Sheep (the founder) and his CTO agent use whe
 
 Status: **Approved process v1.1**, effective September 24, 2026. The team is being staffed. Product discovery has started, and no product repository or sprint exists yet.
 
+## Designed for token efficiency
+
+The team runs on one Cursor Ultra subscription, so the process is arranged around where tokens are spent. Three choices do most of the work:
+
+- **Bots coordinate, Cloud Agents produce.** Each role is a Grok Bot that keeps its identity, memory, and place in the team. Anything that needs a checkout, a terminal, or more than a few lines of change goes to a Cursor Cloud Agent. That keeps the Grok Bot weekly allowance for coordination and puts the heavy work on the Cursor Agent allowance.
+- **Volume on cheap models, leverage on frontier models.** Engineers implement on Composer, in the Cursor Models pool, which is the cheapest place to spend a lot of tokens. The product roles use third-party frontier models, because every later step depends on the quality of their documents.
+- **Different model families check each other.** The Code Reviewer and QA never run on the family that wrote the change, or on each other's. Different families have different blind spots, so the checks catch more than the implementation cost.
+
+The rules, model names, and fallbacks are in [SOP-001](SOP/SOP-001-token-efficiency.md). The charts below color each role by where its Cloud Agents spend tokens.
+
 ## Organization
 
+Solid lines are reporting lines. Dotted lines are direction without authority over assignments.
+
 ```mermaid
-graph TD
-    Founder["Founder (human)"] --> CTO["Chief Technology Officer"]
-    CTO --> PM["Product Manager"]
-    CTO --> UXD["UX/UI Designer"]
-    CTO --> ARCH["Software Architect"]
-    CTO --> SM["Scrum Master"]
-    SM --> CLOUD["Cloud Engineer"]
-    SM --> FE["Frontend Engineer"]
-    SM --> BE["Backend Engineer"]
-    SM --> QA["QA Engineer"]
-    SM --> CR["Code Reviewer"]
+flowchart TD
+    Founder["Founder<br>human"]
+    CTO["Chief Technology Officer"]
+    SM["Scrum Master"]
+    subgraph Product["Product roles: third-party frontier models"]
+        direction LR
+        PM["Product Manager"]
+        UXD["UX/UI Designer"]
+        ARCH["Software Architect"]
+    end
+    subgraph Eng["Engineers: Cursor Models pool"]
+        direction LR
+        CLOUD["Cloud Engineer"]
+        FE["Frontend Engineer"]
+        BE["Backend Engineer"]
+    end
+    subgraph Checks["Independent checks: a different family each"]
+        direction LR
+        CR["Code Reviewer"]
+        QA["QA Engineer"]
+    end
+    Founder --> CTO
+    CTO --> PM & UXD & ARCH & SM
+    SM --> CLOUD & FE & BE & CR & QA
+    ARCH -. technical direction .-> Eng
+    PM -. product intent .-> Eng
+    classDef human fill:#e5e7eb,stroke:#374151,color:#111827
+    classDef frontier fill:#dbeafe,stroke:#1d4ed8,color:#111827
+    classDef cursor fill:#dcfce7,stroke:#15803d,color:#111827
+    classDef checks fill:#ffedd5,stroke:#c2410c,color:#111827
+    class Founder human
+    class CTO,PM,UXD,ARCH frontier
+    class SM,CLOUD,FE,BE cursor
+    class CR,QA checks
 ```
+
+| Color | Where the role's Cloud Agents run | Roles |
+|---|---|---|
+| Blue | Third-party frontier models | CTO, Product Manager, UX/UI Designer, Software Architect |
+| Green | Cursor Models pool | Scrum Master, Cloud Engineer, Frontend Engineer, Backend Engineer |
+| Orange | Whichever family didn't write the change, and not each other's | Code Reviewer, QA Engineer |
 
 All roles are active: the CTO, Product Manager, UX/UI Designer, Software Architect, Scrum Master, Cloud Engineer, Frontend Engineer, Backend Engineer, Code Reviewer, and QA Engineer.
 
@@ -72,23 +113,64 @@ Repositories are treated as public. No credentials, secrets, private customer da
 9. **Release.** The CTO authorizes routine releases. The founder approves high-impact ones.
 10. **Close and learn.** The Scrum Master reconciles every issue, records the outcome, and runs a retrospective.
 
+The same ten steps, grouped by where their tokens are spent. Steps on the Bots are conversation and coordination. Steps on Cloud Agents produce documents, code, or verdicts.
+
+```mermaid
+flowchart LR
+    subgraph Bots["On the Bots: Grok Bot weekly usage"]
+        direction TB
+        S1["1. Discovery"]
+        S5["5. Refinement"]
+        S6["6. Sprint planning"]
+        S9["9. Release"]
+        S10["10. Close and learn"]
+    end
+    subgraph Frontier["Cloud Agents on third-party frontier models"]
+        direction TB
+        S2["2. Requirements"]
+        S3["3. Design"]
+        S4["4. Technical design"]
+        S8["8. Review and verification"]
+    end
+    subgraph Cursor["Cloud Agents on the Cursor Models pool"]
+        direction TB
+        S7["7. Build"]
+    end
+    S1 --> S2 --> S3 --> S4 --> S5 --> S6 --> S7 --> S8 --> S9 --> S10
+    S8 -. blocking findings .-> S7
+    classDef bots fill:#e5e7eb,stroke:#374151,color:#111827
+    classDef frontier fill:#dbeafe,stroke:#1d4ed8,color:#111827
+    classDef cursor fill:#dcfce7,stroke:#15803d,color:#111827
+    class S1,S5,S6,S9,S10 bots
+    class S2,S3,S4,S8 frontier
+    class S7 cursor
+```
+
 ## Sprint workflow
 
 Sprints last **one week**. Planning happens on day 1, there's a check on day 3, and closure and the retrospective happen on the last day. Each sprint has its own GitHub Project, which is archived when the sprint closes and never deleted.
 
+Every issue moves through these states. Review and QA happen together in one state, and a merge is a step before done, not done itself.
+
 ```mermaid
 stateDiagram-v2
+    state "In progress" as InProgress
+    state "In review" as InReview
     [*] --> Backlog
-    Backlog --> Ready: meets definition of ready
+    Backlog --> Ready: definition of ready met
     Ready --> InProgress: pulled into sprint
-    InProgress --> InReview: pull request opened
-    InReview --> InProgress: changes requested
-    InReview --> Verifying: review passed
-    Verifying --> InProgress: gaps found
-    Verifying --> Done: definition of done met
-    InProgress --> Blocked
-    Blocked --> InProgress: blocker cleared
+    InProgress --> InReview: PR opened
+    InReview --> InProgress: changes or QA fail
+    InReview --> Merged: QA pass, CI green, reviewer approves
+    Merged --> Done: definition of done met
+    Merged --> InProgress: gap found
+    InProgress --> Blocked: blocked
+    Blocked --> InProgress: cleared
     Done --> [*]
+    note right of InReview
+        Code Reviewer and QA work in parallel,
+        each on a model family that didn't write the change
+    end note
 ```
 
 Each engineer works on **one issue at a time**. Every issue has exactly one accountable owner. Agents that don't have GitHub accounts are recorded with an `owner:<role>` label.
