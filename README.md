@@ -260,6 +260,7 @@ The [SOP folder](SOP/README.md) holds the procedures Bots follow to carry out th
 | SM-010 | SOP-007: Pull request, review, and QA | Pending CTO and founder |
 | SM-011 | SOP-008: Sprint ceremonies and records | Pending CTO and founder |
 | SM-012 | SOP-009: Escalation and urgent risks | Pending CTO and founder |
+| SM-013 | SOP-010: Releases | Pending CTO and founder |
 
 ## References
 
