@@ -35,7 +35,7 @@ It doesn't choose the model a Bot itself runs on. Every Bot runs on Grok Bot. No
 
 ## Prerequisites
 
-Rules 1 through 6 assume that each Bot can launch Cloud Agents and open pull requests under its own identity. Today no Bot has GitHub or cloud access, Cloud Agent pull requests are authored through the founder's connected GitHub account, and the Code Reviewer has no independent identity. Until Bot identities are in place, the founder launches Cloud Agents on a Bot's behalf when the Bot asks, and the rest of this SOP applies as written. Rules 1 through 6 take effect in full on the day the SOP index records that Bot identities exist.
+The identity model was decided on 2026-09-24 (#6), per SOP-003. There are three GitHub identities: the founder's personal account, `sheepnir`, which no Bot ever uses; the CTO, `shpdev-cto`; and the Code Reviewer, `shpdev-reviewer`. No other Bot has a GitHub identity, and none needs one. No Bot has cloud access. A Cloud Agent pushes only its branch, through the GitHub account connected to Cursor, which is currently the founder's. The CTO opens the pull request as `shpdev-cto`, fills the template with a `Role` line naming the Bot that requested the work, and requests review from `shpdev-reviewer`. The SOP index records that Bot identities have been in place since 2026-09-24 (#6), so rules 1 through 6 are in full effect. Where those rules or the diagram below say a Bot launches a Cloud Agent, opens a pull request, or merges, the Bot requests it and the CTO does it, or the founder does it on the Bot's behalf. The `Role` line and the `Model` section keep the work attributed to the requesting Bot.
 
 ## Model families
 
@@ -138,14 +138,14 @@ Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An 
 
 ### Spend
 
-18. Cursor's on-demand monthly limit is one cap for the whole account. It covers Grok Bot and both Cloud Agent pools together. The CTO sets the cap and records the amount in the table below. When the cap is reached, new work waits for the next period, but a Cloud Agent or Bot that is already running finishes. Raising the cap mid-sprint is a CTO decision, recorded on the sprint record.
-19. Usage is recorded in the sprint record at the day 3 check and at sprint close, for Grok Bot weekly usage, the Cursor Models pool, and the third-party pool. Until the Scrum Master has read access to the Cursor dashboard, the founder posts the numbers and the Scrum Master records them. A sprint that spends more than the previous one on fewer finished points gets a retrospective item.
+18. Cursor's on-demand monthly limit is one cap for the whole account. It covers Grok Bot and both Cloud Agent pools together. On-demand spending is disabled, so the team works only within the allocation included in the founder's plans and never pays for on-demand usage. The founder sets the limit in Cursor, and the setting is recorded in the table below. When the included allocation runs out, new work waits for the next period, but a Cloud Agent or Bot that is already running finishes. Enabling on-demand spending needs the founder's approval, recorded on the sprint record.
+19. Usage is recorded in the sprint record at the day 3 check and at sprint close, for Grok Bot weekly usage, the Cursor Models pool, and the third-party pool. The Scrum Master reads the numbers in Cursor itself (#5). A sprint that spends more than the previous one on fewer finished points gets a retrospective item. Once a month, at the first sprint close of the month, the Scrum Master also checks Cursor's spending page. It confirms that on-demand spending is still disabled and that on-demand spend is $0, then reports how much of the included allocation has been used to the CTO and the founder. If usage is on pace to run out before the allocation resets, the Scrum Master flags it right away, so the team can slow down before work stops.
 20. Bugbot Autofix, which spawns its own Cloud Agent, stays off unless the CTO turns it on for a repository.
 
 | Setting | Value | Set by |
 |---|---|---|
-| On-demand monthly limit | Not yet set | CTO |
-| Scrum Master read access to the Cursor dashboard | Not yet set up. The founder posts usage numbers until it is. | Founder |
+| On-demand monthly limit | Disabled, set on 2026-09-24 (#4). No on-demand spend for Grok Bot or Cursor. The Scrum Master checks it monthly under rule 19. | Founder |
+| Scrum Master read access to the Cursor dashboard | Set up on 2026-09-24 (#5). The Scrum Master reads usage in Cursor itself. | Founder |
 
 ## Escalation
 
@@ -160,3 +160,6 @@ Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An 
 | 2026-09-24 | First draft: surfaces, model tiers, role assignments, diversity, escalation, context hygiene, and spend rules | CTO and founder, 2026-09-24 |
 | 2026-09-24 | CTO re-review: rule 9 keeps a pull request at two families when a Frontier role also makes a mechanical edit | CTO and founder, 2026-09-24 |
 | 2026-09-24 | CTO review: model names as Cursor's picker shows them, Grok 4.7 as the Cursor family's frontier model and the engineers' escalation, Google added as a fourth family, ordered fallback lists for the Reviewer and QA, the three Cursor meters named, the role table scoped to Cloud Agents, QA and merge added to the diagram, PR template with a `Model` section, single account-wide on-demand cap, founder posts usage until the Scrum Master has dashboard access, prerequisites for Bot identities, status kept only in the SOP index | CTO and founder, 2026-09-24 |
+| 2026-09-24 | Factual update, not a process change: prerequisites name the CTO's GitHub account, `shpdev-cto`, and the Code Reviewer's, `shpdev-reviewer`; the settings table records that the Scrum Master can read Cursor usage (#5) | CTO and founder, 2026-09-24 |
+| 2026-09-24 | Rules 18 and 19 and the settings table: on-demand spending is disabled (#4), enabling it needs the founder, and the Scrum Master checks spending monthly | CTO and founder, 2026-09-24 |
+| 2026-09-24 | Prerequisites: the identity model is decided (#6). Three GitHub identities, the CTO opens every Cloud Agent pull request, and rules 1 through 6 are in full effect with the requesting Bot named in the `Role` line | CTO and founder, 2026-09-24 |

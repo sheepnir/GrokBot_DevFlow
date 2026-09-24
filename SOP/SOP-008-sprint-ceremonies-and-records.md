@@ -43,7 +43,7 @@ Inputs: the backlog in priority order from the PM, the stories that meet the def
 
 12. The Scrum Master records, for every issue, whether it's done, in progress, or blocked, and for blocked ones what clears them and who owns that.
 13. Scope changes since planning are recorded with who agreed them. A story added mid-sprint needs the PM and the Scrum Master to agree, and something of equal size comes out.
-14. Usage since sprint start is recorded per SOP-001 rule 19. Until the Scrum Master has dashboard access, it asks the founder for the numbers on day 3 and records what it gets.
+14. Usage since sprint start is recorded per SOP-001 rule 19. The Scrum Master reads the numbers in Cursor itself (#5).
 15. Risks to the goal are named. If the goal can't be met, the Scrum Master says so on day 3, not on the last day, and proposes what to drop.
 
 ## Last day: closure

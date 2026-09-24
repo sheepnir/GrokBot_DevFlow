@@ -13,7 +13,7 @@ Who a Bot is on GitHub and in the cloud, and what it may reach.
 
 The process depends on two things that only identities can give it. A pull request must be reviewed by someone other than its author, so the Code Reviewer needs an identity separate from the engineers. And a Bot must be able to act only within its role, so each identity needs the least access that its role requires. This SOP sets the rules any identity model must satisfy, the access each role gets, how access is requested and recorded, and what happens when a credential is exposed.
 
-The identity model itself is a founder decision, tracked in issue #6. This SOP records the decision once it's made.
+The identity model is a founder decision, tracked in issue #6. The founder decided it on 2026-09-24, and the CTO agrees. There are three GitHub identities: the founder's personal account, `sheepnir`, which no Bot ever uses; the CTO, `shpdev-cto`; and the Code Reviewer, `shpdev-reviewer`. No other Bot has a GitHub identity. A Cloud Agent pushes only its branch, and the CTO opens every Cloud Agent pull request as `shpdev-cto`, with a `Role` line naming the Bot that requested the work. The Code Reviewer is the required non-author reviewer.
 
 ## Scope
 
@@ -23,19 +23,23 @@ This SOP covers GitHub identities, cloud identities, logins on the shared cloud 
 
 | Item | State | Tracked in |
 |---|---|---|
-| Identity model | Not yet decided. Until then, the founder opens pull requests and launches Cloud Agents on a Bot's behalf, and the Code Reviewer's approval is recorded as a comment rather than a GitHub review. | #6 |
-| Pull request creation on `main` | Restricted by ruleset to the founder and the CTO. Bot identities are added to the ruleset when they exist. | #6 |
-| Scrum Master read access to Cursor usage | Not set up. The founder posts the numbers. | #5 |
+| Identity model | Decided on 2026-09-24. Three GitHub identities: the founder (`sheepnir`), the CTO (`shpdev-cto`), and the Code Reviewer (`shpdev-reviewer`). Other Bots request Cloud Agent work, and the CTO or the founder launches it. A Cloud Agent pushes only its branch, through the GitHub account connected to Cursor, which is currently the founder's. The CTO opens the pull request as `shpdev-cto`, with a `Role` line naming the requesting Bot, and requests `shpdev-reviewer`. The Code Reviewer's approval is a GitHub review from `shpdev-reviewer`. | #6 |
+| CTO GitHub account | `shpdev-cto`. | #6 |
+| Code Reviewer GitHub account | Set up. [`shpdev-reviewer`](https://github.com/shpdev-reviewer), created by the founder, is the independent reviewer identity: separate from pull request authors, from `shpdev-cto`, and from the founder's personal account. Its login is the 1Password item "GitHub - ShpDev - Code Reviewer". Its profile picture is the team portrait `assets/team/code-reviewer.png`. It's a collaborator with Write on this repository, so its approvals count toward branch protection. No product repository exists yet. | #6 |
+| Other Bots' GitHub accounts | None, by design. The PM, Designer, Architect, Scrum Master, Frontend, Backend, and Cloud Engineers, and QA work through the CTO. | #6 |
+| Founder's personal GitHub account | `sheepnir`. Never used by a Bot. | |
+| Pull request creation on `main` | Restricted by ruleset to the founder and the CTO. | #6 |
+| Scrum Master read access to Cursor usage | Set up on 2026-09-24. The Scrum Master reads usage in Cursor itself. | #5 |
 | Cursor on-demand monthly limit | Not yet set | #4 |
 
-When the identity model is in place, the SOP index records the date, and SOP-001 rules 1 through 6 take full effect.
+The SOP index records that Bot identities have been in place since 2026-09-24 (#6), so SOP-001 rules 1 through 6 are in full effect. Where those rules say a Bot launches a Cloud Agent or opens a pull request, the Bot requests it and the CTO does it.
 
 ## Requirements for the identity model
 
-Whatever model the founder chooses, it satisfies all of these:
+The decided model satisfies all of these, and any future change to it must too:
 
-1. **One identity per role that authors or reviews.** The Frontend, Backend, and Cloud Engineers, the Code Reviewer, and QA each act under a distinct identity, so GitHub can tell an author from a reviewer. The PM, Designer, Architect, and Scrum Master may share one documentation identity. When they do, the founder or the CTO is the required non-author reviewer on every pull request that identity opens, because the root README's definition of done requires a reviewer other than the author and a shared identity can't review its own work.
-2. **A Cloud Agent's pull request is attributed to the role that launched it.** If the platform authors every pull request through one connected account, the pull request template's `Model` section and a `Role` line make the launching role explicit, and the Code Reviewer's identity is still distinct.
+1. **The author and the reviewer are different identities.** The GitHub identities are the founder, the CTO, and the Code Reviewer, and no Bot ever uses the founder's. The root README's definition of done requires a reviewer other than the author, so the CTO never counts as the reviewer on a pull request it opened, and the Code Reviewer's approval is required on every pull request the CTO opens. That includes documentation pull requests for the PM, Designer, Architect, and Scrum Master, which the Code Reviewer or the founder reviews. On a pull request the Code Reviewer opened, the founder or the CTO is the reviewer.
+2. **A Cloud Agent's pull request is opened by the CTO and attributed to the role that requested it.** The Cloud Agent pushes only its branch. The CTO opens every Cloud Agent pull request as `shpdev-cto`, and the pull request template's `Role` line and `Model` section name the requesting role and the models that produced the work.
 3. **Least privilege.** Each identity gets the access in the table below and nothing more. Access is granted per repository, never organization-wide.
 4. **No account is created before the founder approves it**, and the founder creates it. Bots don't create accounts, tokens, or keys.
 5. **Credentials live in 1Password**, in a vault the founder controls. They're never in a profile, a skill, a routine, a chat, a Bot's memory, a repository, or a file on the shared computer.
@@ -45,12 +49,12 @@ Whatever model the founder chooses, it satisfies all of these:
 | Role | GitHub | Cloud | Cursor |
 |---|---|---|---|
 | CTO | Admin on the process repository, maintain on product repositories | Read-only on billing and cost views | Team admin, if a team plan is used |
-| Product Manager, UX/UI Designer, Software Architect | Write, scoped by CODEOWNERS to their `/docs` folder | None | Cloud Agents on their assigned models |
-| Scrum Master | Triage, plus admin on GitHub Projects | None | Read-only usage, once #5 is done |
-| Frontend and Backend Engineers | Write on feature branches. No direct push to `main`. | None. Engineers use environments the Cloud Engineer provides. | Cloud Agents on Composer 2.5 and Grok 4.7 |
-| Cloud Engineer | Write on feature branches, plus GitHub Actions secrets by request | OIDC-assumed roles per environment, scoped to that environment. No long-lived access keys. Production roles need a per-change approval. | Cloud Agents on Composer 2.5 and Grok 4.7 |
+| Product Manager, UX/UI Designer, Software Architect | None. Works through the CTO. CODEOWNERS names the owning role's `/docs` folder for review purposes. | None | Cloud Agents on their assigned models, launched by the CTO or the founder |
+| Scrum Master | None. Works through the CTO. | None | Read-only usage in Cursor (#5) |
+| Frontend and Backend Engineers | None. Works through the CTO. Their Cloud Agents push feature branches only, never `main`. | None. Engineers use environments the Cloud Engineer provides. | Cloud Agents on Composer 2.5 and Grok 4.7, launched by the CTO or the founder |
+| Cloud Engineer | None. Works through the CTO. Its Cloud Agents push feature branches only. GitHub Actions secrets are set by the founder on request. | OIDC-assumed roles per environment, scoped to that environment. No long-lived access keys. Production roles need a per-change approval. | Cloud Agents on Composer 2.5 and Grok 4.7, launched by the CTO or the founder |
 | Code Reviewer | Write, so its review can approve, but no merge. Never pushes to a branch it's reviewing. | None | Cloud Agents on its ordered list |
-| QA Engineer | Triage, so it can label and file defects | Read-only on test environments | Cloud Agents on its ordered list |
+| QA Engineer | None. Works through the CTO, who posts its verdicts and files its defects. | Read-only on test environments | Cloud Agents on its ordered list, launched by the CTO or the founder |
 
 Bots don't hold personal access tokens that outlive a task. Where a token is unavoidable, it's fine-grained, scoped to one repository, expires within 90 days, and is recorded in the access register.
 
@@ -62,6 +66,8 @@ Every Bot on the account shares one cloud computer. Browser logins, files, and t
 7. Billing consoles, cloud account root or admin consoles, the password manager, the founder's email, and anything with personal data are never logged in there. Those actions are the founder's, on the founder's own devices.
 8. A Bot signs out of any service it logged into for a one-off task, and says so in the task's record.
 9. Files a Bot keeps on the shared computer go under a folder named for its role. Nothing under any role's folder is a secret. A Bot that finds one tells the founder and doesn't copy or use it.
+
+Bots also share one browser profile. A Bot with its own GitHub account, which today means the Code Reviewer, adds it with GitHub's account switcher and never signs out `shpdev-cto`. It confirms its own account is the active one before any GitHub write, and switches back when done. Its login is filled from 1Password without the Bot ever seeing it, so the password manager itself is never logged in on the shared computer (rule 7). GitHub is a team service under rule 6, so this login isn't a one-off under rule 8.
 
 ## Requesting, recording, and reviewing access
 
@@ -93,3 +99,5 @@ Every Bot on the account shares one cloud computer. Browser logins, files, and t
 |---|---|---|
 | 2026-09-24 | First draft | Pending CTO and founder |
 | 2026-09-24 | CTO review: the founder or the CTO reviews documentation pull requests from a shared identity | Pending CTO and founder |
+| 2026-09-24 | Current state records the CTO's account, the Code Reviewer's account `shpdev-reviewer` as set up, and the founder's personal account, and how a Bot's account shares the browser profile (factual). Process change: the Code Reviewer's approval is a GitHub review from `shpdev-reviewer` instead of a comment | Pending CTO and founder |
+| 2026-09-24 | Identity model decided (#6): three GitHub identities (founder, CTO, Code Reviewer); the CTO opens every Cloud Agent pull request; the Code Reviewer is the required non-author reviewer | CTO and founder, 2026-09-24 |
