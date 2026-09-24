@@ -18,11 +18,9 @@ graph TD
     SM --> BE["Backend Engineer"]
     SM --> QA["QA Engineer"]
     SM --> CR["Code Reviewer"]
-    classDef planned stroke-dasharray: 5 5;
-    class FE,BE planned;
 ```
 
-The CTO, Product Manager, UX/UI Designer, Software Architect, Scrum Master, Cloud Engineer, Code Reviewer, and QA Engineer are active. The Frontend and Backend Engineers (dashed) are planned and will be created only when the founder asks for them.
+All roles are active: the CTO, Product Manager, UX/UI Designer, Software Architect, Scrum Master, Cloud Engineer, Frontend Engineer, Backend Engineer, Code Reviewer, and QA Engineer.
 
 Engineers report to the Scrum Master for assignments and delivery. They take technical direction from the Architect and product intent from the Product Manager.
 
@@ -39,9 +37,10 @@ Engineers report to the Scrum Master for assignments and delivery. They take tec
 | <img src="assets/team/cloud-engineer.png" alt="Cloud Engineer" width="80"> | Cloud Engineer (CE) | Infrastructure on AWS and Cloudflare, deployment and release automation, GitHub Actions, infrastructure costs, cloud account cleanup, monitoring, backups, and recovery. Reports to the Scrum Master and consults the Architect on infrastructure design. |
 | <img src="assets/team/code-reviewer.png" alt="Code Reviewer" width="80"> | Code Reviewer (CR) | Independent review of every pull request for correctness, security, reliability, and maintainability. Gives the final merge approval once QA and the required checks pass. Reports to the Scrum Master. |
 | <img src="assets/team/qa.png" alt="QA Engineer" width="80"> | Quality Assurance Engineer (QA) | Risk-based test plans, independent verification of each pull request, defect reports, and a Pass, Fail, or Blocked verdict with evidence. Reports to the Scrum Master. |
-| | Engineers (planned) | Implementation, estimates, tests, and technical verification. The planned roles are Frontend and Backend. |
+| <img src="assets/team/frontend-engineer.png" alt="Frontend Engineer" width="80"> | Frontend Engineer (FE) | Accessible, responsive interfaces that faithfully implement the approved design, with every loading, empty, error, and permission state. Reports to the Scrum Master. |
+| <img src="assets/team/backend-engineer.png" alt="Backend Engineer" width="80"> | Backend Engineer (BE) | Secure, reliable APIs, business logic, and data services, with server-side authorization, safe migrations, and API contracts agreed with the Frontend Engineer. Reports to the Scrum Master. |
 
-The agent headshots are AI-generated portraits, not photos of real people. Planned roles get a portrait when they're created.
+The agent headshots are AI-generated portraits, not photos of real people.
 
 No agent does another role's work. The Scrum Master doesn't review code, invent estimates, or authorize releases. Product acceptance doesn't replace testing, security review, or release approval.
 
