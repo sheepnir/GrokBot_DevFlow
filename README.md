@@ -10,7 +10,7 @@ Status: **Approved process v1.1**, effective September 24, 2026. The team is bei
 
 The team runs on one Cursor Ultra subscription, so the process is arranged around where tokens are spent. Three choices do most of the work:
 
-- **Bots coordinate, Cloud Agents produce.** Each role is a Grok Bot that keeps its identity, memory, and place in the team. Anything that needs a checkout, a terminal, or more than a few lines of change goes to a Cursor Cloud Agent. That keeps the Grok Bot weekly allowance for coordination and puts the heavy work on the Cursor Agent allowance.
+- **Bots coordinate, Cloud Agents produce.** Each role is a Grok Bot that keeps its identity, memory, and place in the team. Anything that needs a checkout, a terminal, or more than a few lines of change goes to a Cursor Cloud Agent, on the Cursor Models pool or the third-party pool, per SOP-001. That keeps Grok Bot weekly usage for coordination and puts the heavy work on the two Cloud Agent pools.
 - **Volume on cheap models, leverage on frontier models.** Engineers implement on Composer, in the Cursor Models pool, which is the cheapest place to spend a lot of tokens. The product roles use third-party frontier models, because every later step depends on the quality of their documents.
 - **Different model families check each other.** The Code Reviewer and QA never run on the family that wrote the change, or on each other's. Different families have different blind spots, so the checks catch more than the implementation cost.
 
@@ -130,27 +130,32 @@ flowchart LR
         S2["2. Requirements"]
         S3["3. Design"]
         S4["4. Technical design"]
-        S8["8. Review and verification"]
     end
     subgraph Cursor["Cloud Agents on the Cursor Models pool"]
         direction TB
         S7["7. Build"]
+    end
+    subgraph Checks["Cloud Agents on a family that didn't write the change"]
+        direction TB
+        S8["8. Review and verification"]
     end
     S1 --> S2 --> S3 --> S4 --> S5 --> S6 --> S7 --> S8 --> S9 --> S10
     S8 -. blocking findings .-> S7
     classDef bots fill:#e5e7eb,stroke:#374151,color:#111827
     classDef frontier fill:#dbeafe,stroke:#1d4ed8,color:#111827
     classDef cursor fill:#dcfce7,stroke:#15803d,color:#111827
+    classDef checks fill:#ffedd5,stroke:#c2410c,color:#111827
     class S1,S5,S6,S9,S10 bots
-    class S2,S3,S4,S8 frontier
+    class S2,S3,S4 frontier
     class S7 cursor
+    class S8 checks
 ```
 
 ## Sprint workflow
 
 Sprints last **one week**. Planning happens on day 1, there's a check on day 3, and closure and the retrospective happen on the last day. Each sprint has its own GitHub Project, which is archived when the sprint closes and never deleted.
 
-Every issue moves through these states. Review and QA happen together in one state, and a merge is a step before done, not done itself.
+Every issue moves through these states. Review and QA happen together in one state, per SM-003. Verifying is the state after the merge, where the Scrum Master checks the definition of done, because a merge alone doesn't make an issue done.
 
 ```mermaid
 stateDiagram-v2
@@ -161,9 +166,9 @@ stateDiagram-v2
     Ready --> InProgress: pulled into sprint
     InProgress --> InReview: PR opened
     InReview --> InProgress: changes or QA fail
-    InReview --> Merged: QA pass, CI green, reviewer approves
-    Merged --> Done: definition of done met
-    Merged --> InProgress: gap found
+    InReview --> Verifying: QA pass, CI green, approved, merged
+    Verifying --> Done: definition of done met
+    Verifying --> InProgress: gap found
     InProgress --> Blocked: blocked
     Blocked --> InProgress: cleared
     Done --> [*]
