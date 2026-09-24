@@ -108,8 +108,8 @@ Repositories are treated as public. No credentials, secrets, private customer da
 4. **Technical design.** The Architect writes a TDD that is linked to the BRD's requirement IDs.
 5. **Refinement.** Approved features are broken into stories, and Engineering estimates them.
 6. **Sprint planning.** The Scrum Master proposes a sprint goal and pulls in the highest-priority stories that meet the definition of ready, within the team's capacity.
-7. **Build.** Engineers implement on feature branches and open pull requests with linked requirements and their own test evidence.
-8. **Review and verification.** The Code Reviewer and QA work on each pull request in parallel. QA publishes a Pass, Fail, or Blocked verdict with evidence. Once QA passes, CI is green, and blocking findings are fixed, the Code Reviewer gives final merge approval for that exact commit, and the implementing engineer merges. The PM, Designer, and Architect record their acceptance where it applies, and the Architect security-checks sensitive changes.
+7. **Build.** Engineers implement on feature branches through Cloud Agents. The CTO opens each pull request, with linked requirements, the engineer's test evidence, and a `Role` line naming the engineer, per SOP-003.
+8. **Review and verification.** The Code Reviewer and QA work on each pull request in parallel. QA publishes a Pass, Fail, or Blocked verdict with evidence. Once QA passes, CI is green, and blocking findings are fixed, the Code Reviewer gives final merge approval for that exact commit, and the founder or the CTO merges. The PM, Designer, and Architect record their acceptance where it applies, and the Architect security-checks sensitive changes.
 9. **Release.** The CTO authorizes routine releases. The founder approves high-impact ones.
 10. **Close and learn.** The Scrum Master reconciles every issue, records the outcome, and runs a retrospective.
 
@@ -261,6 +261,7 @@ The [SOP folder](SOP/README.md) holds the procedures Bots follow to carry out th
 | SM-011 | SOP-008: Sprint ceremonies and records | Pending CTO and founder |
 | SM-012 | SOP-009: Escalation and urgent risks | Pending CTO and founder |
 | SM-013 | SOP-010: Releases | Pending CTO and founder |
+| SM-014 | On-demand spending disabled, with a monthly Scrum Master spending check (#4); Bot identity model: three GitHub identities and the CTO opens every Cloud Agent pull request (#6); the Code Reviewer approves with a GitHub review from `shpdev-reviewer` (SOP-007 rule 23) | CTO, 2026-09-24; founder, 2026-09-24 |
 
 ## References
 
