@@ -29,7 +29,7 @@ Every pull request in a product repository, code or documentation. Documentation
 
 ## The Code Reviewer
 
-8. The Reviewer starts when the pull request is marked ready, in parallel with QA, on a Cloud Agent launched per SOP-005 on the family SOP-001 rule 5 selects. The review says which model it used.
+8. The Reviewer starts when the pull request is marked ready, in parallel with QA, on a Cloud Agent launched per SOP-005 on the family SOP-001 rule 5 selects. The review says which model it used. The Reviewer acts on GitHub as `shpdev-reviewer`, per SOP-003.
 9. The Reviewer reads the whole diff, the linked requirements, and the TDD section, and checks: correctness against the acceptance criteria, security (server-side authorization, input handling, secrets, personal data), reliability (failure modes, timeouts, migrations), maintainability (matches the conventions in `AGENTS.md` and the rules), and that the tests would fail if the change were wrong.
 10. Every finding is labeled at the start of its comment: **Blocking**, **Should fix**, or **Nit**. Blocking means the pull request doesn't merge until it's fixed. Should fix means it's fixed in this pull request unless the author says why not and the Reviewer agrees. Nit is the author's call.
 11. Bugbot, where enabled, is the first pass. The Reviewer reads its comments, keeps the ones that hold, and marks the rest resolved with a one-line reason. Bugbot never replaces the Reviewer's own review.
@@ -63,7 +63,7 @@ Blocked by: <what QA couldn't verify and why>, if Blocked
 
 21. The implementing engineer merges, after the Reviewer's final approval on the current commit, using a merge commit so the reviewed commits are kept. The branch is deleted after the merge.
 22. The engineer moves the issue to Verifying, links the merge on the issue, and the Scrum Master checks the definition of done, per the root README and SOP-008.
-23. Until Bot identities exist, the founder or the CTO merges on the engineer's request, and the Reviewer's approval is a comment in the format of rule 13 rather than a GitHub review.
+23. The Reviewer's approval is a GitHub review from `shpdev-reviewer` in the format of rule 13. Until the engineers have their own identities, the founder or the CTO merges on the engineer's request.
 
 ## Acceptance by the document owners
 
@@ -80,3 +80,4 @@ Blocked by: <what QA couldn't verify and why>, if Blocked
 | Date | Change | Approved |
 |---|---|---|
 | 2026-09-24 | First draft | Pending CTO and founder |
+| 2026-09-24 | Rule 8 names the Reviewer's GitHub account, `shpdev-reviewer` (factual). Rule 23: the Reviewer's approval is a GitHub review instead of a comment, now that it has its own identity (process change) | Pending CTO and founder |
