@@ -151,6 +151,14 @@ Silence is never treated as approval, and neither is a recommendation from a ret
 - Significant decisions are written down: product decisions by the PM and architecture decisions by the Architect.
 - Agents create no external accounts or credentials, and change no infrastructure, without explicit approval.
 
+## Standard operating procedures
+
+The [SOP folder](SOP/README.md) holds the procedures Bots follow to carry out this process. Each SOP is a draft until the index shows it as approved with a date. Every new product repository carries the folder with it.
+
+| ID | Title | Status |
+|---|---|---|
+| [SOP-001](SOP/SOP-001-token-efficiency.md) | Token efficiency: Bots coordinate, Cloud Agents produce, and each role has a model tier, with different model families for authoring, review, and verification | Draft |
+
 ## Process change log
 
 | ID | Change | Approved |
@@ -158,6 +166,7 @@ Silence is never treated as approval, and neither is a recommendation from a ret
 | SM-001 | Base process: workflow states, definitions of ready and done, approval gates, story points, one-week sprints, release authority | CTO and founder, 2026-09-24 |
 | SM-002 | Collaboration before escalation, and the planned engineering organization under the Scrum Master | CTO and founder, 2026-09-24 |
 | SM-003 | Pull request workflow: parallel code review and QA, with final merge approval from the Code Reviewer | CTO and founder, 2026-09-24 |
+| SM-004 | Standard operating procedures folder, and SOP-001 on token efficiency and model assignment | Pending CTO and founder |
 
 ## References
 
