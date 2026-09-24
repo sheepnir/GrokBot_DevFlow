@@ -15,6 +15,7 @@ Every new product repository starts from this repository, so it carries this fol
 | [SOP-005](SOP-005-cloud-agent-launch.md) | Cloud Agent launch | Software Architect | Draft | Pending CTO and founder |
 | [SOP-006](SOP-006-document-templates.md) | Document templates | Product Manager, with the Software Architect | Draft | Pending CTO and founder |
 | [SOP-007](SOP-007-pull-request-review-and-qa.md) | Pull request, review, and QA | Code Reviewer, with the QA Engineer | Draft | Pending CTO and founder |
+| [SOP-008](SOP-008-sprint-ceremonies-and-records.md) | Sprint ceremonies and records | Scrum Master | Draft | Pending CTO and founder |
 
 ## Conventions
 
