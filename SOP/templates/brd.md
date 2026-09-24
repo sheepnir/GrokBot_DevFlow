@@ -1,3 +1,5 @@
+<!-- Required for Large work. For Standard work, don't start a new BRD: add only the requirements the issue implements to the existing one. Small work needs none. See SOP-006. -->
+
 # BRD: <product or feature name>
 
 | | |

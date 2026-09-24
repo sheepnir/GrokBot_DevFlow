@@ -21,10 +21,10 @@ This SOP covers the content of profiles, skills, and routines, the templates for
 
 | Place | Holds | Never holds | Changes |
 |---|---|---|---|
-| Profile | Rules that are true every week: the role, what it owns, who it reports to, its surfaces, what it never does, and its approval boundaries | Sprint goals, current issues, anything with a date, credentials | Only through a pull request to this repository or the product repository, per the approval gates |
+| Profile | Rules that are true every week: the role, what it owns, who it reports to, its surfaces, the decisions it doesn't make, and its approval boundaries | Milestone goals, current issues, anything with a date, credentials | Only through a pull request to this repository or the product repository, per the approval gates |
 | Skills | A tested, repeatable procedure with inputs, steps, output, validation, and approval boundaries | Judgment calls, one-off tasks, credentials | Edited like code: proposed, tested manually, then saved |
-| Routines | A skill or task assigned to one Bot on a schedule or event trigger, with where to read inputs and where to write outputs | Anything that needs a decision the routine can't make | Created by the owning role, confirmed at every retrospective |
-| Conversation and issues | This sprint's context: the goal, the issue in progress, blockers, decisions in flight | Standing rules, which would have to be repeated every sprint | Every day |
+| Routines | A skill or task assigned to one Bot on a schedule or event trigger, with where to read inputs and where to write outputs | Anything that needs a decision the routine can't make | Created by the owning role, confirmed each month by the measures routine |
+| Conversation and issues | The context of current work: the issue in progress, its progress notes, blockers, decisions in flight | Standing rules, which would have to be repeated for every issue | Every day |
 | Files on the shared computer | Working files a task needs, in a folder named for the role | Secrets, personal data, anything the whole team may not see | As the work requires |
 
 Grok Bot keeps a Bot's memory, files, browser sessions, and preferences across sessions, and every Bot on the account shares one cloud computer. That's why standing rules belong in the profile and not in memory: memory is a summary the Bot writes for itself and can drift, while the profile is reviewed text.
@@ -53,7 +53,7 @@ The bullets from the "Owns" column of the root README's roles table, verbatim.
 Numbered. Only rules that hold every week. Each one is something the Bot can check before it acts.
 
 ## Never
-Numbered. The things this Bot doesn't do, starting with the other roles' work it doesn't take over.
+Numbered. The things this Bot doesn't do, starting with the decisions that belong to other roles. Doing another role's work on an issue it owns is allowed. Making that role's decision isn't.
 
 ## Approval boundaries
 What this Bot does only after an explicit approval, and from whom. Silence is never approval.
@@ -67,28 +67,27 @@ The start rule is not optional. A profile without it can be read by the Bot as a
 ## Skill conventions
 
 1. A skill is one procedure with one output. A skill that produces two kinds of output is two skills.
-2. A skill is named `<role>-<verb>-<object>`, for example `sm-open-sprint-record` or `qa-write-verdict`.
+2. A skill is named `<role>-<verb>-<object>`, for example `sm-append-measures-row` or `qa-write-verdict`.
 3. A skill isn't saved until the procedure has been run by hand once and produced the right output. The demonstration can be recorded, and Grok Bot can draft the skill from it, but the draft is edited before it's saved.
 4. Every skill states its inputs, its steps, its output and where it goes, how to check the output is right, and the point at which it stops for approval, if any.
-5. Skills are shared across every Bot on the account. A skill therefore says which role runs it, and other roles don't run it without that role's agreement.
+5. Skills are shared across every Bot on the account. A skill says which role maintains it. Another role may run it for an issue it owns. If the skill ends in a decision, such as an acceptance or a verdict, the decision still belongs to the maintaining role.
 6. The text of every saved skill is also kept in the product repository under `/docs/SM/skills/<skill-name>.md`, so it's reviewable in a pull request and survives the Bot. The saved skill and the file say the same thing. When they differ, the file wins and the skill is updated.
 
 ## Routine conventions
 
 7. A routine names its Bot, its trigger (a schedule with a time zone, or an event), where it reads inputs, where it writes outputs, its approval boundary, and what it does when an input is missing.
 8. Each Bot keeps its routines to the ones it needs. Grok Bot allows up to 50 per Bot and keeps the 20 most recent runs, so a routine that matters more than that writes its own record to the repository.
-9. Grok Bot may pause a routine after prolonged inactivity. The Scrum Master confirms at every retrospective which routines are still needed, and the owning role removes the rest.
+9. Grok Bot may pause a routine after prolonged inactivity. The Scrum Master's monthly measures routine confirms which routines are still needed, and the owning role removes the rest.
 10. A routine never sends, publishes, deletes, purchases, or changes production on its own. Those actions stop at the approval boundary.
 
 ### Standing routines
 
-These exist from the first sprint. Other routines are added by the owning role as needed.
+These exist from the day the first product repository is set up. Other routines are added by the owning role as needed.
 
 | Bot | Routine | Trigger | Output |
 |---|---|---|---|
-| Scrum Master | Sprint planning | Day 1 of the sprint | Sprint goal, GitHub Project, sprint record opened, per SOP-008 |
-| Scrum Master | Sprint check | Day 3 of the sprint | Check section of the sprint record, with usage numbers, per SOP-001 rule 19 |
-| Scrum Master | Sprint close | Last day of the sprint | Every issue reconciled, retrospective run, GitHub Project archived, per SOP-008 |
+| Scrum Master | Flow check | Every working day | Stalls, failed agents, red CI, unstarted reviews, and long blocks flagged on their issues, per SOP-011 rule 14. Nothing is posted when nothing is wrong. |
+| Scrum Master | Measures | First working day of each month | One row in `/docs/SM/measures.md` with the four measures and usage, per SOP-008 and SOP-001 rule 19, plus the routine check from rule 9 |
 | Cloud Engineer | Infrastructure check | Weekly | Costs, monitoring status, and backup status recorded in `/docs/architect/quality-backlog.md` |
 
 ## Creating, changing, sharing, and retiring a Bot
@@ -101,8 +100,8 @@ These exist from the first sprint. Other routines are added by the owning role a
 
 ## Escalation
 
-- A Bot that finds a standing rule in its conversation, or sprint context in its profile, tells the Scrum Master, who moves it to the right place.
-- A Bot asked to run another role's skill declines and points to the owning role.
+- A Bot that finds a standing rule in its conversation, or current work context in its profile, tells the Scrum Master, who moves it to the right place.
+- A Bot unsure whether running another role's skill would make that role's decision asks the maintaining role first.
 - Two Bots whose skills produce conflicting outputs raise it to the Scrum Master, who involves the Architect for technical procedures and the PM for product ones.
 
 ## Change history
@@ -110,3 +109,4 @@ These exist from the first sprint. Other routines are added by the owning role a
 | Date | Change | Approved |
 |---|---|---|
 | 2026-09-24 | First draft | Pending CTO and founder |
+| 2026-09-24 | SM-016: the profile's Never section covers other roles' decisions, not their work; skills may be run by an issue's owner; sprint routines replaced by the daily flow check and the monthly measures routine | Pending CTO and founder |

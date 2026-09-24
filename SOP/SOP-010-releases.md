@@ -1,79 +1,75 @@
 # SOP-010: Releases
 
-Routine and high-impact releases: the criteria, the checklist, and who authorizes.
+Routine and high-impact releases: how unfinished work is kept out, who authorizes, and what's recorded.
 
 | | |
 |---|---|
 | Owner | CTO, with the Cloud Engineer |
 | Status | See the [SOP index](README.md). |
-| Applies to | The CTO, the Cloud Engineer, the Scrum Master, the PM, and the founder |
-| Related | [Root README](../README.md) step 9 and the approval gates, [SOP-004](SOP-004-new-product-repository.md) items 15 to 19, [SOP-009](SOP-009-escalation-and-urgent-risks.md) |
+| Applies to | The CTO, the Cloud Engineer, the Scrum Master, the PM, the Architect, and the founder |
+| Related | [Root README](../README.md) "Controls" and the approval gates, [SOP-004](SOP-004-new-product-repository.md) items 16 to 22, [SOP-009](SOP-009-escalation-and-urgent-risks.md), [SOP-011](SOP-011-autonomous-execution.md) permissions |
 
 ## Purpose
 
-The root README gives the CTO authority over routine releases and the founder over the first production launch and any release that adds ongoing cost, external commitments, or material security or privacy risk. This SOP says how a release is classified, what's checked before it goes, who does what, and what's recorded.
+The root README gives the CTO authority over routine releases, and the founder authority over the first production launch and any release that adds ongoing cost, external commitments, or material security or privacy risk. This SOP says how a release is classified, how unfinished work that has already merged is kept out of it, what's checked, and what's recorded.
 
 ## Scope
 
-Every deployment to production. Deployments to test environments are the Cloud Engineer's routine work and need no release record.
+Every deployment to production, and every change to a feature flag in production. Deployments to test environments are routine work under SOP-011 and need no release record.
+
+## Keeping unfinished work out
+
+The team uses **feature flags**. It doesn't keep a list of excluded issues.
+
+1. `main` is always releasable. A release is `main` at one commit, and everything merged by then ships in it.
+2. Work whose issue isn't Done merges only behind a feature flag that's off in production. The flag is named in the pull request template and on the issue.
+3. A change that can't sit behind a flag merges only when its issue can be Done. That includes a migration that changes or removes existing data, an infrastructure change, and a dependency upgrade. Its acceptance happens in the test environment before the merge. Additive migrations are written so the old code keeps working, and may merge ahead.
+4. Turning a flag on in production is a release decision, recorded in the release like a code change. Turning one off to contain harm is an emergency action under SOP-011.
+5. A flag is removed within 30 days of its issue being Done, by a Small follow-up issue that the original owner opens when closing.
+
+Until the flag mechanism (SOP-004 item 19) exists, rule 2 can't be met. Unfinished work stays on its branch and doesn't merge.
 
 ## Classification
 
 | Class | Definition | Authorizes |
 |---|---|---|
-| Routine | Every issue in it is Done, it changes no cost, commitment, or risk posture, and it isn't the first production launch | CTO |
-| High-impact | The first production launch, or a release that does any of: adds ongoing cost, makes an external commitment such as a public API, a contract, or a customer-visible promise, changes how personal data is handled, or changes authentication or authorization in a way the Architect calls material | Founder, after the CTO recommends it |
+| Routine | Everything it turns on is Done, it changes no cost, commitment, or risk posture, and it isn't the first production launch | CTO |
+| High-impact | The first production launch, or a release that turns on anything with a `risk:external` flag, adds ongoing cost, changes how personal data is handled, or changes authentication or authorization in a way the Architect calls material | Founder, after the CTO recommends it |
 
-The Scrum Master proposes the class on the release record. The CTO confirms it. If in doubt, it's high-impact.
+The Scrum Master proposes the class in the release draft. The CTO confirms it. If in doubt, it's high-impact.
 
-## Release readiness
+## The release record
 
-The Scrum Master assembles the release record from the template below and checks every line. The Cloud Engineer confirms the operational lines. Nothing is released with an unchecked line.
+The release record is the GitHub release for the tag. It isn't a separate file, and it links to evidence instead of restating it. The Scrum Master drafts it and the Cloud Engineer completes the deployment lines.
 
 ```markdown
-# Release <version or date>
-
 Class: Routine | High-impact
-Sprint: SPRINT-NNN
-Issues: <links>, all Done
+Commit: <sha>, CI: <link to the green run on this commit>
+Flags turned on in production: <flag, issue link>, or none
+Issues shipped complete: <links>
 
-## Readiness
-- [ ] Every issue is Done by the definition of done, with evidence linked
-- [ ] CI is green on the exact commit being released
-- [ ] Every change touching authentication, authorization, personal data, or secrets has the Architect's security check recorded
-- [ ] Product, design, and technical acceptance are recorded where they apply
-- [ ] Migrations have been run in the test environment and are reversible, or the rollback plan says why not
-- [ ] Monitoring covers the changed behavior, and alerts reach the CTO and the founder
-- [ ] The rollback procedure in /docs/architect/operations.md applies to this release, or has been updated
-- [ ] Documentation is updated where the change requires it
-- [ ] Cost delta: none, or the amount per month and the founder's approval link
-- [ ] External commitments: none, or listed with the founder's approval link
+Needs attention
+- Risk-flagged issues: <links>, each with its security review, or none
+- Migrations: <none | reversible | not reversible, with the rollback plan link>
+- Cost delta: <none | amount per month, with the founder's approval link>
+- External commitments: <none | listed, with the founder's approval link>
 
-## Authorization
-| Role | Decision | Date |
-|---|---|---|
-| CTO | | |
-| Founder (high-impact only) | | |
-
-## Deployment
-Deployed by: <role>, at <UTC time>, commit <sha>
-Verification after deploy: <what was checked and the result>
-
-## Outcome
-Held | Rolled back, with the reason and the follow-up issues
+Authorization: <link to the production environment approval>, or, until C7 exists, CTO <date> and founder <date> if high-impact
+Deployed: <UTC time>, by the pipeline run <link>
+Verified after deploy: <what was checked, and the result>
+Outcome: Held | Rolled back, with the reason and the follow-up issues
 ```
+
+Definition of done evidence, CI results, and acceptance are already on the issues and pull requests. The record links to them. It doesn't re-check them line by line.
 
 ## Rules
 
-1. Only Done issues ship. An issue that isn't Done is left out of the release, not hurried.
-2. A release is authorized in writing on the release record, with the date. Silence isn't authorization, and a release isn't authorized by being scheduled.
-3. The Cloud Engineer deploys through the release automation from SOP-004, never by hand, and never from a machine other than the pipeline. A deployment the pipeline can't do is a change to the pipeline first.
-4. Production changes are made under the Cloud Engineer's per-change approval from SOP-003. The approval is the CTO's authorization on the release record.
-5. After deployment, the Cloud Engineer verifies the changed behavior in production and records the result. QA verifies the user-facing changes where a test in production is safe.
-6. A release is rolled back, without waiting for a diagnosis, when any of: an alert fires on the changed behavior, a user-facing error rate rises above the threshold in `operations.md`, data is found to be wrong, or a security or privacy problem is found. The rollback is recorded on the release record, and an `incident` issue is opened per SOP-009 if the cause is a risk.
-7. Release notes for user-facing changes are written by the PM in `/docs/product/releases.md`, from the issues, before the release is authorized.
-8. Release records live in `/docs/SM/releases/`, one file per release, and are linked from the sprint record.
-9. Between the first production launch and the founder's say-so, every release is high-impact.
+6. A release is authorized before it deploys. Once C7 exists, the authorization is the approval on the `production` environment, by the CTO, or the founder for a high-impact release, and the pipeline can't deploy without it. Until then, it's written in the release draft with the date, and the Cloud Engineer doesn't deploy without it. Silence isn't authorization, and a release isn't authorized by being scheduled.
+7. The Cloud Engineer deploys through the pipeline from SOP-004, never by hand, and never from a machine other than the pipeline. The pipeline deploys the artifact CI built for the release commit. A deployment the pipeline can't do is a change to the pipeline first.
+8. After deployment, the Cloud Engineer verifies the changed behavior in production and records the result. QA verifies user-facing changes where a test in production is safe.
+9. A release is rolled back, without waiting for a diagnosis, when any of these happens: an alert fires on the changed behavior, a user-facing error rate rises above the threshold in `/docs/architect/operations.md`, data is found to be wrong, or a security or privacy problem is found. If a flag caused it, turning the flag off comes first. The rollback is an emergency action under SOP-011, and it's recorded on the release. An `incident` issue is opened per SOP-009 if the cause is a risk.
+10. Release notes for user-facing changes are written by the PM in `/docs/product/releases.md`, from the issues, before the release is authorized.
+11. From the first production launch until the founder says otherwise, every release is high-impact.
 
 ## Escalation
 
@@ -85,3 +81,4 @@ Held | Rolled back, with the reason and the follow-up issues
 | Date | Change | Approved |
 |---|---|---|
 | 2026-09-24 | First draft | Pending CTO and founder |
+| 2026-09-24 | SM-016: feature flags keep unfinished work out of a release instead of excluding issues, the GitHub release is the release record and links evidence instead of re-checking it, and authorization moves to the `production` environment approval once C7 exists | Pending CTO and founder |

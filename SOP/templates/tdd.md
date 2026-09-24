@@ -1,3 +1,5 @@
+<!-- Required for Large work. For Standard work, write a TDD section or a decision record only if the approach isn't obvious. Small work needs none. See SOP-006. -->
+
 # TDD-NNN: <feature name>
 
 | | |
@@ -31,7 +33,7 @@ One subsection per requirement or group of requirements. Each starts with the ID
 
 ## Security
 
-Authentication, authorization, personal data, and secrets touched by this design. Whether the Architect's security check is required for the resulting changes.
+Authentication, authorization, personal data, and secrets touched by this design, and the risk flags the resulting issues carry.
 
 ## Reliability and performance
 
@@ -43,7 +45,7 @@ What the engineers test, what QA verifies, and any test data or environment this
 
 ## Rollout
 
-Feature flags, migrations order, and rollback.
+The feature flag that keeps unfinished work off in production, the order of migrations and whether each one is additive, and the rollback. See SOP-010.
 
 ## Decisions
 
