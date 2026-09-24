@@ -12,6 +12,7 @@ Every new product repository starts from this repository, so it carries this fol
 | [SOP-002](SOP-002-bot-profiles-skills-and-routines.md) | Bot profiles, skills, and routines | CTO | Draft | Pending CTO and founder |
 | [SOP-003](SOP-003-bot-identities-and-access.md) | Bot identities and access | CTO | Draft | Pending CTO and founder |
 | [SOP-004](SOP-004-new-product-repository.md) | New product repository | Cloud Engineer, with the CTO | Draft | Pending CTO and founder |
+| [SOP-005](SOP-005-cloud-agent-launch.md) | Cloud Agent launch | Software Architect | Draft | Pending CTO and founder |
 
 ## Conventions
 
