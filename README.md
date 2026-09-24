@@ -254,6 +254,7 @@ The [SOP folder](SOP/README.md) holds the procedures Bots follow to carry out th
 | SM-004 | Standard operating procedures folder, SOP-001 on token efficiency and model assignment, and the pull request template with a `Model` section | CTO and founder, 2026-09-24 |
 | SM-005 | SOP-002: Bot profiles, skills, and routines | Pending CTO and founder |
 | SM-006 | SOP-003: Bot identities and access | Pending CTO and founder |
+| SM-007 | SOP-004: New product repository | Pending CTO and founder |
 
 ## References
 
