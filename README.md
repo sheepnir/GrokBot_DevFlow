@@ -19,10 +19,10 @@ graph TD
     SM --> QA["QA Engineer"]
     SM --> CR["Code Reviewer"]
     classDef planned stroke-dasharray: 5 5;
-    class FE,BE,QA,CR planned;
+    class FE,BE planned;
 ```
 
-The CTO, Product Manager, UX/UI Designer, Software Architect, Scrum Master, and Cloud Engineer are active. The remaining engineering roles (dashed) are planned and will be created only when the founder asks for them.
+The CTO, Product Manager, UX/UI Designer, Software Architect, Scrum Master, Cloud Engineer, Code Reviewer, and QA Engineer are active. The Frontend and Backend Engineers (dashed) are planned and will be created only when the founder asks for them.
 
 Engineers report to the Scrum Master for assignments and delivery. They take technical direction from the Architect and product intent from the Product Manager.
 
@@ -37,7 +37,9 @@ Engineers report to the Scrum Master for assignments and delivery. They take tec
 | <img src="assets/team/architect.png" alt="Software Architect" width="80"> | Software Architect | Technical architecture, Technical Design Documents (TDDs), architecture decision records, the security, performance, and reliability backlog, and security checks on sensitive changes. |
 | <img src="assets/team/scrum-master.png" alt="Scrum Master" width="80"> | Scrum Master (SM) | Sprint planning and tracking, work assignment, process adherence, completion evidence, retrospectives, and release-readiness tracking. |
 | <img src="assets/team/cloud-engineer.png" alt="Cloud Engineer" width="80"> | Cloud Engineer (CE) | Infrastructure on AWS and Cloudflare, deployment and release automation, GitHub Actions, infrastructure costs, cloud account cleanup, monitoring, backups, and recovery. Reports to the Scrum Master and consults the Architect on infrastructure design. |
-| | Engineers (planned) | Implementation, estimates, tests, and technical verification. The planned roles are Frontend, Backend, QA, and Code Reviewer. |
+| <img src="assets/team/code-reviewer.png" alt="Code Reviewer" width="80"> | Code Reviewer (CR) | Independent review of every pull request for correctness, security, reliability, and maintainability. Gives the final merge approval once QA and the required checks pass. Reports to the Scrum Master. |
+| <img src="assets/team/qa.png" alt="QA Engineer" width="80"> | Quality Assurance Engineer (QA) | Risk-based test plans, independent verification of each pull request, defect reports, and a Pass, Fail, or Blocked verdict with evidence. Reports to the Scrum Master. |
+| | Engineers (planned) | Implementation, estimates, tests, and technical verification. The planned roles are Frontend and Backend. |
 
 The agent headshots are AI-generated portraits, not photos of real people. Planned roles get a portrait when they're created.
 
@@ -64,8 +66,8 @@ Repositories are treated as public. No credentials, secrets, private customer da
 4. **Technical design.** The Architect writes a TDD that is linked to the BRD's requirement IDs.
 5. **Refinement.** Approved features are broken into stories, and Engineering estimates them.
 6. **Sprint planning.** The Scrum Master proposes a sprint goal and pulls in the highest-priority stories that meet the definition of ready, within the team's capacity.
-7. **Build and review.** Engineers implement on feature branches and open pull requests. Each change is reviewed by someone other than its author.
-8. **Verification and acceptance.** QA and CI evidence is linked, and the PM, Designer, and Architect record their acceptance where it applies.
+7. **Build.** Engineers implement on feature branches and open pull requests with linked requirements and their own test evidence.
+8. **Review and verification.** The Code Reviewer and QA work on each pull request in parallel. QA publishes a Pass, Fail, or Blocked verdict with evidence. Once QA passes, CI is green, and blocking findings are fixed, the Code Reviewer gives final merge approval for that exact commit, and the implementing engineer merges. The PM, Designer, and Architect record their acceptance where it applies, and the Architect security-checks sensitive changes.
 9. **Release.** The CTO authorizes routine releases. The founder approves high-impact ones.
 10. **Close and learn.** The Scrum Master reconciles every issue, records the outcome, and runs a retrospective.
 
@@ -154,3 +156,4 @@ Silence is never treated as approval, and neither is a recommendation from a ret
 |---|---|---|
 | SM-001 | Base process: workflow states, definitions of ready and done, approval gates, story points, one-week sprints, release authority | CTO and founder, 2026-09-24 |
 | SM-002 | Collaboration before escalation, and the planned engineering organization under the Scrum Master | CTO and founder, 2026-09-24 |
+| SM-003 | Pull request workflow: parallel code review and QA, with final merge approval from the Code Reviewer | CTO and founder, 2026-09-24 |
