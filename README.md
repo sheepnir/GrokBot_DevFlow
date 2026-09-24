@@ -261,7 +261,8 @@ The [SOP folder](SOP/README.md) holds the procedures Bots follow to carry out th
 | SM-011 | SOP-008: Sprint ceremonies and records | Pending CTO and founder |
 | SM-012 | SOP-009: Escalation and urgent risks | Pending CTO and founder |
 | SM-013 | SOP-010: Releases | Pending CTO and founder |
-| SM-014 | On-demand spending disabled, with a monthly Scrum Master spending check (#4); Bot identity model: three GitHub identities and the CTO opens every Cloud Agent pull request (#6); the Code Reviewer approves with a GitHub review from `shpdev-reviewer` (SOP-007 rule 23) | CTO, 2026-09-24; founder, 2026-09-24 |
+| SM-014 | On-demand spending disabled, with a monthly Scrum Master spending check (#4); Bot identity model: three GitHub identities, and the CTO opens every Cloud Agent pull request (#6) | CTO and founder, 2026-09-24 (founder decisions given to the CTO in writing) |
+| SM-015 | The Code Reviewer approves with a GitHub review from `shpdev-reviewer` (SOP-007 rule 23) | CTO and founder, 2026-09-24 |
 
 ## References
 
