@@ -29,7 +29,7 @@ This SOP covers GitHub identities, cloud identities, logins on the shared cloud 
 | Other Bots' GitHub accounts | None, by design. The PM, Designer, Architect, Scrum Master, Frontend, Backend, and Cloud Engineers, and QA work through the CTO. | #6 |
 | Founder's personal GitHub account | `sheepnir`. Never used by a Bot. | |
 | Pull request creation on `main` | Restricted by ruleset to the founder and the CTO. | #6 |
-| Scrum Master read access to Cursor usage | Not set up. The founder posts the numbers. | #5 |
+| Scrum Master read access to Cursor usage | Set up on 2026-09-24. The Scrum Master reads usage in Cursor itself. | #5 |
 | Cursor on-demand monthly limit | Not yet set | #4 |
 
 The SOP index records that Bot identities have been in place since 2026-09-24 (#6), so SOP-001 rules 1 through 6 are in full effect. Where those rules say a Bot launches a Cloud Agent or opens a pull request, the Bot requests it and the CTO does it.
@@ -50,7 +50,7 @@ The decided model satisfies all of these, and any future change to it must too:
 |---|---|---|---|
 | CTO | Admin on the process repository, maintain on product repositories | Read-only on billing and cost views | Team admin, if a team plan is used |
 | Product Manager, UX/UI Designer, Software Architect | None. Works through the CTO. CODEOWNERS names the owning role's `/docs` folder for review purposes. | None | Cloud Agents on their assigned models, launched by the CTO or the founder |
-| Scrum Master | None. Works through the CTO. | None | Read-only usage, once #5 is done |
+| Scrum Master | None. Works through the CTO. | None | Read-only usage in Cursor (#5) |
 | Frontend and Backend Engineers | None. Works through the CTO. Their Cloud Agents push feature branches only, never `main`. | None. Engineers use environments the Cloud Engineer provides. | Cloud Agents on Composer 2.5 and Grok 4.7, launched by the CTO or the founder |
 | Cloud Engineer | None. Works through the CTO. Its Cloud Agents push feature branches only. GitHub Actions secrets are set by the founder on request. | OIDC-assumed roles per environment, scoped to that environment. No long-lived access keys. Production roles need a per-change approval. | Cloud Agents on Composer 2.5 and Grok 4.7, launched by the CTO or the founder |
 | Code Reviewer | Write, so its review can approve, but no merge. Never pushes to a branch it's reviewing. | None | Cloud Agents on its ordered list |
