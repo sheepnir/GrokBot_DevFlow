@@ -103,7 +103,7 @@ This table sets the model of the Cloud Agents each role launches. It doesn't and
 | Code Reviewer | First available in order: GPT-5.6 Sol, Gemini 3.1 Pro, Claude Opus 5.5, Grok 4.7 | | See rule 5 |
 | QA Engineer | First available in order: Claude Sonnet 5, Gemini 3.8 Flash, GPT-5.6 Sol, Composer 2.5 | For changes that touch authentication, authorization, personal data, or secrets, the Frontier model of the same family | See rule 6 |
 
-Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An escalation never adds a family to the pull request, so it never takes a family away from the Reviewer or QA. A pull request carries at most two families, a role's default and its fallback, and the Reviewer and QA take one each, so four families are always enough.
+Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An escalation never adds a family to the pull request, so it never takes a family away from the Reviewer or QA. A pull request carries at most two families: a role's default and its fallback, or its default and Composer 2.5 for mechanical edits under rule 9. The Reviewer and QA take one each, so four families are always enough.
 
 ## Rules
 
@@ -123,7 +123,7 @@ Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An 
 ### Escalation and de-escalation
 
 8. An engineer whose Cloud Agent fails twice with the same root cause launches the third attempt on Grok 4.7 and notes the switch on the issue and in the pull request's `Model` section. Two failed attempts on Composer cost more than one pass on Grok.
-9. A Frontier role uses Composer 2.5 for mechanical edits: renames, formatting, moving sections, updating a table, or applying a reviewer's one-line change.
+9. A Frontier role uses Composer 2.5 for mechanical edits: renames, formatting, moving sections, updating a table, or applying a reviewer's one-line change. If the pull request already lists two families, the mechanical edit uses one of the models already listed.
 10. Estimation matters here. A story of 5 or 8 points that keeps escalating is a sign the story is too big or the technical design is missing something. The engineer raises that with the Scrum Master and the Architect instead of escalating a fourth time.
 
 ### Context hygiene
@@ -158,4 +158,5 @@ Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An 
 | Date | Change | Approved |
 |---|---|---|
 | 2026-09-24 | First draft: surfaces, model tiers, role assignments, diversity, escalation, context hygiene, and spend rules | Pending CTO and founder |
+| 2026-09-24 | CTO re-review: rule 9 keeps a pull request at two families when a Frontier role also makes a mechanical edit | Pending CTO and founder |
 | 2026-09-24 | CTO review: model names as Cursor's picker shows them, Grok 4.7 as the Cursor family's frontier model and the engineers' escalation, Google added as a fourth family, ordered fallback lists for the Reviewer and QA, the three Cursor meters named, the role table scoped to Cloud Agents, QA and merge added to the diagram, PR template with a `Model` section, single account-wide on-demand cap, founder posts usage until the Scrum Master has dashboard access, prerequisites for Bot identities, status kept only in the SOP index | Pending CTO and founder |
