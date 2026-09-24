@@ -145,7 +145,7 @@ Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An 
 | Setting | Value | Set by |
 |---|---|---|
 | On-demand monthly limit | Not yet set | CTO |
-| Scrum Master read access to the Cursor dashboard | Not yet set up. The founder posts usage numbers until it is. | Founder |
+| Scrum Master read access to the Cursor dashboard | Set up on 2026-09-24 (#5). The Scrum Master reads usage in Cursor itself. | Founder |
 
 ## Escalation
 
@@ -160,4 +160,4 @@ Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An 
 | 2026-09-24 | First draft: surfaces, model tiers, role assignments, diversity, escalation, context hygiene, and spend rules | CTO and founder, 2026-09-24 |
 | 2026-09-24 | CTO re-review: rule 9 keeps a pull request at two families when a Frontier role also makes a mechanical edit | CTO and founder, 2026-09-24 |
 | 2026-09-24 | CTO review: model names as Cursor's picker shows them, Grok 4.7 as the Cursor family's frontier model and the engineers' escalation, Google added as a fourth family, ordered fallback lists for the Reviewer and QA, the three Cursor meters named, the role table scoped to Cloud Agents, QA and merge added to the diagram, PR template with a `Model` section, single account-wide on-demand cap, founder posts usage until the Scrum Master has dashboard access, prerequisites for Bot identities, status kept only in the SOP index | CTO and founder, 2026-09-24 |
-| 2026-09-24 | Factual update, not a process change: prerequisites name the CTO's GitHub account, `shpdev-cto`, and the Code Reviewer's, `shpdev-reviewer` | CTO and founder, 2026-09-24 |
+| 2026-09-24 | Factual update, not a process change: prerequisites name the CTO's GitHub account, `shpdev-cto`, and the Code Reviewer's, `shpdev-reviewer`; the settings table records that the Scrum Master can read Cursor usage (#5) | CTO and founder, 2026-09-24 |
