@@ -155,27 +155,44 @@ flowchart LR
 
 Sprints last **one week**. Planning happens on day 1, there's a check on day 3, and closure and the retrospective happen on the last day. Each sprint has its own GitHub Project, which is archived when the sprint closes and never deleted.
 
-Every issue moves through these states. Review and QA happen together in one state, per SM-003. Verifying is the state after the merge, where the Scrum Master checks the definition of done, because a merge alone doesn't make an issue done.
+Every issue moves through these states. Each lane is the role that owns the state: the PM owns the backlog, the Scrum Master checks readiness and the definition of done, engineers build, and the Code Reviewer and QA work In review together, per SM-003. Verifying is the state after the merge, because a merge alone doesn't make an issue done.
 
 ```mermaid
-stateDiagram-v2
-    state "In progress" as InProgress
-    state "In review" as InReview
-    [*] --> Backlog
-    Backlog --> Ready: definition of ready met
-    Ready --> InProgress: pulled into sprint
-    InProgress --> InReview: PR opened
-    InReview --> InProgress: changes or QA fail
-    InReview --> Verifying: QA pass, CI green, approved, merged
-    Verifying --> Done: definition of done met
-    Verifying --> InProgress: gap found
-    InProgress --> Blocked: blocked
-    Blocked --> InProgress: cleared
-    Done --> [*]
-    note right of InReview
-        Code Reviewer and QA work in parallel,
-        each on a model family that didn't write the change
-    end note
+flowchart LR
+    subgraph PM["Product Manager"]
+        Backlog
+    end
+    subgraph SM["Scrum Master"]
+        Ready
+        Verifying
+        Done
+    end
+    subgraph ENG["Engineer"]
+        InProgress["In progress"]
+        Blocked
+    end
+    subgraph CHK["Code Reviewer and QA<br>in parallel, on families that didn't write the change"]
+        InReview["In review"]
+    end
+    Backlog -->|definition of ready met| Ready
+    Ready -->|pulled into sprint| InProgress
+    InProgress -->|blocked| Blocked
+    Blocked -->|cleared| InProgress
+    InProgress -->|PR opened| InReview
+    InReview -->|changes requested or QA fail| InProgress
+    InReview -->|QA pass, CI green, approved, merged by engineer| Verifying
+    Verifying -->|gap found| InProgress
+    Verifying -->|definition of done met| Done
+    classDef frontier fill:#dbeafe,stroke:#1d4ed8,color:#111827
+    classDef cursor fill:#dcfce7,stroke:#15803d,color:#111827
+    classDef checks fill:#ffedd5,stroke:#c2410c,color:#111827
+    class Backlog frontier
+    class Ready,Verifying,Done,InProgress,Blocked cursor
+    class InReview checks
+    style PM fill:#f8fafc,stroke:#94a3b8
+    style SM fill:#f8fafc,stroke:#94a3b8
+    style ENG fill:#f8fafc,stroke:#94a3b8
+    style CHK fill:#f8fafc,stroke:#94a3b8
 ```
 
 Each engineer works on **one issue at a time**. Every issue has exactly one accountable owner. Agents that don't have GitHub accounts are recorded with an `owner:<role>` label.
