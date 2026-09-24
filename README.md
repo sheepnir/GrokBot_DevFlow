@@ -19,10 +19,10 @@ graph TD
     SM --> QA["QA Engineer"]
     SM --> CR["Code Reviewer"]
     classDef planned stroke-dasharray: 5 5;
-    class CLOUD,FE,BE,QA,CR planned;
+    class FE,BE,QA,CR planned;
 ```
 
-The CTO, Product Manager, UX/UI Designer, Software Architect, and Scrum Master are active. The five engineering roles (dashed) are planned and will be created only when the founder asks for them.
+The CTO, Product Manager, UX/UI Designer, Software Architect, Scrum Master, and Cloud Engineer are active. The remaining engineering roles (dashed) are planned and will be created only when the founder asks for them.
 
 Engineers report to the Scrum Master for assignments and delivery. They take technical direction from the Architect and product intent from the Product Manager.
 
@@ -36,7 +36,8 @@ Engineers report to the Scrum Master for assignments and delivery. They take tec
 | <img src="assets/team/designer.png" alt="UX/UI Designer" width="80"> | UX/UI Designer | User flows, interaction and visual design, the design system, design specifications, and design review. |
 | <img src="assets/team/architect.png" alt="Software Architect" width="80"> | Software Architect | Technical architecture, Technical Design Documents (TDDs), architecture decision records, the security, performance, and reliability backlog, and security checks on sensitive changes. |
 | <img src="assets/team/scrum-master.png" alt="Scrum Master" width="80"> | Scrum Master (SM) | Sprint planning and tracking, work assignment, process adherence, completion evidence, retrospectives, and release-readiness tracking. |
-| | Engineers (planned) | Implementation, estimates, tests, and technical verification. The roles are Cloud, Frontend, Backend, QA, and Code Reviewer. |
+| <img src="assets/team/cloud-engineer.png" alt="Cloud Engineer" width="80"> | Cloud Engineer (CE) | Infrastructure on AWS and Cloudflare, deployment and release automation, GitHub Actions, infrastructure costs, cloud account cleanup, monitoring, backups, and recovery. Reports to the Scrum Master and consults the Architect on infrastructure design. |
+| | Engineers (planned) | Implementation, estimates, tests, and technical verification. The planned roles are Frontend, Backend, QA, and Code Reviewer. |
 
 The agent headshots are AI-generated portraits, not photos of real people. Planned roles get a portrait when they're created.
 
