@@ -62,26 +62,28 @@ When a Bot isn't sure, the test is: does the task need a full checkout, a termin
 ```mermaid
 sequenceDiagram
     participant BE as Backend Engineer (Bot), issue owner
+    participant CTO as CTO (Bot), shpdev-cto
     participant CA as Cloud Agent (Composer 2.5)
-    participant CR as Code Reviewer (Bot)
+    participant CR as Code Reviewer (Bot), shpdev-reviewer
     participant QA as QA Engineer (Bot)
-    BE->>BE: Claims the top Ready issue and confirms its tier, per SOP-011
-    BE->>CA: Launches with issue link, model, branch, and budget
-    CA-->>BE: Pull request opened, tests linked, Model section filled
-    BE->>CR: Pull request ready
-    BE->>QA: Pull request ready, if the tier or a risk flag requires QA
+    BE->>CTO: Asks to claim the top Ready issue and launch, per SOP-011
+    CTO->>CA: Launches with issue link, model, branch, and budget
+    CA-->>CTO: Branch pushed, tests linked
+    CTO->>CTO: Opens the pull request, Role line names the Backend Engineer
+    CTO->>CR: Requests review
+    CTO->>QA: Pull request ready, if the tier or a risk flag requires QA
     par Review
         CR->>CR: Cloud Agent on a family not in the PR's Model section
-        CR-->>BE: Findings
+        CR-->>CTO: Findings, as shpdev-reviewer
     and Verification
         QA->>QA: Cloud Agent on a family not in the PR or the Reviewer's run
-        QA-->>BE: Pass, Fail, or Blocked, with evidence
+        QA-->>CTO: Pass, Fail, or Blocked, with evidence, posted by the CTO
     end
-    BE->>CA: Fixes blocking findings
+    CTO->>CA: Relaunches on the same branch to fix blocking findings
     Note over CR: CI green, blocking findings fixed, QA passed where required
-    CR-->>BE: Final merge approval for that commit
-    BE->>BE: Merges
-    BE->>BE: Closes the issue with links to the evidence
+    CR-->>CTO: Approves that commit as shpdev-reviewer
+    CTO->>CTO: Merges, or the founder does
+    CTO-->>BE: Merged, and the issue closed with links to the evidence
 ```
 
 ## Role assignments
@@ -122,7 +124,7 @@ Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An 
 
 8. An engineer whose Cloud Agent fails twice with the same root cause launches the third attempt on Grok 4.7 and notes the switch on the issue and in the pull request's `Model` section. Two failed attempts on Composer cost more than one pass on Grok.
 9. A Frontier role uses Composer 2.5 for mechanical edits: renames, formatting, moving sections, updating a table, or applying a reviewer's one-line change. If the pull request already lists two families, the mechanical edit uses one of the models already listed.
-10. An issue that keeps escalating is a sign it's classified too low, or the technical design is missing something. After the escalation attempt, the engineer stops and escalates per SOP-011 rule 17, instead of trying a fourth time.
+10. An issue that keeps escalating is a sign it's classified too low, or the technical design is missing something. After the escalation attempt, the engineer stops and escalates per SOP-011 rule 18, instead of trying a fourth time.
 
 ### Context hygiene
 

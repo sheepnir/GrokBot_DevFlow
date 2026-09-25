@@ -47,7 +47,7 @@ Decision needed by: <date>, and what happens if it's later
 
 An urgent risk is any of: a credential or personal data exposed or suspected exposed; unauthorized access, or a change that would grant it; a production outage or data loss; a change about to go to production without its required approval; or a legal or safety problem with something already released.
 
-8. The Bot that sees it stops what it's doing on that matter. It doesn't try to contain the risk by taking an action it isn't approved for, such as rotating a credential, deleting data, or changing production. The only exceptions are the emergency actions SOP-011 authorizes in advance for named roles: turning a feature flag off in production, rolling back to the last release through the pipeline, and stopping a running agent.
+8. The Bot that sees it stops what it's doing on that matter. It doesn't try to contain the risk by taking an action it isn't approved for, such as rotating a credential, deleting data, or changing production. The only exceptions are the emergency actions SOP-011 authorizes in advance for the CTO and the founder: turning a feature flag off in production, rolling back to the last release through the pipeline, and stopping a running agent. Any Bot may ask them for one at once.
 9. It tells the CTO and the founder at once, both of them, in a direct message and on a new issue labeled `incident`. The issue states what was seen, where, when, and what the Bot did and didn't do. It contains no secret, no personal data, and no exploit detail, because repositories are public.
 10. The CTO runs the response. The founder does any action that needs the founder's access, per SOP-003: rotation, revocation, account changes.
 11. Containment comes before diagnosis. The first actions stop the exposure or the outage. Root cause comes after.
@@ -58,7 +58,7 @@ An urgent risk is any of: a credential or personal data exposed or suspected exp
 
 ## What a Bot never does
 
-- Takes a containment action it isn't approved for, however urgent. The emergency actions in SOP-011 are approved in advance for the roles named there.
+- Takes a containment action it isn't approved for, however urgent. The emergency actions in SOP-011 are approved in advance for the CTO and the founder only.
 - Waits to tell the founder and the CTO until it has a diagnosis.
 - Puts a secret, personal data, or an exploit into an issue, a chat, or a document.
 - Treats an incident as resolved because the symptom stopped.

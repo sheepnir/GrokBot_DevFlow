@@ -23,16 +23,16 @@ The CTO confirms three things on the product's discovery issue in this repositor
 
 ## Checklist
 
-Each item names its owner and what "done" means. The Cloud Engineer runs the checklist and records it in the new repository's `/docs/SM/setup.md`, with the date each item was done. Items marked C1 to C9 set up the controls in the root README. Until an item is done, `setup.md` shows its control as not enforced.
+Each item names its owner and what "done" means. The Cloud Engineer runs the checklist and records it in the new repository's `/docs/SM/setup.md`, with the date each item was done. Items marked C1 to C9 set up the controls in the root README. Until an item is done, `setup.md` shows its control as not enforced. C5 and C6 are written controls by design, and `setup.md` says so. Roles without a GitHub identity make their changes through Cloud Agents and the CTO, per SOP-003.
 
 ### Repository and settings
 
 | # | Item | Owner | Done when |
 |---|---|---|---|
 | 1 | Create the repository from this one as a template, named as the founder chose | Founder | The repository exists with this repository's `SOP`, `.github`, and `assets` folders in it |
-| 2 | Add a ruleset on `main` (C1 to C4). Target: the default branch. Bypass list: empty. Restrict deletions: on. Block force pushes: on. Require a pull request before merging: on, with required approvals set to 1, "Dismiss stale pull request approvals when new commits are pushed" on, "Require review from Code Owners" on, "Require approval of the most recent reviewable push" on, and "Require conversation resolution before merging" on. Require status checks to pass: on, with "Require branches to be up to date before merging" on and the `ci` check from item 16 required. Add `qa/verdict` from item 17 once it exists. | Founder | The ruleset is active, and each setting is listed in `/docs/SM/setup.md` |
-| 3 | Add the Bot identities that exist to the ruleset's pull request allowance, per SOP-003 | Founder | Every identity that opens pull requests can open one |
-| 4 | Add `CODEOWNERS` (C6). Map each `/docs` folder to its owning role's identity and `/SOP` to the CTO. Map the sensitive paths to the identity that gives the specialist review: authentication and authorization code, migrations, infrastructure, `.github/workflows/`, and the production feature flag settings. | CTO | A pull request that touches a sensitive path can't merge without that owner's review. Until the specialist has an identity (#6), the path list is recorded in `setup.md` and the Code Reviewer applies it by hand. |
+| 2 | Add a ruleset on `main` (C1 to C4). Target: the default branch. Bypass list: empty. Restrict deletions: on. Block force pushes: on. Require a pull request before merging: on, with required approvals set to 1, "Dismiss stale pull request approvals when new commits are pushed" on, "Require approval of the most recent reviewable push" on, "Require conversation resolution before merging" on, and "Require review from Code Owners" off, because a required code owner who opens a pull request would block it. Require status checks to pass: on, with "Require branches to be up to date before merging" on and the `ci` check from item 16 required. | Founder | The ruleset is active, and each setting is listed in `/docs/SM/setup.md` |
+| 3 | Limit pull request creation to the founder and `shpdev-cto`, and add `shpdev-reviewer` as a collaborator with Write so its approvals count, per SOP-003 | Founder | The CTO can open a pull request, and a `shpdev-reviewer` approval satisfies the ruleset |
+| 4 | Add `CODEOWNERS` with `* @shpdev-reviewer`, so every pull request requests the Code Reviewer automatically. Record the sensitive paths in `setup.md` for C6, a written control: authentication and authorization code, migrations, infrastructure, `.github/workflows/`, and the production feature flag settings. | CTO | A new pull request requests `shpdev-reviewer` by itself, and the Code Reviewer checks the path list for missing risk flags |
 | 5 | Turn on secret scanning and push protection (C9) | Founder | A test push with a fake token pattern is blocked |
 | 6 | Connect the repository to Cursor for Cloud Agents and Bugbot, with Autofix off per SOP-001 rule 20 | Founder | A Cloud Agent can clone and push a branch |
 
@@ -60,24 +60,23 @@ Each item names its owner and what "done" means. The Cloud Engineer runs the che
 | # | Item | Owner | Done when |
 |---|---|---|---|
 | 16 | Add CI in GitHub Actions as a check named `ci`: lint, tests, and build (C4). The build produces an artifact labeled with the commit SHA, which deployment uses. | Cloud Engineer | The ruleset requires `ci`, and a failing test blocks a merge |
-| 17 | Add a workflow for the `qa/verdict` commit status (C5). QA's identity sets it to success or failure on the head commit. For a pull request whose issue is labeled `tier:small` with no `risk:` label, the workflow sets it to success with the description "Not required: Small". | Cloud Engineer | A new commit resets the status, and the ruleset requires it. Until QA has an identity (#6), this item is recorded as pending and QA's verdict stays a comment naming the commit. |
-| 18 | Create separate environments, at least `test` and `production`, with their own credentials and their own cloud roles. Protect `production` (C7): the CTO's and the founder's identities as required reviewers, "Prevent self-review" on, deployment branches limited to `main`, and a production cloud role whose OIDC trust accepts only this repository's `production` environment. | Cloud Engineer, with the founder for the protection settings | Nothing in `test` can reach `production`, and a deployment to `production` waits for an approval |
-| 19 | Choose the feature flag mechanism in a decision record (C8). Flags default to off in production, flag state can be read per environment, and the production flag settings are a CODEOWNERS path. | Architect, with the Cloud Engineer | A flag can be turned on in test and stay off in production without a deployment |
-| 20 | Put secrets in the secrets manager and, for Cloud Agents, in Cursor's secret store. Nothing in the repository. | Cloud Engineer | A search of the repository for tokens and keys finds none |
-| 21 | Add monitoring and a cost alert for the cloud accounts the product uses | Cloud Engineer | An alert reaches the CTO and the founder |
-| 22 | Write the deployment and rollback procedure in `/docs/architect/operations.md`. The pipeline deploys by commit SHA and skips a commit already live in that environment, migrations record their version, and a rollback job redeploys the last release tag. | Cloud Engineer | A release can be rolled back by following it, and re-running a deployment changes nothing |
+| 17 | Create separate environments, at least `test` and `production`, with their own credentials and their own cloud roles. Protect `production` (C7): `shpdev-cto` and the founder as required reviewers, "Prevent self-review" on, deployment branches limited to `main`, and a production cloud role whose OIDC trust accepts only this repository's `production` environment. Because self-review is prevented, whoever starts a production deployment can't approve it, so every production deployment needs both the CTO and the founder. Add a `production-rollback` environment whose only job redeploys the last release tag, with the same two reviewers and self-review allowed, so either of them can roll back alone. | Cloud Engineer, with the founder for the protection settings | Nothing in `test` can reach `production`, a deployment to `production` waits for the other person's approval, and a rollback runs with one |
+| 18 | Choose the feature flag mechanism in a decision record (C8). Flags default to off in production, flag state can be read per environment, and the production flag settings are a CODEOWNERS path. | Architect, with the Cloud Engineer | A flag can be turned on in test and stay off in production without a deployment |
+| 19 | Put secrets in the secrets manager and, for Cloud Agents, in Cursor's secret store. Nothing in the repository. | Cloud Engineer | A search of the repository for tokens and keys finds none |
+| 20 | Add monitoring and a cost alert for the cloud accounts the product uses | Cloud Engineer | An alert reaches the CTO and the founder |
+| 21 | Write the deployment and rollback procedure in `/docs/architect/operations.md`. The pipeline deploys by commit SHA and skips a commit already live in that environment, migrations record their version, and a rollback job redeploys the last release tag. | Cloud Engineer | A release can be rolled back by following it, and re-running a deployment changes nothing |
 
 ### Tracking
 
 | # | Item | Owner | Done when |
 |---|---|---|---|
-| 23 | Create labels: `owner:<role>` for each role, `tier:small`, `tier:standard`, `tier:large`, `risk:security`, `risk:privacy`, `risk:operations`, `risk:external`, `blocked`, `access`, `incident`, `escalation`, `defect`, and `escaped` | Scrum Master | The labels exist |
-| 24 | Add issue templates for a work item, from `SOP/templates/issue.md`, and a defect, with the fields SOP-007 and SOP-008 need | Scrum Master | A new issue opens with the fields |
-| 25 | Create the product's one GitHub Project with the states from the root README and the fields from SOP-008 | Scrum Master | The Project exists and is empty |
+| 22 | Create labels: `owner:<role>` for each role, `tier:small`, `tier:standard`, `tier:large`, `risk:security`, `risk:privacy`, `risk:operations`, `risk:external`, `blocked`, `access`, `incident`, `escalation`, `defect`, and `escaped` | Scrum Master | The labels exist |
+| 23 | Add issue templates for a work item, from `SOP/templates/issue.md`, and a defect, with the fields SOP-007 and SOP-008 need | Scrum Master | A new issue opens with the fields |
+| 24 | Create the product's one GitHub Project with the states from the root README and the fields from SOP-008 | Scrum Master | The Project exists and is empty |
 
 ## Rules
 
-1. No issue is claimed in a product repository until every checklist item is done and recorded. The exceptions are items 3, 4, and 17, which wait on identities: they're recorded as pending, with the issue that tracks them. Partial setup is where agents burn their runs.
+1. No issue is claimed in a product repository until every checklist item is done and recorded. Partial setup is where agents burn their runs.
 2. The `SOP` folder in a product repository is a copy. Changes to an SOP happen in this repository and are copied forward. A product repository may add SOPs of its own under `/docs/SM`, numbered from `SOP-101`.
 3. Nothing in the checklist creates an external account or credential without the founder doing it, per SOP-003.
 4. The checklist is re-run, and `/docs/SM/setup.md` updated, whenever a new environment, cloud account, or integration is added.
@@ -94,3 +93,4 @@ Each item names its owner and what "done" means. The Cloud Engineer runs the che
 |---|---|---|
 | 2026-09-24 | First draft | Pending CTO and founder |
 | 2026-09-24 | SM-016: exact ruleset settings, code owners for sensitive paths, secret scanning, the `qa/verdict` status, `production` environment protection, feature flags, idempotent deployment, tier and risk labels, one persistent Project, and a rule that `setup.md` separates enforced controls from written ones | Pending CTO and founder |
+| 2026-09-25 | CTO review: code owner review off and CODEOWNERS used only to request the Code Reviewer, the `qa/verdict` item removed (C5 and C6 are written controls), pull request creation limited to the founder and the CTO, the C7 consequence stated, and a `production-rollback` environment either the CTO or the founder can run alone. Items 18 to 25 renumbered 17 to 24. | Pending CTO and founder |

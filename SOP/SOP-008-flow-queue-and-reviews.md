@@ -21,12 +21,12 @@ The GitHub Project, the queue, the work-in-progress limits, milestones, the meas
 
 1. Each product repository has one GitHub Project, named for the product, created once by SOP-004. It's never archived on a schedule or recreated.
 2. The Project has these fields: Status, with the states from the root README; Tier; Risk flags; Owner, from the `owner:<role>` label; Requirements, the REQ IDs if any; Type, one of Story, Defect, or Quality; and Milestone, where there is one.
-3. The Project is the live view. The issues are the record. Nothing is copied from one into the other by hand.
+3. The Project is the live view. The issues are the record. Nothing is copied from one into the other by hand. The CTO keeps the Project's fields in step as it posts for owners. The Scrum Master reads the Project, and the issue and pull request timelines, per SOP-011 rule 3.
 
 ## The queue
 
 4. The PM keeps Ready in priority order. A defect that breaks something in production goes to the top.
-5. An owner pulls the top Ready issue it can do. If it skips one, it says why on the skipped issue, in one line.
+5. An owner pulls the top Ready issue it can do, through the CTO, per SOP-011. If it skips one, it gives the CTO one line on why, and the CTO posts it on the skipped issue.
 6. An issue enters Ready only when it meets the root README's definition of ready. The PM moves it there.
 
 ## Work-in-progress limits
@@ -58,12 +58,12 @@ The GitHub Project, the queue, the work-in-progress limits, milestones, the meas
 
 | Measure | Definition | Source |
 |---|---|---|
-| Delivery time | Median working days from In progress to Done, per tier | The Project's status history |
-| Waiting time | Time in Blocked, plus time a ready pull request waits for its first review and for approval, per tier | The Project's status history and pull request timestamps |
+| Delivery time | Median working days from the claim to the issue closing, per tier | The claim comment and the issue's close date |
+| Waiting time | Time with the `blocked` label, plus time a ready pull request waits for its first review and for approval, per tier | The issue timeline's label events, and the pull request's ready, review, and approval times |
 | Escaped defects | Defects opened after the issue that caused them was Done, with the `escaped` label and a link to that issue | Defect issues |
 | Agent usage | Cursor usage by pool for the month, and per issue where the dashboard shows it | The Cursor dashboard, per SOP-001 rule 19 |
 
-14. On the first working day of each month, the Scrum Master's measures routine appends one row to `/docs/SM/measures.md`: the four numbers for the month and one sentence on what changed. There's no other report.
+14. On the first working day of each month, the Scrum Master's measures routine appends one row to `/docs/SM/measures.md`: the four numbers for the month and one sentence on what changed. The same routine runs the spending check from SOP-001 rule 19: on-demand spending still disabled, on-demand spend $0, and the share of the included allocation used, reported to the CTO and the founder. The weekly pacing check (SOP-002) warns them sooner if usage runs ahead. There's no other report.
 15. A measure that nobody has used for a decision in three months is proposed for removal.
 16. Measures describe the flow, not people. They aren't used to rank owners.
 
@@ -98,3 +98,4 @@ The GitHub Project, the queue, the work-in-progress limits, milestones, the meas
 |---|---|---|
 | 2026-09-24 | First draft, as sprint ceremonies and records | Pending CTO and founder |
 | 2026-09-24 | Replaced by flow, queue, and reviews as part of SM-016: one persistent Project, work-in-progress limits instead of sprints and story points, four measures, and reviews held on triggers | Pending CTO and founder |
+| 2026-09-25 | CTO review: the monthly spending check from SM-014 moves to the measures routine on the first working day of the month, measures come from issue and pull request timelines, and owners act on the queue through the CTO | Pending CTO and founder |

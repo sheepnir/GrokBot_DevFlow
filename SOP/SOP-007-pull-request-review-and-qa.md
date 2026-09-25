@@ -27,7 +27,7 @@ Every pull request in a product repository, code or documentation. What each pul
 
 ## The author
 
-1. A pull request covers one issue. An issue may take several pull requests, such as a shared change first (SOP-011 rule 8) or work that merges behind a feature flag.
+1. A pull request covers one issue. An issue may take several pull requests, such as a shared change first (SOP-011 rule 10) or work that merges behind a feature flag.
 2. The author fills every section of the pull request template. The `Model` section lists every model that produced a commit, per SOP-001 rule 4, and a `Role` line always names the requesting role, because the CTO opens every Cloud Agent pull request as `shpdev-cto`, per SOP-003.
 3. The pull request title starts with the requirement IDs it implements, for example `REQ-AUTH-003: password reset flow`, or with the issue number when there are none, for example `#42: invoice dates in the user's time zone`.
 4. Test evidence is the author's: what was run, where the output is, and what it shows. "Tests pass" without a link isn't evidence. A bug fix includes a test that fails without the fix.

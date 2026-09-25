@@ -20,7 +20,7 @@ Every new product repository starts from this repository, so it carries this fol
 | [SOP-010](SOP-010-releases.md) | Releases | CTO, with the Cloud Engineer | Draft | Pending CTO and founder |
 | [SOP-011](SOP-011-autonomous-execution.md) | Autonomous execution | CTO, with the Scrum Master | Draft | Pending CTO and founder |
 
-SM-016 proposes changes to SOP-001 through SOP-010 and adds SOP-011. Each SOP's change history lists its SM-016 change as pending. Until the CTO and the founder approve SM-016, SOP-001 stays in effect as approved, and the other SOPs stay drafts.
+SM-016 proposes changes to SOP-001 through SOP-010 and adds SOP-011. Each SOP's change history lists its SM-016 change as pending. Until the CTO and the founder approve SM-016, the SOPs as they stand at [commit `d323687`](https://github.com/sheepnir/GrokBot_DevFlow/tree/d323687c3545eb9097c20b4561a0e9b394a3d969/SOP) apply: SOP-001 as approved, with SM-014 and SM-015, and the others as drafts.
 
 Bot identities in place 2026-09-24 (#6). The identity model is recorded in [SOP-003](SOP-003-bot-identities-and-access.md), and SOP-001 rules 1 through 6 are in full effect from that date.
 

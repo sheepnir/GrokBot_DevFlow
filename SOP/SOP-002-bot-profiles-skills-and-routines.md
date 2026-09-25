@@ -86,8 +86,9 @@ These exist from the day the first product repository is set up. Other routines 
 
 | Bot | Routine | Trigger | Output |
 |---|---|---|---|
-| Scrum Master | Flow check | Every working day | Stalls, failed agents, red CI, unstarted reviews, and long blocks flagged on their issues, per SOP-011 rule 14. Nothing is posted when nothing is wrong. |
-| Scrum Master | Measures | First working day of each month | One row in `/docs/SM/measures.md` with the four measures and usage, per SOP-008 and SOP-001 rule 19, plus the routine check from rule 9 |
+| Scrum Master | Flow check | Every working day | Stalls, failed agents, red CI, unstarted reviews, and long blocks, read from GitHub and sent to each owner and the CTO in the team chat, per SOP-011 rules 3 and 14 to 16. Nothing is sent when nothing is wrong. |
+| Scrum Master | Pacing check | Every week | The share of the included allocation used against the share of the period elapsed, per SOP-001 rule 19. The CTO and the founder are told only when usage is ahead of pace. |
+| Scrum Master | Measures and spending | First working day of each month | One row in `/docs/SM/measures.md` with the four measures and usage, per SOP-008. The spending check from SOP-001 rule 19: on-demand still disabled, on-demand spend $0, and the allocation used, reported to the CTO and the founder. Plus the routine check from rule 9, and the access review at the start of each quarter, per SOP-003. |
 | Cloud Engineer | Infrastructure check | Weekly | Costs, monitoring status, and backup status recorded in `/docs/architect/quality-backlog.md` |
 
 ## Creating, changing, sharing, and retiring a Bot
@@ -110,3 +111,4 @@ These exist from the day the first product repository is set up. Other routines 
 |---|---|---|
 | 2026-09-24 | First draft | Pending CTO and founder |
 | 2026-09-24 | SM-016: the profile's Never section covers other roles' decisions, not their work; skills may be run by an issue's owner; sprint routines replaced by the daily flow check and the monthly measures routine | Pending CTO and founder |
+| 2026-09-25 | CTO review: the flow check reads GitHub and reports in chat, the monthly spending check from SM-014 moves to the first working day of the month, and a weekly pacing check is added | Pending CTO and founder |
