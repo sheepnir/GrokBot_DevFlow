@@ -54,41 +54,41 @@ Grok and Composer count as one family, Cursor, until there's evidence they're in
 
 | Surface | Meter | Use it for | Never use it for |
 |---|---|---|---|
-| The Bot itself (Grok Bot) | Grok Bot weekly usage | Reading and answering messages, keeping role memory, running routines, coordinating with other Bots, sprint planning and retrospectives in conversation, updating issues and GitHub Projects, launching and reporting on Cloud Agents, and edits of a few lines to a document it owns | Writing or refactoring code, running test suites, writing a BRD, TDD, design spec, or review from scratch |
+| The Bot itself (Grok Bot) | Grok Bot weekly usage | Reading and answering messages, keeping role memory, running routines, coordinating with other Bots, classifying work, flow checks and reviews in conversation, updating issues and the GitHub Project, launching and reporting on Cloud Agents, and edits of a few lines to a document it owns | Writing or refactoring code, running test suites, writing a BRD, TDD, design spec, or review from scratch |
 | Cursor Cloud Agent | Cursor Models pool or third-party pool, by the chosen model | Anything that reads or changes a repository substantially: documents, code, tests, reviews, verification runs, infrastructure changes | Conversation with the founder or the team. The Bot does that. |
 
 When a Bot isn't sure, the test is: does the task need a full checkout, a terminal, or more than a few lines of change? If yes, it's a Cloud Agent task.
 
 ```mermaid
 sequenceDiagram
-    participant SM as Scrum Master (Bot)
-    participant BE as Backend Engineer (Bot)
+    participant BE as Backend Engineer (Bot), issue owner
+    participant CTO as CTO (Bot), shpdev-cto
     participant CA as Cloud Agent (Composer 2.5)
-    participant CR as Code Reviewer (Bot)
+    participant CR as Code Reviewer (Bot), shpdev-reviewer
     participant QA as QA Engineer (Bot)
-    SM->>BE: Assigns issue
-    BE->>CA: Launches with issue link, model, and branch
-    CA-->>BE: Pull request opened, tests linked, Model section filled
-    BE->>CR: Pull request ready
-    BE->>QA: Pull request ready
+    BE->>CTO: Asks to claim the top Ready issue and launch, per SOP-011
+    CTO->>CA: Launches with issue link, model, branch, and budget
+    CA-->>CTO: Branch pushed, tests linked
+    CTO->>CTO: Opens the pull request, Role line names the Backend Engineer
+    CTO->>CR: Requests review
+    CTO->>QA: Pull request ready, if the tier or a risk flag requires QA
     par Review
         CR->>CR: Cloud Agent on a family not in the PR's Model section
-        CR-->>BE: Findings
+        CR-->>CTO: Findings, as shpdev-reviewer
     and Verification
         QA->>QA: Cloud Agent on a family not in the PR or the Reviewer's run
-        QA-->>BE: Pass, Fail, or Blocked, with evidence
+        QA-->>CTO: Pass, Fail, or Blocked, with evidence, posted by the CTO
     end
-    BE->>CA: Fixes blocking findings
-    Note over CR: QA passed, CI green, blocking findings fixed
-    CR-->>BE: Final merge approval for that commit
-    BE->>BE: Merges
-    BE-->>SM: Merged
-    SM->>SM: Records the outcome and closes the issue
+    CTO->>CA: Relaunches on the same branch to fix blocking findings
+    Note over CR: CI green, blocking findings fixed, QA passed where required
+    CR-->>CTO: Approves that commit as shpdev-reviewer
+    CTO->>CTO: Merges, or the founder does
+    CTO-->>BE: Merged, and the issue closed with links to the evidence
 ```
 
 ## Role assignments
 
-This table sets the model of the Cloud Agents each role launches. It doesn't and can't set the model of the Bot itself. Every Bot runs on Grok Bot, and work the Bot does in its own conversation, such as the Scrum Master's sprint planning and retrospectives, runs there.
+This table sets the model of the Cloud Agents each role launches. It doesn't and can't set the model of the Bot itself. Every Bot runs on Grok Bot, and work the Bot does in its own conversation, such as the Scrum Master's flow checks and reviews, runs there.
 
 | Role | Cloud Agent model | Escalation or fallback | Notes |
 |---|---|---|---|
@@ -96,12 +96,12 @@ This table sets the model of the Cloud Agents each role launches. It doesn't and
 | Product Manager | GPT-5.6 Sol | Claude Opus 5.5 | BRDs, backlog priority, product decisions |
 | Software Architect | Claude Opus 5.5 | GPT-5.6 Sol | TDDs, decision records, security checks |
 | UX/UI Designer | Claude Opus 5.5 | GPT-5.6 Sol | Flows, specs, design reviews |
-| Scrum Master | Composer 2.5 | Grok 4.7 | Sprint records, retrospective write-ups, issue reconciliation. The judgment happens in the Bot's conversation. The Cloud Agent writes it down. |
+| Scrum Master | Composer 2.5 | Grok 4.7 | Measures rows, review records, issue reconciliation. The judgment happens in the Bot's conversation. The Cloud Agent writes it down. |
 | Frontend Engineer | Composer 2.5 | Grok 4.7 | See rule 8 |
 | Backend Engineer | Composer 2.5 | Grok 4.7 | See rule 8 |
 | Cloud Engineer | Composer 2.5 | Grok 4.7 | Infrastructure changes that add cost or change security posture get the Architect's review, per the root README, before they run |
 | Code Reviewer | First available in order: GPT-5.6 Sol, Gemini 3.1 Pro, Claude Opus 5.5, Grok 4.7 | | See rule 5 |
-| QA Engineer | First available in order: Claude Sonnet 5, Gemini 3.8 Flash, GPT-5.6 Sol, Composer 2.5 | For changes that touch authentication, authorization, personal data, or secrets, the Frontier model of the same family | See rule 6 |
+| QA Engineer | First available in order: Claude Sonnet 5, Gemini 3.8 Flash, GPT-5.6 Sol, Composer 2.5 | For changes with a `risk:security` or `risk:privacy` flag, the Frontier model of the same family | See rule 6 |
 
 Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An escalation never adds a family to the pull request, so it never takes a family away from the Reviewer or QA. A pull request carries at most two families: a role's default and its fallback, or its default and Composer 2.5 for mechanical edits under rule 9. The Reviewer and QA take one each, so four families are always enough.
 
@@ -124,22 +124,22 @@ Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An 
 
 8. An engineer whose Cloud Agent fails twice with the same root cause launches the third attempt on Grok 4.7 and notes the switch on the issue and in the pull request's `Model` section. Two failed attempts on Composer cost more than one pass on Grok.
 9. A Frontier role uses Composer 2.5 for mechanical edits: renames, formatting, moving sections, updating a table, or applying a reviewer's one-line change. If the pull request already lists two families, the mechanical edit uses one of the models already listed.
-10. Estimation matters here. A story of 5 or 8 points that keeps escalating is a sign the story is too big or the technical design is missing something. The engineer raises that with the Scrum Master and the Architect instead of escalating a fourth time.
+10. An issue that keeps escalating is a sign it's classified too low, or the technical design is missing something. After the escalation attempt, the engineer stops and escalates per SOP-011 rule 18, instead of trying a fourth time.
 
 ### Context hygiene
 
 11. Standing instructions live in files the agent reads on its own: rules under `.cursor/rules/`, an `AGENTS.md` at the repository root, and skills for repeatable procedures. They're never pasted into a prompt.
 12. A prompt links to the owning folder under `/docs` for product, design, or architecture context. It never copies that content in.
 13. The Cloud Agent environment is defined in `.cursor/environment.json` and kept working, so no agent spends its run installing dependencies. The Cloud Engineer owns this file.
-14. Engineers plan before editing on any story above 2 points, and keep one issue in progress at a time, as the root README requires. A plan that fits in a screen is cheaper than a wrong edit.
+14. Engineers plan before editing on any Standard or Large issue, and keep one issue in progress at a time, as the root README requires. A plan that fits in a screen is cheaper than a wrong edit.
 15. Agents run the tests that cover their change while iterating, and the full suite once before opening the pull request. Verbose output is trimmed with the quiet or summary flag the tool provides.
 16. Bugbot, where enabled, keeps Incremental Review on, so each review covers only new commits. It's a first pass. It doesn't replace the Code Reviewer.
-17. A Bot's profile holds only rules that are true every week. Sprint context goes in the sprint record or the issue, not in the profile, so every message doesn't carry it.
+17. A Bot's profile holds only rules that are true every week. The context of current work goes on the issue, not in the profile, so every message doesn't carry it.
 
 ### Spend
 
-18. Cursor's on-demand monthly limit is one cap for the whole account. It covers Grok Bot and both Cloud Agent pools together. On-demand spending is disabled, so the team works only within the allocation included in the founder's plans and never pays for on-demand usage. The founder sets the limit in Cursor, and the setting is recorded in the table below. When the included allocation runs out, new work waits for the next period, but a Cloud Agent or Bot that is already running finishes. Enabling on-demand spending needs the founder's approval, recorded on the sprint record.
-19. Usage is recorded in the sprint record at the day 3 check and at sprint close, for Grok Bot weekly usage, the Cursor Models pool, and the third-party pool. The Scrum Master reads the numbers in Cursor itself (#5). A sprint that spends more than the previous one on fewer finished points gets a retrospective item. Once a month, at the first sprint close of the month, the Scrum Master also checks Cursor's spending page. It confirms that on-demand spending is still disabled and that on-demand spend is $0, then reports how much of the included allocation has been used to the CTO and the founder. If usage is on pace to run out before the allocation resets, the Scrum Master flags it right away, so the team can slow down before work stops.
+18. Cursor's on-demand monthly limit is one cap for the whole account. It covers Grok Bot and both Cloud Agent pools together. On-demand spending is disabled, so the team works only within the allocation included in the founder's plans and never pays for on-demand usage. The founder sets the limit in Cursor, and the setting is recorded in the table below. When the included allocation runs out, new work waits for the next period, but a Cloud Agent or Bot that is already running finishes. Enabling on-demand spending needs the founder's approval, recorded in the table below with the date. A budget or its extension under SOP-011 is a share of the included allocation and never enables on-demand spending.
+19. Usage is recorded once a month in the measures row from SOP-008, for Grok Bot weekly usage, the Cursor Models pool, and the third-party pool. The Scrum Master reads the numbers in Cursor itself (#5). A month in which usage rises while the number of issues done falls triggers a review, per SOP-008. On the first working day of each month, in the same measures routine, the Scrum Master also checks Cursor's spending page. It confirms that on-demand spending is still disabled and that on-demand spend is $0, then reports how much of the included allocation has been used to the CTO and the founder. Each week, the Scrum Master's pacing check (SOP-002) compares the share of the allocation used with the share of the period elapsed. If usage is on pace to run out before the allocation resets, the Scrum Master flags it to the CTO and the founder right away, and the CTO holds new Large work or lowers the budgets of new launches until usage is back on pace, so the team slows down before work stops.
 20. Bugbot Autofix, which spawns its own Cloud Agent, stays off unless the CTO turns it on for a repository.
 
 | Setting | Value | Set by |
@@ -150,7 +150,7 @@ Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An 
 ## Escalation
 
 - A Bot that can't tell which surface or model a task belongs to asks the Scrum Master, once, and records the answer on the issue.
-- A recurring disagreement about a role's model assignment goes to the CTO with the usage numbers from the sprint record. Changing a row in the role table is a process change and follows the root README's approval gate.
+- A recurring disagreement about a role's model assignment goes to the CTO with the usage numbers from the measures rows. Changing a row in the role table is a process change and follows the root README's approval gate.
 - If a model in the family table is unavailable, the role uses the next model in its escalation or fallback column and tells the Scrum Master. The Reviewer and QA move to the next family in their ordered lists, applying rules 5 and 6 as written.
 
 ## Change history
@@ -163,3 +163,4 @@ Engineers escalate to Grok 4.7 because it's the same family as Composer 2.5. An 
 | 2026-09-24 | Factual update, not a process change: prerequisites name the CTO's GitHub account, `shpdev-cto`, and the Code Reviewer's, `shpdev-reviewer`; the settings table records that the Scrum Master can read Cursor usage (#5) | CTO and founder, 2026-09-24 |
 | 2026-09-24 | Rules 18 and 19 and the settings table: on-demand spending is disabled (#4), enabling it needs the founder, and the Scrum Master checks spending monthly | CTO and founder, 2026-09-24 |
 | 2026-09-24 | Prerequisites: the identity model is decided (#6). Three GitHub identities, the CTO opens every Cloud Agent pull request, and rules 1 through 6 are in full effect with the requesting Bot named in the `Role` line | CTO and founder, 2026-09-24 |
+| 2026-09-24 | SM-016: sprints and story points replaced by tiers and the queue in the diagram and rules 10, 14, 17, and 19, with the monthly spending check moved to the first working day of the month and a weekly pacing check added; the CTO launches Cloud Agents and opens pull requests for the owner, per SM-014; QA runs where the tier or a risk flag requires it; QA's frontier model follows the risk flags | Pending CTO and founder |

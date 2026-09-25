@@ -19,8 +19,8 @@ This SOP covers launching a Cloud Agent for any repository task: a document, cod
 
 ## Before launching
 
-1. The task has an issue with one accountable owner, and that owner is the launching Bot's role.
-2. The issue is in the sprint, or it's an approved out-of-sprint task recorded on the sprint record.
+1. The task has an issue with one accountable owner, and that owner is the launching Bot's role. Review and QA launches are the exception: they're launched by the Reviewer or QA against the pull request.
+2. The owner has claimed the issue per SOP-011, and the issue has a classification and budget left.
 3. The Bot has read the issue and the documents it links, and can state the expected output in one sentence. If it can't, the issue isn't ready, and the Bot says so on the issue rather than launching.
 4. The Bot has no other Cloud Agent running for a different issue. One issue at a time, per the root README.
 
@@ -30,9 +30,12 @@ Every launch prompt has these parts, in this order. A Bot keeps them short and l
 
 ```markdown
 Issue: <link>
-Role: <role launching this agent>
+Role: <role requesting this work>
+Tier: <Small | Standard | Large>, risk flags: <flags or none>
 Model: <model from SOP-001 for this role and this attempt>
+Attempt: <n>, budget left: <runs>, <hours>, this run stops by <time>
 Branch: <type>/<issue number>-<short-slug>   (type is one of docs, feat, fix, infra, test)
+Marker: <!-- run: <issue>-<attempt> -->   (put it in the body of anything you create on GitHub)
 
 Task
 One paragraph. What to produce, and for whom.
@@ -46,32 +49,34 @@ Context
 Done when
 - <the acceptance criteria from the issue, verbatim>
 - Tests that cover the change pass, and the full suite passes once before the pull request opens
-- A pull request is open on the branch above, with the template filled in, including the Model section
+- The change and its tests are pushed to the branch above. Push only that branch. The CTO opens the pull request as `shpdev-cto`, with the template filled in, including the Classification, Role, and Model sections.
 
 Constraints
 - Change only what the task needs. Note anything else you find on the issue instead.
 - No new accounts, credentials, infrastructure, or external services. Stop and report if the task seems to need one.
 - Don't install what .cursor/environment.json already provides.
+- Before retrying anything that has an effect outside the branch, check whether it already happened (SOP-011 rule 25).
+- If this is unfinished work that will merge, keep it behind the feature flag named on the issue.
 ```
 
 For a document task, "Done when" names the file, its folder under `/docs`, and the template it follows from SOP-006, and the pull request goes to that folder's owner for acceptance.
 
 5. The model in the launch is the one SOP-001 assigns to the role for this attempt. On the third attempt at the same root cause, it's the escalation model, and the issue says so.
 6. Branch names use the pattern above. One branch per issue. A second pull request for the same issue reuses the branch after the first merges.
-7. The launch surface is whichever the Bot's identity has access to under SOP-003: the Cursor web app, the desktop app, Slack, a GitHub comment mentioning `@cursor`, or the API. Until Bot identities exist, the Bot posts the launch prompt on the issue and asks the founder to launch it.
+7. The CTO or the founder launches the agent, on the owning Bot's request, per SOP-003 and SOP-011 rule 2. The owning Bot sends the launch prompt to the CTO. The CTO launches it from the Cursor web app, the desktop app, Slack, or the API, and posts the prompt on the issue. The Code Reviewer launches its own review runs.
 
 ## While the agent runs
 
-8. The Bot links the agent run on the issue as soon as it has a link, and moves the issue to In progress if it isn't already.
+8. The CTO posts a progress note for the owner, with the run link, as soon as it has one, per SOP-011 rule 12.
 9. The Bot doesn't poll. It does other work and picks the result up when the agent reports or the pull request opens.
 10. If the agent asks a question, the Bot answers from the issue and the linked documents. If the answer isn't there, the Bot asks the owning role of the missing document, once, and records the answer on the issue.
 
 ## When the agent finishes
 
-11. The Bot reads the pull request, not just the agent's summary, and checks it against "Done when". A pull request that doesn't meet it goes back to the agent with the gap named, on the same branch.
-12. The Bot confirms the `Model` section lists every model used, adds the launch's model if the agent left it out, and moves the issue to In review.
-13. The Bot posts one comment on the issue: the pull request link, the models used, and anything the agent noted that's outside the task. Those notes become new issues if they're worth doing.
-14. A failed run is recorded on the issue with the root cause in one line. Two failures with the same root cause trigger SOP-001 rule 8.
+11. The owning Bot reads the branch's diff, or the pull request once it's open, not just the agent's summary, and checks it against "Done when". A pull request that doesn't meet it goes back to the agent with the gap named, on the same branch.
+12. The owning Bot gives the CTO every model used, for the `Model` section. The CTO opens the pull request, or marks it ready, and moves the issue to In review.
+13. The CTO posts a progress note for the owner with the pull request link, the models used, and anything the agent noted that's outside the task. Those notes become new issues if they're worth doing.
+14. A failed run is recorded in a progress note with the root cause in one line. Two failures with the same root cause trigger SOP-001 rule 8, and the limits in SOP-011 rule 18 apply after that.
 
 ## Rules for reviews and verification runs
 
@@ -81,10 +86,12 @@ For a document task, "Done when" names the file, its folder under `/docs`, and t
 ## Escalation
 
 - An agent that reports it needs access, an account, or infrastructure stops, and the Bot opens an `access` issue per SOP-003.
-- An agent that finds the task can't be done as specified stops, and the Bot takes it to the owning role of the document that's wrong, then to the Scrum Master if the sprint is affected.
+- An agent that finds the task can't be done as specified stops, and the Bot takes it to the owning role of the document that's wrong, then to the Scrum Master if the queue or a milestone is affected.
 
 ## Change history
 
 | Date | Change | Approved |
 |---|---|---|
 | 2026-09-24 | First draft | Pending CTO and founder |
+| 2026-09-24 | SM-016: launches follow a claim instead of a sprint, the prompt carries the tier, attempt, budget, and run marker, the pull request opens as a draft on the first push, and results are recorded as progress notes | Pending CTO and founder |
+| 2026-09-25 | CTO review, building on SM-014: the `Role` line names the requesting role, the agent pushes only its branch and the CTO opens the pull request, and the CTO or the founder launches the agent | Pending CTO and founder |

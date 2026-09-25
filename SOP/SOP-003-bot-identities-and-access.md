@@ -30,7 +30,7 @@ This SOP covers GitHub identities, cloud identities, logins on the shared cloud 
 | Founder's personal GitHub account | `sheepnir`. Never used by a Bot. | |
 | Pull request creation on `main` | Restricted by ruleset to the founder and the CTO. | #6 |
 | Scrum Master read access to Cursor usage | Set up on 2026-09-24. The Scrum Master reads usage in Cursor itself. | #5 |
-| Cursor on-demand monthly limit | Not yet set | #4 |
+| Cursor on-demand monthly limit | Disabled on 2026-09-24. Enabling it needs the founder, per SOP-001 rule 18. | #4 |
 
 The SOP index records that Bot identities have been in place since 2026-09-24 (#6), so SOP-001 rules 1 through 6 are in full effect. Where those rules say a Bot launches a Cloud Agent or opens a pull request, the Bot requests it and the CTO does it.
 
@@ -69,12 +69,23 @@ Every Bot on the account shares one cloud computer. Browser logins, files, and t
 
 Bots also share one browser profile. A Bot with its own GitHub account, which today means the Code Reviewer, adds it with GitHub's account switcher and never signs out `shpdev-cto`. It confirms its own account is the active one before any GitHub write, and switches back when done. Its login is filled from 1Password without the Bot ever seeing it, so the password manager itself is never logged in on the shared computer (rule 7). GitHub is a team service under rule 6, so this login isn't a one-off under rule 8.
 
+## How identities support the controls
+
+The root README lists the controls that protect `main` and production. With three GitHub identities, this is what each control can rely on:
+
+- **Independent approval (C2): enforced.** Every Cloud Agent pull request is opened by `shpdev-cto` and pushed through the account connected to Cursor, currently `sheepnir`. GitHub never counts an author's own approval, and the ruleset requires approval from someone other than the last pusher. So on those pull requests, `shpdev-reviewer` is the only identity whose approval counts. That's the control.
+- **QA verdicts tied to a commit (C5): written.** QA has no identity, and any writer could set a commit status, so a status would prove no more than a comment. The CTO posts QA's verdict verbatim, naming the commit, and the Code Reviewer checks that it names the head commit before approving.
+- **Specialist review (C6): written.** The Architect and the Cloud Engineer have no identities, so code owner review can't require them. Making the CTO a required code owner would block every pull request the CTO opens. The CTO posts the specialist's review on the pull request, and the Code Reviewer doesn't approve without it.
+- **Production deployment (C7): enforced.** The `production` environment's required reviewers are `shpdev-cto` and `sheepnir`, with self-review prevented, so whoever starts a production deployment can't approve it. Every production deployment therefore involves both the CTO and the founder (SOP-010 rule 6). A rollback uses a separate environment that either of them can run alone (SOP-004 item 17).
+
+A Bot other than the CTO and the Code Reviewer never writes to GitHub, including through the shared browser session signed in as `shpdev-cto`. It may read there. Every write it needs is a request to the CTO, per SOP-011 rule 1.
+
 ## Requesting, recording, and reviewing access
 
 10. A Bot that needs access it doesn't have opens an issue labeled `access`, stating what it needs, for which task, and for how long. It doesn't work around the gap.
 11. The CTO approves or declines on the issue. The founder provisions approved access.
 12. Every grant is recorded in the product repository's access register at `/docs/SM/access.md`: identity, what was granted, scope, date, approver, and review date.
-13. The Scrum Master reviews the register at the last retrospective of every quarter. Access that no open work needs is removed by the founder.
+13. The Scrum Master reviews the register once a quarter, in the measures routine on the first working day of the quarter. Access that no open work needs is removed by the founder.
 14. When a role changes hands, its identity keeps the role's access and loses nothing else. Identities belong to roles, not to Bot instances.
 
 ## Cloud Agent access
@@ -90,7 +101,7 @@ Bots also share one browser profile. A Bot with its own GitHub account, which to
 
 ## Escalation
 
-- Access denied on an issue can be raised once to the CTO with the task it blocks. The CTO's second answer is final for that sprint.
+- Access denied on an issue can be raised once to the CTO with the task it blocks. The CTO's second answer stands until something about the task changes.
 - A disagreement over a role's default access row is a process change to this SOP.
 
 ## Change history
@@ -101,3 +112,4 @@ Bots also share one browser profile. A Bot with its own GitHub account, which to
 | 2026-09-24 | CTO review: the founder or the CTO reviews documentation pull requests from a shared identity | Pending CTO and founder |
 | 2026-09-24 | Current state records the CTO's account, the Code Reviewer's account `shpdev-reviewer` as set up, and the founder's personal account, and how a Bot's account shares the browser profile (factual). Process change: the Code Reviewer's approval is a GitHub review from `shpdev-reviewer` instead of a comment | Pending CTO and founder |
 | 2026-09-24 | Identity model decided (#6): three GitHub identities (founder, CTO, Code Reviewer); the CTO opens every Cloud Agent pull request; the Code Reviewer is the required non-author reviewer | CTO and founder, 2026-09-24 |
+| 2026-09-24 | SM-016: how the three identities support the controls in the root README, with C5 and C6 as written controls and the C7 consequence stated; other Bots read GitHub but never write to it; access reviews moved to the quarterly measures routine; the on-demand row updated to match SOP-001 (#4) | Pending CTO and founder |

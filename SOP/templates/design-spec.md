@@ -1,3 +1,5 @@
+<!-- Needed when the interface changes, on Standard or Large work. For a small change to an existing screen, update the existing spec's affected state instead of starting a new one. See SOP-006. -->
+
 # DS-NNN: <flow or screen name>
 
 | | |
