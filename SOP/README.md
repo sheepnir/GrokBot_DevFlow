@@ -24,6 +24,13 @@ SM-016 proposes changes to SOP-001 through SOP-010 and adds SOP-011. Each SOP's 
 
 Bot identities in place 2026-09-24 (#6). The identity model is recorded in [SOP-003](SOP-003-bot-identities-and-access.md), and SOP-001 rules 1 through 6 are in full effect from that date.
 
+## Rollout assets
+
+- [Versioned profiles and shared collaboration rules](profiles/README.md): proposed instructions for all ten Bots, not yet verified as installed.
+- [Activation, control tests, and pilot](rollout/activation-checklist.md): evidence-based rollout steps for SM-016 and SM-017.
+
+SM-017 hardens the SM-016 proposal. Its edits remain pending with SM-016; no live approval or installation is implied.
+
 ## Conventions
 
 - One SOP per file, named `SOP-NNN-short-title.md`, numbered in the order they are proposed.
