@@ -4,7 +4,9 @@ This document describes how SHP Development, a software team made up of AI agent
 
 This repository is the process Nir Sheep (the founder) and his CTO agent use when working on big projects together with Grok Bot. Every new project starts from this repository. The repository itself is maintained by the founder and the CTO directly, not through the team workflow it describes. The work is supported by a Cursor Ultra subscription, which covers Grok Bot agents and Cursor cloud agents.
 
-Status: **Proposed process v2.0**, pending CTO and founder approval as SM-016. It takes effect only when that approval is recorded here with a date, together with the updated Bot instruction sets. Until then, **approved process v1.1** (SM-001 to SM-015) applies, as it stands at [commit `d323687`](https://github.com/sheepnir/GrokBot_DevFlow/tree/d323687c3545eb9097c20b4561a0e9b394a3d969), and this README describes the proposal. The team is being staffed. Product discovery has started, and no product repository exists yet.
+Status: **Proposed process v2.0**, pending CTO and founder approval as SM-016, with rollout hardening proposed in SM-017. It takes effect only when that approval is recorded here with a date, together with the updated Bot instruction sets. Until then, **approved process v1.1** (SM-001 to SM-015) applies, as it stands at [commit `d323687`](https://github.com/sheepnir/GrokBot_DevFlow/tree/d323687c3545eb9097c20b4561a0e9b394a3d969), and this README describes the proposal. The team is being staffed. Product discovery has started, and no product repository exists yet.
+
+The [activation checklist](SOP/rollout/activation-checklist.md) tracks instruction installation, control verification, and the first pilot. [Versioned Bot profiles](SOP/profiles/README.md) are prepared for installation; their presence does not mean live Bots have been updated.
 
 ## Designed for token efficiency
 
@@ -296,7 +298,7 @@ No product repository exists yet, so **none of these controls is enforced anywhe
 | C8 | Unfinished work stays off in production | Enforced once built | Feature flags that default to off in production. Changes to the production flag settings go through C1 to C4 like any other change. | SOP-004 item 18 |
 | C9 | Secrets stay out of the repository | Enforced | Secret scanning with push protection | SOP-004 item 5 |
 
-What C7 means in practice: because self-review is prevented, whoever starts a production deployment can't approve it, so **every production deployment needs both the CTO and the founder**. For a routine release, the founder starts it and the CTO's approval is the authorization. For a high-impact release, the CTO starts it and the founder approves. A rollback to the last release uses a separate `production-rollback` environment that either of them can run alone.
+What C7 means in practice: because self-review is prevented, whoever starts a production deployment can't approve it, so **every production deployment needs both the CTO and the founder**. For a routine release, the founder starts it and the CTO's approval is the authorization. For a high-impact release, the CTO starts it and the founder approves. A rollback to the recorded previous known-good release when compatible uses a separate `production-rollback` environment that either of them can run alone.
 
 Identities are what make C2 and C7 real. Cloud Agents push only their own branches and have no merge or deploy rights, so an agent can't approve, merge, or deploy its own work. Bots other than the CTO and the Code Reviewer never write to GitHub. SOP-003 sets the identity model and each role's least-privilege access.
 
@@ -305,14 +307,15 @@ Identities are what make C2 and C7 real. Cloud Agents push only their own branch
 Bots and their Cloud Agents work without asking permission for routine steps. [SOP-011](SOP/SOP-011-autonomous-execution.md) sets the policy. In short:
 
 - **Through the CTO.** Only the CTO and the Code Reviewer have GitHub identities. Every other Bot reads GitHub, but its writes are requests to the CTO. The CTO or the founder launches its Cloud Agents.
-- **Claiming.** The CTO posts the owner's claim, naming the branch, the classification, the budget, and any shared areas it touches. Because every claim goes through the CTO, two claims can't land at once.
+- **Claiming.** The CTO posts the owner's claim, naming the branch, the classification, the budget, and any shared areas it touches. One registered dispatcher serializes claims and launches; a shared account alone is not a lock. Takeover requires confirming the old dispatcher has stopped.
 - **Isolation.** One issue, one branch, one running agent. Changes to shared areas, such as API contracts, the schema, CI, or agent configuration, are sequenced between owners and land in their own small pull request first.
 - **Durable records.** The issue and the pull request are the record, not a Bot's memory. A short progress note is posted at each launch, result, and block, and a handoff note when work changes hands. Nothing is posted on a schedule.
 - **Stalls.** A daily Scrum Master check, which only reads, finds issues with no progress for two working days, failed agents, red CI, and unstarted reviews. It tells the owner and the CTO in chat. If the owner doesn't respond, the CTO reassigns the issue, and the new owner continues from the branch.
 - **Retries and stopping.** Two attempts on the default model and one on the escalation model, then the owner stops and escalates. The owner also stops when access, clarity, the budget, or permission runs out.
+- **Runtime enforcement.** Each launch has a save deadline and hard stop, enforced by a tested timeout or watchdog; otherwise it requires a named supervisor. The daily stall check does not enforce run limits.
 - **Budgets.** Build, review, and QA runs each have a cap in runs and agent time: per issue for builds, per pull request for review and QA. Budgets are shares of the included allocation. An extension never turns on on-demand spending, and a weekly pacing check slows new work when usage runs ahead.
-- **Safe retries.** Before retrying anything with an external effect, the owner and the CTO check whether the first attempt took effect. Everything posted carries a run marker, and deployments and migrations are keyed to the commit, so they don't repeat.
-- **Permissions.** Routine actions need no approval. Approving, merging, production deployment, and new accounts or infrastructure go through their gates. Turning a flag off in production, rolling back to the last release, and stopping a runaway agent are authorized in advance for the CTO and the founder, and reported at once.
+- **Safe retries.** Before retrying anything with an external effect, the owner and the CTO check whether the first attempt took effect. Each external action has its own operation ID, reused only for retries of that action. Deployment records include the artifact and configuration revision, and uncertain outcomes are reconciled before retrying.
+- **Permissions.** Routine actions need no approval. Approving, merging, production deployment, and new accounts or infrastructure go through their gates. Turning a flag off in production, restoring the recorded previous known-good release when compatible, and stopping a runaway agent are authorized in advance for the CTO and the founder, and reported at once.
 
 ## Approval gates
 
@@ -433,6 +436,7 @@ The [SOP folder](SOP/README.md) holds the procedures Bots follow to carry out th
 | SM-014 | On-demand spending disabled, with a monthly Scrum Master spending check (#4); Bot identity model: three GitHub identities, and the CTO opens every Cloud Agent pull request (#6) | CTO and founder, 2026-09-24 (founder decisions given to the CTO in writing) |
 | SM-015 | The Code Reviewer approves with a GitHub review from `shpdev-reviewer` (SOP-007 rule 23) | CTO and founder, 2026-09-24 |
 | SM-016 | Process v2.0, a workflow proportional to the work. Adds work classification with three tiers and risk flags. Roles become accountabilities with one owner per issue, and independence is kept. One persistent queue with work-in-progress limits and four measures replaces sprints, story points, and per-sprint Projects. The controls are listed as written or enforced. Feature flags keep unfinished work out of releases. Adds SOP-011, autonomous execution. Updates SOP-001 through SOP-010 and the templates to match, and replaces SOP-008 with flow, queue, and reviews. Supersedes the sprint, story point, and ceremony parts of SM-001, and QA on every pull request from SM-003. Builds on SM-014 and SM-015: the three GitHub identities, the CTO opening every Cloud Agent pull request, and disabled on-demand spending. Takes effect together with the updated Bot instruction sets. | Pending CTO and founder |
+| SM-017 | Harden the proposed v2.0 rollout: serialize claims through a registered dispatcher, distinguish operation IDs from run IDs, enforce run deadlines, restore compatible previous known-good artifacts, permit scoped bootstrap issues, and prepare versioned profiles plus activation/control/pilot checks. | Pending CTO and founder |
 
 ## References
 

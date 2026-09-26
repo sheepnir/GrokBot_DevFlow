@@ -19,7 +19,7 @@ This SOP covers launching a Cloud Agent for any repository task: a document, cod
 
 ## Before launching
 
-1. The task has an issue with one accountable owner, and that owner is the launching Bot's role. Review and QA launches are the exception: they're launched by the Reviewer or QA against the pull request.
+1. The task has an issue with one accountable owner, and that owner is the launching Bot's role. Review and QA requests are the exception: they target a pull request. QA requests a launch through the CTO; the Code Reviewer may launch a registered review run under rule 7.
 2. The owner has claimed the issue per SOP-011, and the issue has a classification and budget left.
 3. The Bot has read the issue and the documents it links, and can state the expected output in one sentence. If it can't, the issue isn't ready, and the Bot says so on the issue rather than launching.
 4. The Bot has no other Cloud Agent running for a different issue. One issue at a time, per the root README.
@@ -33,9 +33,13 @@ Issue: <link>
 Role: <role requesting this work>
 Tier: <Small | Standard | Large>, risk flags: <flags or none>
 Model: <model from SOP-001 for this role and this attempt>
-Attempt: <n>, budget left: <runs>, <hours>, this run stops by <time>
+Attempt: <n>, budget left: <runs>, <hours>
+Dispatcher: <registered session ID>
+Save deadline: <UTC time>, hard stop: <UTC time>
+Timeout: <tested platform timeout | independent watchdog | named supervisor>
 Branch: <type>/<issue number>-<short-slug>   (type is one of docs, feat, fix, infra, test)
-Marker: <!-- run: <issue>-<attempt> -->   (put it in the body of anything you create on GitHub)
+Operation ledger: <record location; dispatcher assigns a separate action and UUID per external operation>
+Marker format: <!-- operation: <repo>-<issue>-<action>-<UUID> --> (reuse only for a retry of that operation)
 
 Task
 One paragraph. What to produce, and for whom.
@@ -63,12 +67,12 @@ For a document task, "Done when" names the file, its folder under `/docs`, and t
 
 5. The model in the launch is the one SOP-001 assigns to the role for this attempt. On the third attempt at the same root cause, it's the escalation model, and the issue says so.
 6. Branch names use the pattern above. One branch per issue. A second pull request for the same issue reuses the branch after the first merges.
-7. The CTO or the founder launches the agent, on the owning Bot's request, per SOP-003 and SOP-011 rule 2. The owning Bot sends the launch prompt to the CTO. The CTO launches it from the Cursor web app, the desktop app, Slack, or the API, and posts the prompt on the issue. The Code Reviewer launches its own review runs.
+7. The CTO or the founder launches the agent through the designated dispatcher, on the owning Bot's request, per SOP-003 and SOP-011 rules 2 and 5. The dispatcher verifies the timeout or named supervisor before launch; an unattended run without a tested stop mechanism does not start. The owning Bot sends the launch prompt to the CTO. The CTO launches it from the Cursor web app, the desktop app, Slack, or the API, and posts the prompt on the issue. The Code Reviewer may launch its own review runs after registering the run and its timeout with the dispatcher; it does not claim build work or push changes.
 
 ## While the agent runs
 
 8. The CTO posts a progress note for the owner, with the run link, as soon as it has one, per SOP-011 rule 12.
-9. The Bot doesn't poll. It does other work and picks the result up when the agent reports or the pull request opens.
+9. The owning Bot does not repeatedly poll for progress. It picks up the result when the agent reports. The independent watchdog or named supervisor still enforces the deadlines under SOP-011 rule 17; result notifications do not replace timeout enforcement.
 10. If the agent asks a question, the Bot answers from the issue and the linked documents. If the answer isn't there, the Bot asks the owning role of the missing document, once, and records the answer on the issue.
 
 ## When the agent finishes
@@ -95,3 +99,4 @@ For a document task, "Done when" names the file, its folder under `/docs`, and t
 | 2026-09-24 | First draft | Pending CTO and founder |
 | 2026-09-24 | SM-016: launches follow a claim instead of a sprint, the prompt carries the tier, attempt, budget, and run marker, the pull request opens as a draft on the first push, and results are recorded as progress notes | Pending CTO and founder |
 | 2026-09-25 | CTO review, building on SM-014: the `Role` line names the requesting role, the agent pushes only its branch and the CTO opens the pull request, and the CTO or the founder launches the agent | Pending CTO and founder |
+| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | Pending CTO and founder |

@@ -20,19 +20,22 @@ Acting on GitHub, claiming work, isolation, progress records and handoffs, stall
 ## Acting on GitHub
 
 1. **Bots act on GitHub through the CTO.** Only the CTO (`shpdev-cto`) and the Code Reviewer (`shpdev-reviewer`) have GitHub identities, per SOP-003. Every other Bot's GitHub write is a request to the CTO, sent in the team chat with the text to post. That includes claims, labels, state changes, notes, and new issues. The CTO posts it, starting with `For <role>:`, and doesn't edit the substance. Where this SOP says an owner "posts" or "moves" something, the CTO does it on the owner's request.
-2. Cloud Agents are launched by the CTO or the founder, on the owner's request, per SOP-003. A Cloud Agent pushes only its own branch, through the account connected to Cursor.
+2. Build and QA Cloud Agents are launched by the CTO or the founder through the registered dispatcher, on the owner's request, per SOP-003. The Code Reviewer may launch a registered review run under SOP-005 rule 7, subject to the same runtime and budget controls. A Cloud Agent pushes only its own branch, through the account connected to Cursor.
 3. Other Bots read GitHub, including the Project, in the shared browser session, where GitHub is signed in as `shpdev-cto`. They only read there and never write, per SOP-003. The Scrum Master reads the Project and the issue and pull request timelines this way for the flow check and the measures. It reads usage in Cursor itself (#5).
 
 ## Claiming work
 
 4. Work starts only from an issue in Ready that one owner has claimed. No agent is launched for an unclaimed issue, or for an issue claimed by someone else.
-5. To claim an issue, the owner asks the CTO. The CTO re-reads the issue. If it already has an owner label or a claim from another role, the CTO tells the requester and stops. Otherwise it sets the `owner:<role>` label, moves the issue to In progress, and posts the claim. Because every claim goes through the CTO, two claims can't land at once.
+5. To claim an issue, the owner asks the CTO. One designated dispatcher session handles claims and build launches for each product repository, one request at a time. Its session ID and current holder (CTO, or founder during takeover) are recorded in `/docs/SM/setup.md`. Other sessions enqueue requests; they never claim or launch directly. The dispatcher re-reads the issue, confirms it is Ready and within WIP limits, and checks for an existing owner, claim, or running build before recording the owner label, In progress state, and claim. It acknowledges the completed claim before launching. If a write fails partway, it reconciles all three records before continuing; a partial claim is not permission to launch.
+
+   A shared GitHub identity or a read-then-write check is not a lock. This single-dispatcher restriction is a written control until a durable queue and atomic claim store are implemented and tested. On takeover, the founder confirms the old dispatcher has stopped, reconciles outstanding claims and runs, and records the replacement. If the previous dispatcher's state is uncertain, new claims and launches wait. Parallel dispatcher sessions are prohibited.
 
 ```markdown
 For <role>: claimed
 Branch: <type>/<issue number>-<short-slug>
 Classification: confirmed | changed, with the classification block from the root README
 Budget: <the tier's budget from rule 22, or the extended one>
+Dispatcher: <session ID>
 Touches shared: <areas from rule 8>, or none
 ```
 
@@ -73,6 +76,10 @@ Budget used: <runs> of <limit>, <hours> of <limit>
 16. If the owner doesn't respond within one working day, the Scrum Master asks the CTO to reassign the issue. The CTO, or the founder, stops the owner's running agent, if any, and posts the reassignment with a handoff note built from the issue and the branch. The new owner continues from the branch. It starts over only if it judges the branch unusable, and it says why on the issue.
 17. Before a relaunch after a failure, the CTO or the founder confirms the previous run has stopped. Two agents never push to one branch.
 
+   Every build, review, and QA launch records its run ID, start time, save deadline, hard stop time (UTC), and timeout mechanism. The hard stop is no later than the smaller of the single-run limit and remaining cumulative time budget. Stop starting work five minutes before that deadline (or immediately if less time remains). Saving progress is included in the budget, never an unlimited extension.
+
+   Use a tested platform timeout where available. Otherwise an independent watchdog schedules termination at the hard stop, checks active runs at least once per minute, and confirms termination within one minute of the hard stop. If neither mechanism is available and tested, unattended launches are blocked; the CTO or founder may supervise a run with a timer and the same stop deadline. If termination cannot be confirmed, stop new launches, alert the CTO and founder, and treat the old run as active. The daily flow check is recovery reporting, not runtime enforcement. Record any overrun in actual usage; never silently reset the budget.
+
 ## Retries, escalation, and stopping
 
 18. For the same root cause, the owner gets two attempts on the role's default model and one on its escalation model, per SOP-001 rule 8. After that, the owner stops and escalates, to the Architect for a technical cause or the PM for a requirements cause, and tells the Scrum Master. There's no fourth attempt.
@@ -98,14 +105,16 @@ Budget used: <runs> of <limit>, <hours> of <limit>
 | Code Reviewer | 3 per pull request | 1 hour per pull request | 30 minutes |
 | QA | 3 per pull request | 2 hours per pull request | 45 minutes |
 
-23. At the limit, the running agent finishes its current step, not mid-change, and pushes to the branch. The owner posts a handoff note and the issue moves to Blocked with the reason `budget`. The owner then asks the CTO for one extension of up to half the original budget, with the reason, or proposes splitting or reclassifying the issue. A review or QA budget that runs out goes to the CTO the same way. No answer means no extension.
-24. The weekly pacing check (SOP-001 rule 19) compares the share of the allocation used with the share of the period elapsed. When usage is ahead of pace, the CTO holds new Large work or lowers the budgets of new launches until usage is back on pace. When the allocation runs out, no new agents launch, and running ones finish.
+23. Before the hard stop, the running agent checkpoints safe progress on its branch within the five-minute save window in rule 17. At the hard stop it is terminated even if a step is unfinished; incomplete work is described in the handoff and never treated as verified. The owner posts a handoff note and the issue moves to Blocked with the reason `budget`. The owner then asks the CTO for one extension of up to half the original budget, with the reason, or proposes splitting or reclassifying the issue. A review or QA budget that runs out goes to the CTO the same way. No answer means no extension.
+24. The weekly pacing check (SOP-001 rule 19) compares the share of the allocation used with the share of the period elapsed. When usage is ahead of pace, the CTO holds new Large work or lowers the budgets of new launches until usage is back on pace. When the allocation runs out, no new agents launch; running agents checkpoint and stop under rule 17, subject to the platform stopping them sooner. No run may enable on-demand spending.
 
 ## Actions with external effects
 
 25. Before retrying any step that has an effect outside the branch, the owner and the CTO check whether the earlier attempt already took effect, and don't repeat the step if it did. Such steps include opening a pull request, posting a review, verdict, or comment, filing an issue, deploying, running a migration, creating a cloud resource, sending a message, and calling a paid API.
-26. Everything posted on GitHub for an issue carries the marker `<!-- run: <issue>-<attempt> -->` in its body. Before posting, the CTO searches for the marker.
-27. Deployments and migrations run only through the pipeline, keyed to the commit. The pipeline doesn't redeploy a commit that's already live in the same environment, and migrations record their version, so a retry is safe by construction (SOP-004 item 21).
+26. Each external operation is assigned a unique operation ID before its first attempt. Record its target, action, payload fingerprint, and state (pending, confirmed, or uncertain) in a durable operation ledger accessible to the dispatcher. Store no secrets or private payloads. Public GitHub posts carry `<!-- operation: <repo>-<issue>-<action>-<UUID> -->`. A launch note, result note, verdict, and pull request are separate operations with separate IDs, even within one agent run. A retry of the same operation reuses its ID and payload; changed content is a new operation or an explicit update to a known object.
+
+   Before writing, the dispatcher checks the ledger and the target object's current state, including all relevant pages of comments or reviews. A matching confirmed operation returns the existing object instead of posting again. If the earlier outcome is uncertain, reconcile it under rule 28. A search marker helps reconciliation; it does not provide atomic deduplication or permission to retry an uncertain action. Use the single dispatcher from rule 5, and use a service's idempotency key where supported.
+27. Deployments and migrations run only through the pipeline. Serialize deployment and rollback per environment. A deployment operation identifies the environment, immutable artifact digest, configuration/flag revision, and operation ID. Skip it only when that full desired state is already confirmed live; a matching code commit alone is insufficient. Record each migration's version and completion durably, and reconcile partially applied or non-transactional migrations before retrying. An interrupted migration is not assumed safe to rerun. SOP-004 item 21 tests these cases.
 28. If nobody can tell whether a step took effect, the owner stops and escalates. Nobody retries just to be safe.
 
 ## Permissions
@@ -115,7 +124,7 @@ Budget used: <runs> of <limit>, <hours> of <limit>
 | Kind | Action | Who does it | Gate |
 |---|---|---|---|
 | Routine | Claim a Ready issue within the work-in-progress limits | The CTO, on the owner's request | None |
-| Routine | Launch agents within the budget | The CTO or the founder, on the owner's request | None |
+| Routine | Launch agents within the budget and with verified stop enforcement | The designated CTO/founder dispatcher on the owner's request; the Code Reviewer may launch a registered review run under SOP-005 rule 7 | None |
 | Routine | Push to the issue's own branch | The issue's Cloud Agent | None |
 | Routine | Open draft and ready pull requests, and post comments, labels, notes, and state changes for an issue | The CTO as `shpdev-cto`, on the owner's request | None |
 | Routine | Re-run a CI job once under rule 19 | The CTO | None |
@@ -131,7 +140,7 @@ Budget used: <runs> of <limit>, <hours> of <limit>
 | Gated | A new external service, account, credential, or secret | Anyone asks | The founder, per SOP-003 |
 | Gated | Delete data, or a branch or issue someone else owns | Anyone asks | Whoever owns it |
 | Emergency | Turn a feature flag off in production when its behavior is causing harm | The CTO or the founder | Authorized in advance. Report at once. |
-| Emergency | Roll production back to the last release when a SOP-010 rollback trigger fires | The CTO or the founder, alone, through the `production-rollback` environment (SOP-004 item 17) | Authorized in advance. Report at once. |
+| Emergency | Roll production back to the recorded previous known-good artifact when a SOP-010 rollback trigger fires and the compatibility check passes | The CTO or the founder, alone, through the `production-rollback` environment (SOP-004 item 17) | Authorized in advance. Report at once. |
 | Emergency | Stop a running agent that's doing damage | The CTO or the founder | Authorized in advance. Report at once. |
 
 30. Every other containment action, such as rotating or revoking a credential, deleting data, or changing a cloud account, stays with the founder, directed by the CTO, per SOP-003 and SOP-009.
@@ -152,7 +161,7 @@ Budget used: <runs> of <limit>, <hours> of <limit>
 ## Escalation
 
 - An owner who disagrees with a reassignment raises it with the Scrum Master once, then with the CTO.
-- A budget that's extended twice on the same issue goes to the CTO and the PM together, with a proposal to split, reclassify, or drop the issue.
+- A request for a second budget extension is declined and goes to the CTO and the PM together, with a proposal to split, reclassify, or drop the issue. Rule 23 permits only one extension.
 - If the flow check stops running, whoever notices tells the Scrum Master and the CTO. Until it's fixed, the Scrum Master runs it by hand each working day.
 - If the CTO is unavailable, the founder does what this SOP gives the CTO. If both are unavailable, work that needs a GitHub write waits. Nobody writes as another identity.
 
@@ -162,3 +171,4 @@ Budget used: <runs> of <limit>, <hours> of <limit>
 |---|---|---|
 | 2026-09-24 | First draft, as part of SM-016 | Pending CTO and founder |
 | 2026-09-25 | CTO review: Bots act on GitHub through the CTO, launches, stops, deploys, and emergency actions named for the CTO or the founder, no daily progress note, how the Scrum Master reads for the flow check, review and QA budgets capped per pull request, budgets tied to the included allocation with a weekly pacing check | Pending CTO and founder |
+| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | Pending CTO and founder |

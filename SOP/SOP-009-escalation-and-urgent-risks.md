@@ -47,7 +47,7 @@ Decision needed by: <date>, and what happens if it's later
 
 An urgent risk is any of: a credential or personal data exposed or suspected exposed; unauthorized access, or a change that would grant it; a production outage or data loss; a change about to go to production without its required approval; or a legal or safety problem with something already released.
 
-8. The Bot that sees it stops what it's doing on that matter. It doesn't try to contain the risk by taking an action it isn't approved for, such as rotating a credential, deleting data, or changing production. The only exceptions are the emergency actions SOP-011 authorizes in advance for the CTO and the founder: turning a feature flag off in production, rolling back to the last release through the pipeline, and stopping a running agent. Any Bot may ask them for one at once.
+8. The Bot that sees it stops what it's doing on that matter. It doesn't try to contain the risk by taking an action it isn't approved for, such as rotating a credential, deleting data, or changing production. The only exceptions are the emergency actions SOP-011 authorizes in advance for the CTO and the founder: turning a feature flag off in production, restoring the recorded previous known-good release when compatible through the pipeline, and stopping a running agent. Any Bot may ask them for one at once.
 9. It tells the CTO and the founder at once, both of them, in a direct message and on a new issue labeled `incident`. The issue states what was seen, where, when, and what the Bot did and didn't do. It contains no secret, no personal data, and no exploit detail, because repositories are public.
 10. The CTO runs the response. The founder does any action that needs the founder's access, per SOP-003: rotation, revocation, account changes.
 11. Containment comes before diagnosis. The first actions stop the exposure or the outage. Root cause comes after.
@@ -73,3 +73,4 @@ An urgent risk is any of: a credential or personal data exposed or suspected exp
 |---|---|---|
 | 2026-09-24 | First draft | Pending CTO and founder |
 | 2026-09-24 | SM-016: the emergency actions authorized in advance by SOP-011 are named as the exceptions to rule 8, and deadlines no longer refer to sprints | Pending CTO and founder |
+| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | Pending CTO and founder |

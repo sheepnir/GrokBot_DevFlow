@@ -29,6 +29,8 @@ This SOP covers the content of profiles, skills, and routines, the templates for
 
 Grok Bot keeps a Bot's memory, files, browser sessions, and preferences across sessions, and every Bot on the account shares one cloud computer. That's why standing rules belong in the profile and not in memory: memory is a summary the Bot writes for itself and can drift, while the profile is reviewed text.
 
+The [versioned profiles](profiles/README.md) include all ten roles and shared rules. Install and read back the saved instructions using the [activation checklist](rollout/activation-checklist.md); do not infer installation from a repository change.
+
 ## Profile template
 
 Every Bot's profile uses this shape, in this order. Section headings are kept so a reader can compare two profiles side by side.
@@ -112,3 +114,4 @@ These exist from the day the first product repository is set up. Other routines 
 | 2026-09-24 | First draft | Pending CTO and founder |
 | 2026-09-24 | SM-016: the profile's Never section covers other roles' decisions, not their work; skills may be run by an issue's owner; sprint routines replaced by the daily flow check and the monthly measures routine | Pending CTO and founder |
 | 2026-09-25 | CTO review: the flow check reads GitHub and reports in chat, the monthly spending check from SM-014 moves to the first working day of the month, and a weekly pacing check is added | Pending CTO and founder |
+| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | Pending CTO and founder |

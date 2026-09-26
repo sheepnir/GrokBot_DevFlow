@@ -50,7 +50,10 @@ Issues shipped complete: <links>
 
 Needs attention
 - Risk-flagged issues: <links>, each with its security review, or none
-- Migrations: <none | reversible | not reversible, with the rollback plan link>
+- Migrations: <none | reversible | not reversible, with the compatibility and recovery plan link>
+Artifact and configuration: <immutable digest>, <configuration/flag revision>
+Previous known-good target: <artifact digest and configuration revision, or none for first launch>
+Rollback compatibility: <verified compatible | blocked, with containment/forward-recovery plan>
 - Cost delta: <none | amount per month, with the founder's approval link>
 - External commitments: <none | listed, with the founder's approval link>
 
@@ -67,7 +70,7 @@ Definition of done evidence, CI results, and acceptance are already on the issue
 6. A release is authorized before it deploys. Once C7 exists, the authorization is the approval on the `production` environment, and the pipeline can't deploy without it. Self-review is prevented, so whoever starts the deployment can't approve it, and every production deployment needs both the CTO and the founder. For a routine release, the founder starts the pipeline run and the CTO's approval is the authorization. For a high-impact release, the CTO starts it and the founder's approval is the authorization. Until C7 exists, the authorization is written in the release draft with the date, and nobody starts the deployment without it. Silence isn't authorization, and a release isn't authorized by being scheduled.
 7. Production is deployed only by the pipeline from SOP-004, never by hand, and never from a machine other than the pipeline. The Cloud Engineer prepares the deployment lines of the release draft, and the run is started and approved per rule 6. The pipeline deploys the artifact CI built for the release commit. A deployment the pipeline can't do is a change to the pipeline first.
 8. After deployment, the Cloud Engineer verifies the changed behavior in production, through the product and the monitoring views it has been given, and records the result. Anything it can't see, it asks the founder to check. QA verifies user-facing changes where a test in production is safe.
-9. A release is rolled back, without waiting for a diagnosis, when any of these happens: an alert fires on the changed behavior, a user-facing error rate rises above the threshold in `/docs/architect/operations.md`, data is found to be wrong, or a security or privacy problem is found. If a flag caused it, turning the flag off comes first. The rollback is an emergency action under SOP-011: the CTO or the founder runs it alone through the `production-rollback` environment, and it's recorded on the release. An `incident` issue is opened per SOP-009 if the cause is a risk.
+9. A release triggers immediate containment, without waiting for a diagnosis, when any of these happens: an alert fires on the changed behavior, a user-facing error rate rises above the threshold in `/docs/architect/operations.md`, data is found to be wrong, or a security or privacy problem is found. If a flag caused it, turning the flag off comes first. Rollback restores the previous known-good artifact and configuration recorded before this deployment, not the latest release tag. It is allowed only when that target exists and is compatible with the current data/schema. The CTO or founder runs it alone through the restricted `production-rollback` environment and records the result. If the target is missing (including the first launch), a migration is incompatible, or compatibility is uncertain, do not attempt an automatic code rollback: use the pre-approved containment plan and escalate recovery to the CTO and founder. Data restoration or destructive migration reversal is never implicit in rollback authorization. An `incident` issue is opened per SOP-009 if the cause is a risk.
 10. Release notes for user-facing changes are written by the PM in `/docs/product/releases.md`, from the issues, before the release is authorized.
 11. From the first production launch until the founder says otherwise, every release is high-impact.
 
@@ -83,3 +86,4 @@ Definition of done evidence, CI results, and acceptance are already on the issue
 | 2026-09-24 | First draft | Pending CTO and founder |
 | 2026-09-24 | SM-016: feature flags keep unfinished work out of a release instead of excluding issues, the GitHub release is the release record and links evidence instead of re-checking it, and authorization moves to the `production` environment approval once C7 exists | Pending CTO and founder |
 | 2026-09-25 | CTO review: every production deployment needs both the CTO and the founder, because self-review is prevented; the Cloud Engineer prepares but doesn't run deployments; rollback runs through `production-rollback` | Pending CTO and founder |
+| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | Pending CTO and founder |
