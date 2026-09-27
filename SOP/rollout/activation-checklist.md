@@ -1,23 +1,24 @@
 # Workflow v2 activation and pilot
 
-Owner: CTO, with the founder. Status: prepared, not executed. This is the rollout record for SM-016 and the SM-017 hardening changes. Mark a step complete only with actual evidence. Repository documentation and a merged PR do not prove a live setting or a saved Bot instruction changed.
+Owner: CTO, with the founder. Status: approved 2026-09-26 by CTO and founder, activation effective when SM-018 merges. This is the rollout record for SM-016, SM-017, and SM-018. Mark a step complete only with actual evidence. Repository documentation and a merged PR do not prove a live setting or a saved Bot instruction changed.
 
 ## Current handoff
 
-- The founder requested completion of the rollout on 2026-09-26. That authorizes preparation and implementation, but is not a recorded CTO approval.
+- Process v2.0 (SM-016, SM-017) was approved by the founder and the CTO on 2026-09-26 (founder decision in CTO chat, 2026-09-26 17:00 PT). Sprint 6 lessons and founder rules were folded in as SM-018, approved by the same 2026-09-26 decision. Activation is effective when SM-018 merges.
 - Versioned profiles and shared rules are in [profiles](../profiles/README.md). They were prepared from repository policy; the existing live profiles have not been exported or compared.
 - A product repository, live Bot configuration location, and deployment target have not been identified for this rollout. No product controls, live profile installation, watchdog, deployment, or pilot are claimed as complete.
-- The prior approved process remains effective until approvals and instruction installation are recorded. The [SOP index](../README.md) remains the authoritative approval record.
+- The instruction-installation steps (1, 2, 4, 5, 6) and the Bot table rows stay open/"Not verified" until real evidence exists.
 
 ## 1. Synchronize instructions and activate
 
 1. Identify the ten live Bots (CTO plus nine roles), their saved profiles, shared collaboration rules, and existing routines. Record non-secret identifiers and the previous configuration version in a private administration record. Do not publish private prompts or memory exports.
 2. Compare the live profiles with [the proposed profiles](../profiles/README.md). Preserve compatible role-specific knowledge and resolve conflicting instructions about sprints, points, quality caps, engineer merges, QA on every PR, retries, runtime limits, and release authority. Keep the start rule on every profile.
 3. Obtain the CTO and founder's actual decisions on the exact revision. Record their dates and decision evidence in SM-016/SM-017 and update the affected SOP statuses together. Do not sign for either person or infer approval from a merge.
+   - **Done on 2026-09-26.** Evidence: founder decision in CTO chat, 2026-09-26 17:00 PT. SM-016, SM-017, and SM-018 approved together. Activation effective when SM-018 merges.
 4. Pause new work during instruction replacement; checkpoint active work and record which approved version governs it. Save each role profile plus the shared rules. Read back the saved configuration and record the installed repository commit for each Bot. Do not send configuration text as a live task.
 5. Update existing routines in place: daily flow check, weekly pacing, monthly measures/spending, and infrastructure check. Remove superseded sprint routines, avoid duplicates, and preserve notification intent. Runtime stopping is a separate per-run control, not a daily routine. Record trigger, timezone, owner, and output for each routine.
 6. Check each Bot can explain its tier-dependent role, GitHub permissions, and stop conditions without performing external actions. In particular, verify the reviewer cannot author its own change and other Bots request GitHub writes through the CTO.
-7. Record the installed versions and checks in the table below. Activate the revision only once all instruction rows and approvals are complete; then update the root README status and effective date. If installation fails, restore the previous saved versions before resuming work.
+7. Record the installed versions and checks in the table below. Process v2.0 is approved and takes effect when SM-018 merges. Bot instruction installation, the control tests, and the pilot are follow-up rollout steps that stay open; they are not preconditions for activation. Instruction installation (steps 1, 2, 4, 5, 6) and the Bot table rows stay open/"Not verified" until real evidence exists.
 
 | Bot | Proposed profile | Saved version matches | Evidence / installed commit |
 |---|---|---|---|
@@ -67,7 +68,7 @@ Choose real backlog items after the product repository is ready. Do not invent p
 2. **Standard feature:** an actual feature with only missing requirements/design documented, author evidence, independent review and QA, applicable acceptance, and a production-off flag if merging unfinished behavior.
 3. Rehearse a **small security-sensitive classification** using synthetic code in the test target: confirm security review and QA are required despite Small size. This is a control exercise, not an invented production feature.
 4. Record links to the issues, PRs, run IDs, checks, verdicts, actual approvals, release (if authorized), and completion. Record delivery time, waiting time, defects, and actual usage where available; unknown usage stays unknown.
-5. Assess whether CTO-mediated writes and founder participation in every production deployment cause meaningful delay. Keep those authority rules unless the founder and CTO explicitly change them. Change only what the evidence warrants; do not add a recurring ceremony.
+5. Assess whether CTO-mediated writes and founder participation in every production deployment cause meaningful delay. Measure "verdict ready → posted on GitHub" write latency for blocking verdicts. Keep those authority rules unless the founder and CTO explicitly change them. Change only what the evidence warrants; do not add a recurring ceremony.
 
 | Pilot | Issue / PR | Result | Evidence |
 |---|---|---|---|

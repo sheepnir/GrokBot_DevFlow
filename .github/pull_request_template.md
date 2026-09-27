@@ -2,6 +2,10 @@
 
 <!-- Link the issue this pull request is for. One issue per pull request, and an issue may take several. -->
 
+## Stack
+
+<!-- "n of m, base PR #" if stacked, or "none" if not. -->
+
 ## Classification
 
 <!-- Copy from the issue: tier and risk flags. The Reviewer adds a tier or a flag if these look wrong. See the root README, "Classify the work first". -->

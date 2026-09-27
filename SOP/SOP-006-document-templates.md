@@ -63,5 +63,5 @@ A risk flag doesn't add documents. It adds reviews, per the root README. Don't c
 
 | Date | Change | Approved |
 |---|---|---|
-| 2026-09-24 | First draft, with five templates | Pending CTO and founder |
-| 2026-09-24 | SM-016: documents required by tier, the issue template added, the sprint record replaced by the review record, and the release record moved to the GitHub release | Pending CTO and founder |
+| 2026-09-24 | First draft, with five templates | CTO and founder, 2026-09-26 |
+| 2026-09-24 | SM-016: documents required by tier, the issue template added, the sprint record replaced by the review record, and the release record moved to the GitHub release | CTO and founder, 2026-09-26 |

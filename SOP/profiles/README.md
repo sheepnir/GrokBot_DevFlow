@@ -1,6 +1,6 @@
 # Versioned Bot profiles
 
-These are proposed repository-backed profiles for all ten roles, including the CTO and the nine team Bots. They are prepared from the workflow, not exports of the live Bots. Live installation has not been verified.
+These are approved repository-backed profiles for all ten roles, including the CTO and the nine team Bots. They are prepared from the workflow. Live installation has not been verified.
 
 | Bot | Profile |
 |---|---|
