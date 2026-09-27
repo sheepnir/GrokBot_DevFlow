@@ -96,7 +96,7 @@ A Bot other than the CTO and the Code Reviewer never writes to GitHub, including
 
 ## Exposure
 
-18. A Bot that sees a credential where it shouldn't be, or suspects one has leaked, stops the task, tells the founder and the CTO at once, and doesn't try to fix it by using or moving the credential.
+18. A Bot that sees a credential where it shouldn't be, or suspects one has leaked, stops the task, tells the founder and the CTO at once, and doesn't try to fix it by using or moving the credential. Secrets never in chat; any secret pasted into chat is treated as exposed and rotated immediately. One chat-free founder secret-entry path exists: the founder enters the value directly into the secrets manager/secret store, never into chat. Before release day, dry-run that the secret is visible to the process that needs it.
 19. The founder rotates the credential. The CTO records the exposure and the rotation in `/docs/architect/decisions/` as a security note, with no secret in it, because repositories are public.
 
 ## Escalation
@@ -108,8 +108,9 @@ A Bot other than the CTO and the Code Reviewer never writes to GitHub, including
 
 | Date | Change | Approved |
 |---|---|---|
-| 2026-09-24 | First draft | Pending CTO and founder |
-| 2026-09-24 | CTO review: the founder or the CTO reviews documentation pull requests from a shared identity | Pending CTO and founder |
-| 2026-09-24 | Current state records the CTO's account, the Code Reviewer's account `shpdev-reviewer` as set up, and the founder's personal account, and how a Bot's account shares the browser profile (factual). Process change: the Code Reviewer's approval is a GitHub review from `shpdev-reviewer` instead of a comment | Pending CTO and founder |
+| 2026-09-24 | First draft | CTO and founder, 2026-09-26 |
+| 2026-09-24 | CTO review: the founder or the CTO reviews documentation pull requests from a shared identity | CTO and founder, 2026-09-26 |
+| 2026-09-24 | Current state records the CTO's account, the Code Reviewer's account `shpdev-reviewer` as set up, and the founder's personal account, and how a Bot's account shares the browser profile (factual). Process change: the Code Reviewer's approval is a GitHub review from `shpdev-reviewer` instead of a comment | CTO and founder, 2026-09-26 |
 | 2026-09-24 | Identity model decided (#6): three GitHub identities (founder, CTO, Code Reviewer); the CTO opens every Cloud Agent pull request; the Code Reviewer is the required non-author reviewer | CTO and founder, 2026-09-24 |
-| 2026-09-24 | SM-016: how the three identities support the controls in the root README, with C5 and C6 as written controls and the C7 consequence stated; other Bots read GitHub but never write to it; access reviews moved to the quarterly measures routine; the on-demand row updated to match SOP-001 (#4) | Pending CTO and founder |
+| 2026-09-24 | SM-016: how the three identities support the controls in the root README, with C5 and C6 as written controls and the C7 consequence stated; other Bots read GitHub but never write to it; access reviews moved to the quarterly measures routine; the on-demand row updated to match SOP-001 (#4) | CTO and founder, 2026-09-26 |
+| 2026-09-26 | SM-018: secrets never in chat; any secret pasted into chat is treated as exposed and rotated; one chat-free founder secret-entry path (founder enters value directly into secrets manager, never into chat); before release day, dry-run that the secret is visible to the process that needs it | CTO and founder, 2026-09-26 |

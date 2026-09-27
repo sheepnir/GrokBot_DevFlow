@@ -111,7 +111,7 @@ These exist from the day the first product repository is set up. Other routines 
 
 | Date | Change | Approved |
 |---|---|---|
-| 2026-09-24 | First draft | Pending CTO and founder |
-| 2026-09-24 | SM-016: the profile's Never section covers other roles' decisions, not their work; skills may be run by an issue's owner; sprint routines replaced by the daily flow check and the monthly measures routine | Pending CTO and founder |
-| 2026-09-25 | CTO review: the flow check reads GitHub and reports in chat, the monthly spending check from SM-014 moves to the first working day of the month, and a weekly pacing check is added | Pending CTO and founder |
-| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | Pending CTO and founder |
+| 2026-09-24 | First draft | CTO and founder, 2026-09-26 |
+| 2026-09-24 | SM-016: the profile's Never section covers other roles' decisions, not their work; skills may be run by an issue's owner; sprint routines replaced by the daily flow check and the monthly measures routine | CTO and founder, 2026-09-26 |
+| 2026-09-25 | CTO review: the flow check reads GitHub and reports in chat, the monthly spending check from SM-014 moves to the first working day of the month, and a weekly pacing check is added | CTO and founder, 2026-09-26 |
+| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | CTO and founder, 2026-09-26 |

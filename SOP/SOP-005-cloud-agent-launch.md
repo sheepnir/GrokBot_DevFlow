@@ -20,7 +20,7 @@ This SOP covers launching a Cloud Agent for any repository task: a document, cod
 ## Before launching
 
 1. The task has an issue with one accountable owner, and that owner is the launching Bot's role. Review and QA requests are the exception: they target a pull request. QA requests a launch through the CTO; the Code Reviewer may launch a registered review run under rule 7.
-2. The owner has claimed the issue per SOP-011, and the issue has a classification and budget left.
+2. The owner has claimed the issue per SOP-011, and the issue has a classification and budget left. The launch packet includes `starting_ref` and the expected SHA; the run stops and reports on mismatch. A packet without them is invalid.
 3. The Bot has read the issue and the documents it links, and can state the expected output in one sentence. If it can't, the issue isn't ready, and the Bot says so on the issue rather than launching.
 4. The Bot has no other Cloud Agent running for a different issue. One issue at a time, per the root README.
 
@@ -49,11 +49,12 @@ Context
 - Design: <link to the design spec, if any>
 - Architecture: <link to the TDD section, if any>
 - Conventions: AGENTS.md and .cursor/rules in the repository
+- Planned PR slices: <list if the issue requires multiple PRs per the split plan>
 
 Done when
 - <the acceptance criteria from the issue, verbatim>
 - Tests that cover the change pass, and the full suite passes once before the pull request opens
-- The change and its tests are pushed to the branch above. Push only that branch. The CTO opens the pull request as `shpdev-cto`, with the template filled in, including the Classification, Role, and Model sections.
+- The change and its tests are pushed to the branch above. Push to the given branch only; never open PRs; never create new branches. The CTO opens the pull request as `shpdev-cto`, with the template filled in, including the Classification, Role, and Model sections.
 
 Constraints
 - Change only what the task needs. Note anything else you find on the issue instead.
@@ -96,7 +97,8 @@ For a document task, "Done when" names the file, its folder under `/docs`, and t
 
 | Date | Change | Approved |
 |---|---|---|
-| 2026-09-24 | First draft | Pending CTO and founder |
-| 2026-09-24 | SM-016: launches follow a claim instead of a sprint, the prompt carries the tier, attempt, budget, and run marker, the pull request opens as a draft on the first push, and results are recorded as progress notes | Pending CTO and founder |
-| 2026-09-25 | CTO review, building on SM-014: the `Role` line names the requesting role, the agent pushes only its branch and the CTO opens the pull request, and the CTO or the founder launches the agent | Pending CTO and founder |
-| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | Pending CTO and founder |
+| 2026-09-24 | First draft | CTO and founder, 2026-09-26 |
+| 2026-09-24 | SM-016: launches follow a claim instead of a sprint, the prompt carries the tier, attempt, budget, and run marker, the pull request opens as a draft on the first push, and results are recorded as progress notes | CTO and founder, 2026-09-26 |
+| 2026-09-25 | CTO review, building on SM-014: the `Role` line names the requesting role, the agent pushes only its branch and the CTO opens the pull request, and the CTO or the founder launches the agent | CTO and founder, 2026-09-26 |
+| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | CTO and founder, 2026-09-26 |
+| 2026-09-26 | SM-018: exact-SHA pinning (launch packet must include starting_ref and expected SHA, stop on mismatch); planned PR slices listed in launch packet; launch prompt instruction "Push to the given branch only; never open PRs; never create new branches" | CTO and founder, 2026-09-26 |

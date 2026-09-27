@@ -71,6 +71,6 @@ An urgent risk is any of: a credential or personal data exposed or suspected exp
 
 | Date | Change | Approved |
 |---|---|---|
-| 2026-09-24 | First draft | Pending CTO and founder |
-| 2026-09-24 | SM-016: the emergency actions authorized in advance by SOP-011 are named as the exceptions to rule 8, and deadlines no longer refer to sprints | Pending CTO and founder |
-| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | Pending CTO and founder |
+| 2026-09-24 | First draft | CTO and founder, 2026-09-26 |
+| 2026-09-24 | SM-016: the emergency actions authorized in advance by SOP-011 are named as the exceptions to rule 8, and deadlines no longer refer to sprints | CTO and founder, 2026-09-26 |
+| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | CTO and founder, 2026-09-26 |

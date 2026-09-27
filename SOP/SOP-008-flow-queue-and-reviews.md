@@ -43,7 +43,7 @@ The GitHub Project, the queue, the work-in-progress limits, milestones, the meas
 | Start of a review or a QA run after the pull request is marked ready | Within one working day |
 | Blocked before the Scrum Master escalates to the CTO | Two working days |
 
-8. When a review or QA limit is reached, no issue moves to In progress until it drops below the limit. Owners use the time to finish work: they answer review threads, fix their own findings, and clear blocks. Nobody approves or verifies their own work to drain the queue.
+8. When a review or QA limit is reached, no issue moves to In progress until it drops below the limit. Owners use the time to finish work: they answer review threads, fix their own findings, and clear blocks. Nobody approves or verifies their own work to drain the queue. No same-day exceptions to WIP limits. The Scrum Master flags when review capacity is below build throughput.
 9. An owner whose issue is Blocked may claim one more issue. It returns to the blocked one as soon as the block clears.
 
 ## Milestones
@@ -96,6 +96,7 @@ The GitHub Project, the queue, the work-in-progress limits, milestones, the meas
 
 | Date | Change | Approved |
 |---|---|---|
-| 2026-09-24 | First draft, as sprint ceremonies and records | Pending CTO and founder |
-| 2026-09-24 | Replaced by flow, queue, and reviews as part of SM-016: one persistent Project, work-in-progress limits instead of sprints and story points, four measures, and reviews held on triggers | Pending CTO and founder |
-| 2026-09-25 | CTO review: the monthly spending check from SM-014 moves to the measures routine on the first working day of the month, measures come from issue and pull request timelines, and owners act on the queue through the CTO | Pending CTO and founder |
+| 2026-09-24 | First draft, as sprint ceremonies and records | CTO and founder, 2026-09-26 |
+| 2026-09-24 | Replaced by flow, queue, and reviews as part of SM-016: one persistent Project, work-in-progress limits instead of sprints and story points, four measures, and reviews held on triggers | CTO and founder, 2026-09-26 |
+| 2026-09-25 | CTO review: the monthly spending check from SM-014 moves to the measures routine on the first working day of the month, measures come from issue and pull request timelines, and owners act on the queue through the CTO | CTO and founder, 2026-09-26 |
+| 2026-09-26 | SM-018: no same-day exceptions to WIP limits; Scrum Master flags when review capacity is below build throughput | CTO and founder, 2026-09-26 |

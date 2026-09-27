@@ -47,11 +47,11 @@ Touches shared: <areas from rule 8>, or none
 8. These are shared areas: API contracts, the database schema, shared interface components, CI and deployment configuration, `.cursor/` and `AGENTS.md`, feature flag definitions, and dependency lockfiles. A claim lists the shared areas it will touch.
 9. Every Cloud Agent runs in its own cloud machine on its own branch, named per SOP-005. It never pushes to another issue's branch or to `main`.
 10. If another In progress issue lists the same shared area, the two owners agree an order in the team chat, and the CTO records it on both issues before either changes the area. The shared change lands first, in its own small pull request, and the other branch merges `main` after it. If the owners can't agree in two exchanges, the Architect decides.
-11. Before a pull request is marked ready, its branch is up to date with `main` and CI passes on the result. Once C4 is in place, the ruleset enforces this.
+11. Before a pull request is marked ready, its branch is up to date with `main` and CI passes on the result. Once C4 is in place, the ruleset enforces this. GitHub can auto-rebase a stacked PR when its base merges, which changes the head SHA and voids verdicts on the old SHA.
 
 ## Progress records and handoffs
 
-12. The issue and the pull request are the durable record. A Bot's memory and an agent's transcript aren't. Anything the next session needs goes on the issue or in the pull request. The owner posts a progress note at each agent launch, at each agent result or failure, and whenever the issue is blocked. Nothing is posted on a schedule.
+12. The issue and the pull request are the durable record. A Bot's memory and an agent's transcript aren't. Anything the next session needs goes on the issue or in the pull request. The owner posts a progress note at each agent launch, at each agent result or failure, and whenever the issue is blocked. Nothing is posted on a schedule. Progress notes include SHAs copied from a GitHub read and times from the system clock.
 
 ```markdown
 For <role>: progress <date>
@@ -169,6 +169,7 @@ Budget used: <runs> of <limit>, <hours> of <limit>
 
 | Date | Change | Approved |
 |---|---|---|
-| 2026-09-24 | First draft, as part of SM-016 | Pending CTO and founder |
-| 2026-09-25 | CTO review: Bots act on GitHub through the CTO, launches, stops, deploys, and emergency actions named for the CTO or the founder, no daily progress note, how the Scrum Master reads for the flow check, review and QA budgets capped per pull request, budgets tied to the included allocation with a weekly pacing check | Pending CTO and founder |
-| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | Pending CTO and founder |
+| 2026-09-24 | First draft, as part of SM-016 | CTO and founder, 2026-09-26 |
+| 2026-09-25 | CTO review: Bots act on GitHub through the CTO, launches, stops, deploys, and emergency actions named for the CTO or the founder, no daily progress note, how the Scrum Master reads for the flow check, review and QA budgets capped per pull request, budgets tied to the included allocation with a weekly pacing check | CTO and founder, 2026-09-26 |
+| 2026-09-26 | SM-017: align runtime, coordination, recovery, and rollout instructions with the activation checklist | CTO and founder, 2026-09-26 |
+| 2026-09-26 | SM-018: warn that GitHub can auto-rebase a stacked PR when its base merges, which changes the head SHA and voids verdicts on the old SHA (rule 11); progress notes include SHAs copied from a GitHub read and times from the system clock (rule 12) | CTO and founder, 2026-09-26 |

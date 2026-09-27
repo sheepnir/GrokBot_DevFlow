@@ -8,28 +8,26 @@ Every new product repository starts from this repository, so it carries this fol
 
 | ID | Title | Owner | Status | Approved |
 |---|---|---|---|---|
-| [SOP-001](SOP-001-token-efficiency.md) | Token efficiency: Bots, Cloud Agents, and model assignment | CTO | Approved | CTO and founder, 2026-09-24 |
-| [SOP-002](SOP-002-bot-profiles-skills-and-routines.md) | Bot profiles, skills, and routines | CTO | Draft | Pending CTO and founder |
-| [SOP-003](SOP-003-bot-identities-and-access.md) | Bot identities and access | CTO | Draft | Pending CTO and founder |
-| [SOP-004](SOP-004-new-product-repository.md) | New product repository | Cloud Engineer, with the CTO | Draft | Pending CTO and founder |
-| [SOP-005](SOP-005-cloud-agent-launch.md) | Cloud Agent launch | Software Architect | Draft | Pending CTO and founder |
-| [SOP-006](SOP-006-document-templates.md) | Document templates | Product Manager, with the Software Architect | Draft | Pending CTO and founder |
-| [SOP-007](SOP-007-pull-request-review-and-qa.md) | Pull request, review, and QA | Code Reviewer, with the QA Engineer | Draft | Pending CTO and founder |
-| [SOP-008](SOP-008-flow-queue-and-reviews.md) | Flow, queue, and reviews | Scrum Master | Draft | Pending CTO and founder |
-| [SOP-009](SOP-009-escalation-and-urgent-risks.md) | Escalation and urgent risks | CTO | Draft | Pending CTO and founder |
-| [SOP-010](SOP-010-releases.md) | Releases | CTO, with the Cloud Engineer | Draft | Pending CTO and founder |
-| [SOP-011](SOP-011-autonomous-execution.md) | Autonomous execution | CTO, with the Scrum Master | Draft | Pending CTO and founder |
+| [SOP-001](SOP-001-token-efficiency.md) | Token efficiency: Bots, Cloud Agents, and model assignment | CTO | Approved | CTO and founder, 2026-09-24; SM-016, 2026-09-26 |
+| [SOP-002](SOP-002-bot-profiles-skills-and-routines.md) | Bot profiles, skills, and routines | CTO | Approved | CTO and founder, 2026-09-26 |
+| [SOP-003](SOP-003-bot-identities-and-access.md) | Bot identities and access | CTO | Approved | CTO and founder, 2026-09-26 |
+| [SOP-004](SOP-004-new-product-repository.md) | New product repository | Cloud Engineer, with the CTO | Approved | CTO and founder, 2026-09-26 |
+| [SOP-005](SOP-005-cloud-agent-launch.md) | Cloud Agent launch | Software Architect | Approved | CTO and founder, 2026-09-26 |
+| [SOP-006](SOP-006-document-templates.md) | Document templates | Product Manager, with the Software Architect | Approved | CTO and founder, 2026-09-26 |
+| [SOP-007](SOP-007-pull-request-review-and-qa.md) | Pull request, review, and QA | Code Reviewer, with the QA Engineer | Approved | CTO and founder, 2026-09-26 |
+| [SOP-008](SOP-008-flow-queue-and-reviews.md) | Flow, queue, and reviews | Scrum Master | Approved | CTO and founder, 2026-09-26 |
+| [SOP-009](SOP-009-escalation-and-urgent-risks.md) | Escalation and urgent risks | CTO | Approved | CTO and founder, 2026-09-26 |
+| [SOP-010](SOP-010-releases.md) | Releases | CTO, with the Cloud Engineer | Approved | CTO and founder, 2026-09-26 |
+| [SOP-011](SOP-011-autonomous-execution.md) | Autonomous execution | CTO, with the Scrum Master | Approved | CTO and founder, 2026-09-26 |
 
-SM-016 proposes changes to SOP-001 through SOP-010 and adds SOP-011. Each SOP's change history lists its SM-016 change as pending. Until the CTO and the founder approve SM-016, the SOPs as they stand at [commit `d323687`](https://github.com/sheepnir/GrokBot_DevFlow/tree/d323687c3545eb9097c20b4561a0e9b394a3d969/SOP) apply: SOP-001 as approved, with SM-014 and SM-015, and the others as drafts.
+Process v2.0 (SM-016, SM-017, SM-018) was approved by the CTO and founder on 2026-09-26 and is effective when SM-018 merges. Approved process v1.1 at [commit `d323687`](https://github.com/sheepnir/GrokBot_DevFlow/tree/d323687c3545eb9097c20b4561a0e9b394a3d969) is superseded.
 
 Bot identities in place 2026-09-24 (#6). The identity model is recorded in [SOP-003](SOP-003-bot-identities-and-access.md), and SOP-001 rules 1 through 6 are in full effect from that date.
 
 ## Rollout assets
 
-- [Versioned profiles and shared collaboration rules](profiles/README.md): proposed instructions for all ten Bots, not yet verified as installed.
-- [Activation, control tests, and pilot](rollout/activation-checklist.md): evidence-based rollout steps for SM-016 and SM-017.
-
-SM-017 hardens the SM-016 proposal. Its edits remain pending with SM-016; no live approval or installation is implied.
+- [Versioned profiles and shared collaboration rules](profiles/README.md): approved instructions for all ten Bots, not yet verified as installed.
+- [Activation, control tests, and pilot](rollout/activation-checklist.md): evidence-based rollout steps for SM-016, SM-017, and SM-018.
 
 ## Conventions
 
