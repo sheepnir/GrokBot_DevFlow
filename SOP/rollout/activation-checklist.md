@@ -18,8 +18,7 @@ Owner: CTO, with the founder. Status: approved 2026-09-26 by CTO and founder, ac
 4. Pause new work during instruction replacement; checkpoint active work and record which approved version governs it. Save each role profile plus the shared rules. Read back the saved configuration and record the installed repository commit for each Bot. Do not send configuration text as a live task.
 5. Update existing routines in place: daily flow check, weekly pacing, monthly measures/spending, and infrastructure check. Remove superseded sprint routines, avoid duplicates, and preserve notification intent. Runtime stopping is a separate per-run control, not a daily routine. Record trigger, timezone, owner, and output for each routine.
 6. Check each Bot can explain its tier-dependent role, GitHub permissions, and stop conditions without performing external actions. In particular, verify the reviewer cannot author its own change and other Bots request GitHub writes through the CTO.
-7. Record the installed versions and checks in the table below. Activate the revision only once all instruction rows and approvals are complete; then update the root README status and effective date. If installation fails, restore the previous saved versions before resuming work.
-   - By founder and CTO decision, v2.0 activation takes effect when SM-018 merges. Instruction installation (steps 1, 2, 4, 5, 6) and the Bot table rows stay open/"Not verified" until real evidence exists.
+7. Record the installed versions and checks in the table below. Process v2.0 is approved and takes effect when SM-018 merges. Bot instruction installation, the control tests, and the pilot are follow-up rollout steps that stay open; they are not preconditions for activation. Instruction installation (steps 1, 2, 4, 5, 6) and the Bot table rows stay open/"Not verified" until real evidence exists.
 
 | Bot | Proposed profile | Saved version matches | Evidence / installed commit |
 |---|---|---|---|

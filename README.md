@@ -292,8 +292,8 @@ No product repository exists yet, so **none of these controls is enforced anywhe
 | C2 | Independent approval | Enforced | The same ruleset: one approving review, with the most recent push approved by someone other than its pusher. GitHub never counts an author's own approval. On a Cloud Agent pull request, `shpdev-cto` opened it and the founder's connected account pushed it, so only `shpdev-reviewer` can approve. | SOP-004 items 2 and 3, SOP-003 |
 | C3 | Stale approvals are invalidated | Enforced | Ruleset: stale approvals dismissed when new commits are pushed | SOP-004 item 2 |
 | C4 | Required CI checks | Enforced | Ruleset: the `ci` check required, on a branch that's up to date with `main` | SOP-004 items 2 and 16 |
-| C5 | QA's verdict is tied to a commit | Written | The CTO posts QA's verdict verbatim, naming the commit. The Code Reviewer checks that it names the head commit before approving, and C3 dismisses the approval if the head moves. | SOP-007 rules 14 and 18 |
-| C6 | Specialist review of flagged areas | Written | The CTO posts the Architect's or Cloud Engineer's review on the pull request. The Code Reviewer checks it's there, and checks the sensitive-path list for missing risk flags. | SOP-004 item 4, SOP-007 rule 13 |
+| C5 | QA's verdict is tied to a commit | Written | The CTO posts QA's verdict verbatim, naming the commit. The Code Reviewer checks that it names the head commit before approving, and C3 dismisses the approval if the head moves. | SOP-007 rules 16 and 21 |
+| C6 | Specialist review of flagged areas | Written | The CTO posts the Architect's or Cloud Engineer's review on the pull request. The Code Reviewer checks it's there, and checks the sensitive-path list for missing risk flags. | SOP-004 item 4, SOP-007 rule 15 |
 | C7 | Authorized production deployment | Enforced | A `production` environment with `shpdev-cto` and the founder as required reviewers, self-review prevented, deployment from `main` only, and a cloud role that only that environment can assume through OIDC. The artifact deployed is the one CI built for that commit. | SOP-004 items 17 and 21 |
 | C8 | Unfinished work stays off in production | Enforced once built | Feature flags that default to off in production. Changes to the production flag settings go through C1 to C4 like any other change. | SOP-004 item 18 |
 | C9 | Secrets stay out of the repository | Enforced | Secret scanning with push protection | SOP-004 item 5 |
@@ -424,18 +424,18 @@ The [SOP folder](SOP/README.md) holds the procedures Bots follow to carry out th
 | SM-002 | Collaboration before escalation, and the planned engineering organization under the Scrum Master | CTO and founder, 2026-09-24 |
 | SM-003 | Pull request workflow: parallel code review and QA, with final merge approval from the Code Reviewer | CTO and founder, 2026-09-24 |
 | SM-004 | Standard operating procedures folder, SOP-001 on token efficiency and model assignment, and the pull request template with a `Model` section | CTO and founder, 2026-09-24 |
-| SM-005 | SOP-002: Bot profiles, skills, and routines | Pending CTO and founder |
-| SM-006 | SOP-003: Bot identities and access | Pending CTO and founder |
-| SM-007 | SOP-004: New product repository | Pending CTO and founder |
-| SM-008 | SOP-005: Cloud Agent launch | Pending CTO and founder |
-| SM-009 | SOP-006: Document templates | Pending CTO and founder |
-| SM-010 | SOP-007: Pull request, review, and QA | Pending CTO and founder |
-| SM-011 | SOP-008: Sprint ceremonies and records (replaced in SM-016 by flow, queue, and reviews) | Pending CTO and founder |
-| SM-012 | SOP-009: Escalation and urgent risks | Pending CTO and founder |
-| SM-013 | SOP-010: Releases | Pending CTO and founder |
+| SM-005 | SOP-002: Bot profiles, skills, and routines | CTO and founder, 2026-09-26 |
+| SM-006 | SOP-003: Bot identities and access | CTO and founder, 2026-09-26 |
+| SM-007 | SOP-004: New product repository | CTO and founder, 2026-09-26 |
+| SM-008 | SOP-005: Cloud Agent launch | CTO and founder, 2026-09-26 |
+| SM-009 | SOP-006: Document templates | CTO and founder, 2026-09-26 |
+| SM-010 | SOP-007: Pull request, review, and QA | CTO and founder, 2026-09-26 |
+| SM-011 | SOP-008: Sprint ceremonies and records (replaced in SM-016 by flow, queue, and reviews) | CTO and founder, 2026-09-26 |
+| SM-012 | SOP-009: Escalation and urgent risks | CTO and founder, 2026-09-26 |
+| SM-013 | SOP-010: Releases | CTO and founder, 2026-09-26 |
 | SM-014 | On-demand spending disabled, with a monthly Scrum Master spending check (#4); Bot identity model: three GitHub identities, and the CTO opens every Cloud Agent pull request (#6) | CTO and founder, 2026-09-24 (founder decisions given to the CTO in writing) |
-| SM-015 | The Code Reviewer approves with a GitHub review from `shpdev-reviewer` (SOP-007 rule 23) | CTO and founder, 2026-09-24 |
-| SM-016 | Process v2.0, a workflow proportional to the work. Adds work classification with three tiers and risk flags. Roles become accountabilities with one owner per issue, and independence is kept. One persistent queue with work-in-progress limits and four measures replaces sprints, story points, and per-sprint Projects. The controls are listed as written or enforced. Feature flags keep unfinished work out of releases. Adds SOP-011, autonomous execution. Updates SOP-001 through SOP-010 and the templates to match, and replaces SOP-008 with flow, queue, and reviews. Supersedes the sprint, story point, and ceremony parts of SM-001, and QA on every pull request from SM-003. Builds on SM-014 and SM-015: the three GitHub identities, the CTO opening every Cloud Agent pull request, and disabled on-demand spending. Takes effect together with the updated Bot instruction sets. | CTO and founder, 2026-09-26 (founder decision in CTO chat, 17:00 PT) |
+| SM-015 | The Code Reviewer approves with a GitHub review from `shpdev-reviewer` (SOP-007 rule 27) | CTO and founder, 2026-09-24 |
+| SM-016 | Process v2.0, a workflow proportional to the work. Adds work classification with three tiers and risk flags. Roles become accountabilities with one owner per issue, and independence is kept. One persistent queue with work-in-progress limits and four measures replaces sprints, story points, and per-sprint Projects. The controls are listed as written or enforced. Feature flags keep unfinished work out of releases. Adds SOP-011, autonomous execution. Updates SOP-001 through SOP-010 and the templates to match, and replaces SOP-008 with flow, queue, and reviews. Supersedes the sprint, story point, and ceremony parts of SM-001, and QA on every pull request from SM-003. Builds on SM-014 and SM-015: the three GitHub identities, the CTO opening every Cloud Agent pull request, and disabled on-demand spending. Takes effect when SM-018 merges. | CTO and founder, 2026-09-26 (founder decision in CTO chat, 17:00 PT) |
 | SM-017 | Harden the proposed v2.0 rollout: serialize claims through a registered dispatcher, distinguish operation IDs from run IDs, enforce run deadlines, restore compatible previous known-good artifacts, permit scoped bootstrap issues, and prepare versioned profiles plus activation/control/pilot checks. | CTO and founder, 2026-09-26 (founder decision in CTO chat, 17:00 PT) |
 | SM-018 | Fold in Sprint 6 lessons and founder rules: exact-SHA pinning, small and stacked PRs, squash merges with an explicit OK to merge, verdicts and PR body on GitHub, clock-independent tests, secret entry, deploy states, browser-write latency, shared-change sequencing, WIP exception rules, launch prompt, progress-note content, release boundaries, CTO as single channel, provider spending caps, untested-platform disclosure, test-only allowlists, deferred safeguards, and stacked-PR delta review. | CTO and founder, 2026-09-26 (founder decision in CTO chat, 17:00 PT) |
 
