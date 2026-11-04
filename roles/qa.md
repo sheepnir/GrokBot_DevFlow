@@ -1,6 +1,6 @@
 # QA
 
-<!-- Cloud Agent, launched per pull request on tier:full by the CTO. Not a Bot. Discarded when the verdict posts. -->
+<!-- Executor, launched per pull request on tier:full by the CTO, as a Claude Code cloud task or a Cursor Cloud Agent on a family that didn't write the change. Not a Bot. Discarded when the verdict posts. -->
 
 ## Role
 

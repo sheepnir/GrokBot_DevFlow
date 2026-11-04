@@ -5,10 +5,10 @@
 | Field | Value |
 |---|---|
 | Milestone | <link> |
-| Budget | <amount, in the unit the Cursor usage page reports, per pool> |
-| Spent | <amount> |
+| Budget | <per pool: Cursor, Claude, ChatGPT, each in the unit its usage page reports> |
+| Spent | <per pool> |
 | Points committed / done | <n> / <n> |
-| Cost per point | <spent divided by points done> |
+| Cost per point | <per pool: spent divided by points done on that pool> |
 | Trailing cost per point | <average over the last three sprints> |
 | First-pass rate | <pull requests merged with zero rounds, divided by pull requests merged> |
 | Ended because | <all merged, or budget spent> |
@@ -25,7 +25,7 @@
 
 | Item | Spend | Cause | Loop? |
 |---|---|---|---|
-| <issue or pull request> | | <such as browser verification, three rounds, a large diff, a tangled area> | <Yes or No> |
+| <issue or pull request> | | <such as browser verification, three rounds, a large diff, a tangled area, a closed pool> | <Yes or No> |
 
 ## Process change
 

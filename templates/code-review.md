@@ -1,7 +1,7 @@
 <!-- Code Reviewer, one GitHub review per round, as shpdev-reviewer. Diff only. At most five findings, Blocking or Should-fix. Approve is the merge approval. -->
 ## Code review: <Approved | Changes requested>
 
-**Commit:** `<full SHA, re-read from GitHub>` · **Round:** <1 or 2> · **Model:** <model used>
+**Commit:** `<full SHA, re-read from GitHub>` · **Round:** <1 or 2> · **Model:** <model used> · **First pass:** <Codex, Claude, or none>
 
 | ID | Severity | Location | Finding and fix |
 |---|---|---|---|

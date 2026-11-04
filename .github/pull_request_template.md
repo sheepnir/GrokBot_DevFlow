@@ -5,7 +5,7 @@
 
 Closes #<issue> · Tier: <light | full> · Requirements: <REQ IDs, or none> · Stack: <"n of m, Part of #issue", or none>
 
-**Models:** <every model that produced a commit, as Cursor's picker shows them>
+**Models:** <every model that produced a commit and its tool, such as `Claude Opus 5.5 via Claude Code task`, `Composer 2.5 via Cloud Agent`, or `via Codex`>
 **Feature flag:** <the flag that keeps unfinished behavior off in production, or "none: complete when merged">
 
 ## Tests
