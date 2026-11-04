@@ -29,6 +29,11 @@
   color: "e99695"
   description: "Touches auth, authorization, personal data, or secrets; the review includes the security section"
 
+# Pool: applied by the CTO when it opens a pull request written on Codex, so the Claude review workflow is the first pass
+- name: "pool:codex"
+  color: "bfd4f2"
+  description: "Written on Codex; the Claude review workflow is the first pass"
+
 # Incidents and trust
 - name: "incident"
   color: "b60205"
