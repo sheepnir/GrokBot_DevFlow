@@ -6,7 +6,7 @@
 
 1. Clone or fetch the repository under `/workspace/repos/<name>` and check out the packet's branch at its starting SHA.
 2. Write the packet to `/workspace/runs/<issue>/packet.md` and run the wrapper script with `nohup`, never in the foreground:
-   - Claude Code, after sourcing `/workspace/.secrets/claude.env` for `CLAUDE_CODE_OAUTH_TOKEN`:
+   - Claude Code, after sourcing the Claude secrets file the private ops repo names, which sets `CLAUDE_CODE_OAUTH_TOKEN`:
 
      ```bash
      claude -p "$(cat packet.md)" --append-system-prompt-file /workspace/cards/engineer.md \
@@ -15,7 +15,7 @@
      ```
 
      Never add `--bare`: bare mode ignores the subscription token.
-   - Codex, which reuses the sign-in in `~/.codex/auth.json`:
+   - Codex, which reuses its saved sign-in:
 
      ```bash
      codex exec --sandbox workspace-write --json -o result.md "$(cat packet.md)"
@@ -25,3 +25,5 @@
 4. Post one comment on the issue: `Launched on <tool>, shared computer`, with the CTO signature. Stop.
 
 **Guardrails:** one run per tool at a time. Never `--dangerously-skip-permissions`, never `danger-full-access`, never a path outside `/workspace`. When a tool reports an expired sign-in, stop and tell the founder: renewing it is theirs.
+
+**Checked** on 2026-11-04 against the Claude Code [headless](https://code.claude.com/docs/en/headless) and [authentication](https://code.claude.com/docs/en/authentication) documentation: `--permission-mode auto`, `--permission-prompts none`, which needs Claude Code 2.1.259 or later, and bare mode not reading the subscription token; and against the Codex [non-interactive mode](https://learn.chatgpt.com/docs/non-interactive-mode) documentation: `codex exec --sandbox workspace-write --json -o`. The install skill pins versions at or above these.

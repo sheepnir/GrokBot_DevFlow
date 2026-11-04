@@ -121,7 +121,7 @@ Cost per point and first-pass rate replace velocity and the four delivery measur
 | Ready | The story has acceptance criteria, a tier, an estimate, and a link to its brief if one exists. The CTO sets all four in one pass. |
 | Done | Squash-merged with CI green, the Code Reviewer's approval of the head SHA, and on full tier a QA pass naming that SHA. GitHub closes the issue. Unfinished behavior is behind a feature flag that is off in production. Leftovers become new issues. |
 | Token sink | The three most expensive items in a sprint, named in the summary, with a note on whether any was a loop. |
-| Pool | A subscription that supplies executors: Cursor for Cloud Agents, Claude for Claude Code tasks and the Claude review workflow, ChatGPT for Codex review and fix runs. Each has its own weekly window and its own budget line, and a pool under a quarter of its window is closed to new launches until it resets. |
+| Pool | A subscription that supplies executors: Cursor for Cloud Agents, Claude for Claude Code tasks and the Claude review workflow, ChatGPT for Codex review and fix runs. Each has its own weekly window and its own budget line, and a pool under a quarter of its window, as its own usage page shows the remaining share, is closed to new launches until it resets. |
 | First pass | The automatic review that posts when a pull request opens: Codex code review, or the Claude review workflow when Codex wrote the change. Advisory, never an approval. The Code Reviewer keeps the findings that hold and resolves the rest. |
 
 ## Executor pools
@@ -132,7 +132,7 @@ An executor is whatever runs a launch packet. Three subscriptions supply them, e
 |---|---|---|---|---|
 | Cursor | Cloud Agent | Launches it with the packet | Cursor's cloud | The Cursor weekly pool, which the Bots also draw on |
 | Claude | Claude Code cloud task, one saved task per role | Fires the task's API trigger with the packet as the payload | Anthropic's cloud, cloned through the Claude GitHub App | The Claude plan's window |
-| Claude | Claude review workflow | A pull request written by Codex opens | GitHub Actions, signed in with the subscription token | The Claude plan's window, plus Actions minutes |
+| Claude | Claude review workflow | A pull request labeled `pool:codex` opens | GitHub Actions, signed in with the subscription token | The Claude plan's window, plus Actions minutes |
 | ChatGPT | Codex code review and security review | A pull request opens, or `@codex security review` is posted | OpenAI's cloud | The ChatGPT plan's review meter |
 | ChatGPT | Codex fix run | `@codex fix` is posted with the findings | OpenAI's cloud, pushing to the branch | The ChatGPT plan's window |
 | Claude or ChatGPT | CLI run on the shared computer | Runs the dispatch skill | The Bots' computer | The plan the CLI is signed into |
@@ -143,13 +143,13 @@ The last row is the fallback, for when a cloud door is rate-limited or a story n
 |---|---|---|
 | Engineer, 1 to 2 points | Cursor Cloud Agent | Boilerplate-sized changes on the cheapest meter |
 | Engineer, 3 to 5 points | Claude Code task | Cross-layer work with the most context, and it keeps the Cursor window for the Bots |
-| Engineer, fix round | The pool that wrote the change, or `@codex fix` on a Codex-written one | The context is already there |
+| Engineer, fix round | The pool that wrote the change, or `@codex fix` on a Codex-written one | The context is already there, and a fix from another pool would add a second family |
 | First pass | Codex review, or the Claude review workflow when Codex wrote the change | Never the family that wrote the change, and it finds before the Reviewer judges |
 | Code Reviewer | Cursor Cloud Agent on a family not in the Models line | The gate, posted as `shpdev-reviewer` |
 | QA | Claude Code task, or a Cursor Cloud Agent when the change was written on Claude | A clean clone, on a family that didn't write the change |
 | Briefs | Claude Code task on the frontier model | Every later step depends on the acceptance criteria |
 
-Quota rule: before each launch the CTO reads the three usage pages. A pool under a quarter of its window is closed to new launches until it resets, except for fix rounds, and a closed pool's work goes to the next pool its role allows: Engineer 1 to 2 points to Claude Code on the fast model, Engineer 3 to 5 points to a Cloud Agent on Grok 4.7, QA to the other of its two. When every pool a role allows is closed, the CTO stops launching and reports, which is the same trip-wire as the budget.
+Quota rule: before each launch the CTO reads the three usage pages. A pool under a quarter of its window, read as the remaining share its own usage page shows, is closed to new launches until it resets, except for fix rounds, and a closed pool's work goes to the next pool its role allows: Engineer 1 to 2 points to Claude Code on the fast model, Engineer 3 to 5 points to a Cloud Agent on Grok 4.7, QA to the other of its two. When every pool a role allows is closed, the CTO stops launching and reports, which is the same trip-wire as the budget.
 
 Every pull request's `Models` line lists each model that produced a commit and the tool it ran in, such as `Claude Opus 5.5 via Claude Code task`. The first-pass rate shows whether a cheap row costs more in rounds than it saves. If it drops after a routing change, revert that row.
 
