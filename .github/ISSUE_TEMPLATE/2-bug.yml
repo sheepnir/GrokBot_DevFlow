@@ -1,0 +1,50 @@
+name: Defect report
+description: Something doesn't work as specified. Filed by the CTO for a deferred QA defect, or by any role.
+title: "<Component>: <what goes wrong, in a short phrase>"
+labels: ["type:bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Public repository: synthetic data only, screenshots and logs cropped and redacted. A vulnerability in released code goes to private vulnerability reporting, never here.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happens, and what should happen
+      description: Quote the acceptance criterion where one exists.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Sign in as a test user with the <role> role.
+        2. Go to <screen>.
+        3. <action>
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Found on
+      description: Pull request or commit, and the environment by name, never by URL.
+      placeholder: "PR #<n>, commit abc1234, test"
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "Blocking: wrong against an acceptance criterion, security, data loss, or broken build"
+        - "Should-fix: anything else"
+    validations:
+      required: true
+  - type: checkboxes
+    id: public
+    attributes:
+      label: Public posting check
+      options:
+        - label: This report contains no secrets, personal data, internal hosts or account IDs, or unpatched vulnerability details.
+          required: true

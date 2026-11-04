@@ -1,0 +1,57 @@
+name: User story
+description: A unit of user value with acceptance criteria. Written by the CTO.
+title: "<Short outcome, such as: Reset a forgotten password>"
+labels: ["type:story"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Public repository: no secrets, personal data, internal hosts, or unpatched vulnerability details. The CTO applies the `tier:` label. Default is `tier:light`; `tier:full` when the story has user-facing UI, touches auth, personal data, or secrets, or is 3 points or more.
+  - type: textarea
+    id: story
+    attributes:
+      label: User story
+      placeholder: As a <type of user>, I want <capability> so that <benefit>.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Testable, each with a stable ID. QA verifies these and nothing else.
+      placeholder: |
+        - REQ-AUTH-012.AC1: Given <context>, when <action>, then <observable result>.
+        - REQ-AUTH-012.AC2: Given <context>, when <action>, then <observable result>.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Out of scope
+      description: What this story deliberately doesn't cover.
+  - type: input
+    id: brief
+    attributes:
+      label: Brief
+      description: Link to the feature brief in /docs/briefs, or "None".
+      placeholder: "docs/briefs/<slug>.md, or None"
+  - type: dropdown
+    id: estimate
+    attributes:
+      label: Estimate (points)
+      description: 1 is one file, 2 is one area, 3 is one slice across layers, 5 is a new module or contract. Anything bigger is split.
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "5"
+        - "Split before planning"
+    validations:
+      required: true
+  - type: checkboxes
+    id: public
+    attributes:
+      label: Public posting check
+      options:
+        - label: This issue contains no secrets, personal data, internal hosts, cost details, or unpatched vulnerability details.
+          required: true
