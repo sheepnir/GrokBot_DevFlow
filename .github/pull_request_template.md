@@ -1,44 +1,21 @@
-## Issue
-
-<!-- Link the issue this pull request is for. One issue per pull request, and an issue may take several. -->
-
-## Stack
-
-<!-- "n of m, base PR #" if stacked, or "none" if not. -->
-
-## Classification
-
-<!-- Copy from the issue: tier and risk flags. The Reviewer adds a tier or a flag if these look wrong. See the root README, "Classify the work first". -->
-
-- Tier:
-- Risk flags:
-
-## Requirements
-
-<!-- The BRD requirement IDs and, where relevant, the TDD section this change implements. "None" is fine for Small work. -->
-
+<!-- Opened by the CTO for the Engineer. One issue per pull request, under about 300 changed lines. Public repository: no secrets, personal data, internal hosts, or unpatched vulnerability details. -->
 ## Summary
 
-<!-- What changed and why, in a few sentences. -->
+<What this change does and why, in two sentences.>
 
-## Role
+Closes #<issue> · Tier: <light | full> · Requirements: <REQ IDs, or none> · Stack: <"n of m, Part of #issue", or none>
 
-<!-- The owner's role, and every other role whose request produced a commit here. They're all authors, and none of them can give the independent approval. -->
+**Models:** <every model that produced a commit, as Cursor's picker shows them>
+**Feature flag:** <the flag that keeps unfinished behavior off in production, or "none: complete when merged">
 
-## Model
+## Tests
 
-<!-- Every model that produced a commit on this pull request, one per line, named as Cursor's model picker shows it. Add a line on every escalation. See SOP-001, rule 4. -->
+<What ran, the CI run link, and what wasn't tested. A bug fix names the test that fails without it.>
 
-- 
+## Notes for review
 
-## Feature flag
+<Where to look, migrations and rollback, shared areas touched, or "None".>
 
-<!-- The flag that keeps unfinished behavior off in production, or "none: the issue is complete when this merges". See SOP-010. -->
+- [ ] `needs:security-check` applied if this touches auth, authorization, personal data, or secrets
 
-## Test evidence
-
-<!-- What was run, where the output is, and what it shows. Link CI. A bug fix includes a test that fails without it. Link evidence. Don't paste it. -->
-
-## Notes for the Code Reviewer and QA
-
-<!-- Anything that helps them: risky areas, what was deliberately left out, migrations, config changes, shared areas touched. -->
+<sub>Posted by the CTO agent for the Engineer agent · SHP Development</sub>

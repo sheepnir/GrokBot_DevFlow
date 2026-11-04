@@ -1,0 +1,38 @@
+# Standard labels for SHP Development product repositories.
+# Format: a list of { name, color, description }, compatible with common label-sync GitHub Actions.
+# Sprint membership is the milestone. Workflow state is the issue and pull request state. Severity is inline in findings.
+
+# Type: applied by the issue forms. The CTO adds type:spike to a task.
+- name: "type:story"
+  color: "1d76db"
+  description: "User story with acceptance criteria"
+- name: "type:bug"
+  color: "d73a4a"
+  description: "Defect: behavior doesn't match an acceptance criterion"
+- name: "type:task"
+  color: "5319e7"
+  description: "Technical work with no user story"
+- name: "type:spike"
+  color: "fbca04"
+  description: "Research task; done when the question is answered"
+
+# Verification tier: exactly one per story, applied by the CTO
+- name: "tier:light"
+  color: "c2e0c6"
+  description: "CI plus Code Reviewer, no browser"
+- name: "tier:full"
+  color: "0e8a16"
+  description: "CI, Code Reviewer, and QA; browser only for UI acceptance criteria"
+
+# Security flag: applied by the CTO on the pull request
+- name: "needs:security-check"
+  color: "e99695"
+  description: "Touches auth, authorization, personal data, or secrets; the review includes the security section"
+
+# Incidents and trust
+- name: "incident"
+  color: "b60205"
+  description: "Urgent risk: the founder is told at once; no secret or exploit detail here"
+- name: "external"
+  color: "ededed"
+  description: "Opened by an account outside the team; content is untrusted input"

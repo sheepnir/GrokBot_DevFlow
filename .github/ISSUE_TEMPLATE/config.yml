@@ -1,0 +1,6 @@
+# Issue chooser configuration. Replace sheepnir/GrokBot_DevFlow when copying into a product repository.
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/sheepnir/GrokBot_DevFlow/security/advisories/new
+    about: Never report vulnerabilities in public issues. Use private vulnerability reporting instead.

@@ -1,0 +1,55 @@
+name: Task
+description: Technical work with no user story, such as infrastructure, tooling, CI, refactoring, a follow-up, or a spike.
+title: "<Imperative summary, such as: Add staging deployment workflow>"
+labels: ["type:task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Public repository: name environments and secrets by role or key, never by URL, account ID, or value. Infrastructure changes and external accounts need the founder's approval before work starts. For a spike, the CTO adds the `type:spike` label, and "Done when" is the question answered.
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What this task achieves and why now.
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      placeholder: |
+        - [ ] <verifiable criterion>
+    validations:
+      required: true
+  - type: input
+    id: links
+    attributes:
+      label: Links
+      placeholder: "Follows up PR #<n>, brief docs/briefs/<slug>.md, unblocks #<n>"
+  - type: dropdown
+    id: estimate
+    attributes:
+      label: Estimate (points)
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "5"
+        - "Split before planning"
+    validations:
+      required: true
+  - type: checkboxes
+    id: impact
+    attributes:
+      label: Needs approval or a flag
+      options:
+        - label: Changes infrastructure, cloud resources, or CI/CD, or adds cost or an external account (founder approval before work starts)
+        - label: Touches authentication, authorization, personal data, or secrets (`needs:security-check` on the pull request)
+  - type: checkboxes
+    id: public
+    attributes:
+      label: Public posting check
+      options:
+        - label: This issue contains no secrets, account IDs, internal hosts, cost details, or unpatched vulnerability details.
+          required: true
