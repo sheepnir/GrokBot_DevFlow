@@ -4,7 +4,7 @@ How SHP Development, a software team made up of AI agents built on Grok Bot, tur
 
 This repository is the process Nir Sheep (the founder) and his CTO agent use when working on projects together with Grok Bot. Every new product repository starts from it. The repository itself is maintained by the founder and the CTO directly. The work runs on one Cursor Ultra subscription, which covers Grok Bot agents and Cursor Cloud Agents, with on-demand spending disabled.
 
-Status: **Process v3.0, approved by the founder on 2026-11-03** (SM-019, SM-020, SM-021). It supersedes process v2.0, which is kept with its eleven SOPs and ten Bot profiles at [commit `18e3cea`](https://github.com/sheepnir/GrokBot_DevFlow/tree/18e3cea). v3.0 keeps v2.0's identities, controls, and founder rules, and removes the coordination between ten Bots that was consuming the subscription.
+Status: **Process v3.0, proposed by the CTO on 2026-11-03 and pending the founder's approval** (SM-019, SM-020, SM-021). It takes effect when the founder gives the explicit OK to merge [#22](https://github.com/sheepnir/GrokBot_DevFlow/pull/22), which is the approval the change log records. It supersedes process v2.0, which is kept with its eleven SOPs and ten Bot profiles at [commit `18e3cea`](https://github.com/sheepnir/GrokBot_DevFlow/tree/18e3cea). v3.0 keeps v2.0's identities, controls, and founder rules, and removes the coordination between ten Bots that was consuming the subscription.
 
 **Agents don't read this file.** Each role reads its one-page card in [`roles/`](roles) and the template for the post it is making. The one-time configuration the process depends on is in [setup.md](setup.md).
 
@@ -192,11 +192,11 @@ Branches are `eng/<issue>-<slug>`. Commits have an imperative subject under 72 c
 |---|---|---|
 | SM-001 to SM-015 | Process v1.1: ten roles, one-week sprints, story points, the SOP folder, the three Bot identities, disabled on-demand spending. Full log at [commit `d323687`](https://github.com/sheepnir/GrokBot_DevFlow/tree/d323687c3545eb9097c20b4561a0e9b394a3d969). | CTO and founder, 2026-09-24 to 2026-09-26 |
 | SM-016 to SM-018 | Process v2.0: tiers and risk flags, a persistent queue with work-in-progress limits instead of sprints, controls C1 to C9, autonomous execution with a dispatcher and budgets, versioned Bot profiles, Sprint 6 lessons. Full log at [commit `18e3cea`](https://github.com/sheepnir/GrokBot_DevFlow/tree/18e3cea). | CTO and founder, 2026-09-26 |
-| SM-019 | Reviewer and QA scoping: diff-only review with a finding cap, two-round cap, delta re-check, run caps, PR size cap, no browser on light tier, the posting checklist, Auto Review rules as the guardrails | Founder, 2026-11-03 |
-| SM-020 | Restructure: the CTO as the one standing coordinator, the Code Reviewer as the only other Bot, Engineer and QA as Cloud Agents launched per task, Designer dormant, five-step workflow, role cards replace the SOPs and profiles, GitHub automation replaces relayed posts | Founder, 2026-11-03 |
-| SM-021 | Budget-boxed sprints and story points as context and passes, replacing the queue, the work-in-progress limits, and the four measures with cost per point, first-pass rate, and the sprint summary | Founder, 2026-11-03 |
+| SM-019 | Reviewer and QA scoping: diff-only review with a finding cap, two-round cap, delta re-check, run caps, PR size cap, no browser on light tier, the posting checklist, Auto Review rules as the guardrails | Pending: the founder's OK to merge #22 |
+| SM-020 | Restructure: the CTO as the one standing coordinator, the Code Reviewer as the only other Bot, Engineer and QA as Cloud Agents launched per task, Designer dormant, five-step workflow, role cards replace the SOPs and profiles, GitHub automation replaces relayed posts | Pending: the founder's OK to merge #22 |
+| SM-021 | Budget-boxed sprints and story points as context and passes, replacing the queue, the work-in-progress limits, and the four measures with cost per point, first-pass rate, and the sprint summary | Pending: the founder's OK to merge #22 |
 
-Since SM-020 the CTO is the coordination role, so process changes are approved by the founder and recorded here with a date.
+Since SM-020 the CTO is the coordination role, so a process change is proposed by the CTO in a pull request, approved by the founder's explicit OK to merge it, and recorded here with that pull request. A row reads pending until its pull request merges.
 
 ## References
 

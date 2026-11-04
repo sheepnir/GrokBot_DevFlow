@@ -6,9 +6,9 @@ One-time configuration the process depends on. The founder does it, once per Gro
 
 | Identity | Who | Access |
 |---|---|---|
-| `sheepnir` | The founder's personal GitHub account | Never used by a Bot. The account connected to Cursor, so Cloud Agents push branches through it. |
+| `sheepnir` | The founder's personal GitHub account | No Bot acts as this account. Cloud Agent pushes go through its Cursor connection, which is why it counts as an author under C2. |
 | `shpdev-cto` | The CTO Bot | Admin on this repository, maintain on product repositories. Opens every pull request, posts for every other role, merges. |
-| `shpdev-reviewer` | The Code Reviewer Bot | Write on each repository, so its approvals count. No merge. Login in the 1Password item "GitHub - ShpDev - Code Reviewer". |
+| `shpdev-reviewer` | The Code Reviewer Bot | Write on each repository, so its approvals count. No merge. Login in the team password manager. |
 
 No other Bot has a GitHub identity or cloud access. The founder creates every account, credential, and external service, and Bots never do. Credentials live in 1Password and, for Cloud Agents, in Cursor's secret store. Nothing in a profile, skill, routine, chat, memory, repository, or file on the shared computer.
 
